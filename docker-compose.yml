@@ -5,12 +5,19 @@ services:
     restart: always
     env_file:
       - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3012:3306"
     volumes:
-      - mini-erp-dp-volume:/var/lib/mysql
+      - mini-erp-db-volume:/var/lib/mysql
   api:
     build:
       context: .
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
     container_name: mini-erp-api
     env_file:
       - .env
@@ -20,5 +27,4 @@ services:
       - mysql_db
   
 volumes:
-  mini-erp-dp-volume:
-  
+  mini-erp-db-volume:
