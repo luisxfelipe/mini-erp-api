@@ -16,8 +16,10 @@ import { ReturnProductDto } from './dto/return-product.dto';
 import { PaginationDto } from 'src/dtos/pagination.dto';
 import { Product } from './entities/product.entity';
 import { DeleteResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('products')
+@ApiTags('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
