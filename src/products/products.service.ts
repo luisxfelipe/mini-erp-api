@@ -26,13 +26,11 @@ export class ProductsService {
   async countProductsByCategory(): Promise<
     ReturnNumberProductsByCategoryDto[]
   > {
-    const response = await this.productsRepository
+    return await this.productsRepository
       .createQueryBuilder('product')
       .select('product.category_id, COUNT(*) as total')
       .groupBy('product.category_id')
       .getRawMany();
-
-    return response;
   }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {

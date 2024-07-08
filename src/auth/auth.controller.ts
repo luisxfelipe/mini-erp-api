@@ -9,7 +9,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
-import { SignInResponseDto } from './dto/sign-in-response.dto';
+import { ReturnSignInDto } from './dto/return-sign-in.dto';
 import { Public } from './../decorators/is-public.decorator';
 
 @Controller('auth')
@@ -20,7 +20,7 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('signin')
-  async signIn(@Body() signInDto: SignInDto): Promise<SignInResponseDto> {
+  async signIn(@Body() signInDto: SignInDto): Promise<ReturnSignInDto> {
     if (!signInDto) {
       throw new UnauthorizedException('Authorization token is missing');
     }

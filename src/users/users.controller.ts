@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UserResponseDto } from './dto/user-response.dto';
+import { ReturnUserDto } from './dto/return-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UserDecorator } from '../decorators/user.decorator';
 import { User } from './entities/user.entity';
@@ -26,10 +26,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<UserResponseDto> {
-    return new UserResponseDto(await this.usersService.findOne(id));
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<ReturnUserDto> {
+    return new ReturnUserDto(await this.usersService.findOne(id));
   }
 
   @Patch(':id/password')

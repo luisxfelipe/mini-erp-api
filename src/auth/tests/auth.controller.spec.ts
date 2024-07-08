@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
-import { signInResponseDtoMock } from '../mocks/sign-in-response-dto.mock';
+import { returnSignInDtoMock } from '../mocks/return-sign-in-dto.mock';
 import { signInDtoMock } from '../mocks/sign-in-dto.mock';
 describe('AuthController', () => {
   let controller: AuthController;
@@ -14,7 +14,7 @@ describe('AuthController', () => {
         {
           provide: AuthService,
           useValue: {
-            signIn: jest.fn().mockResolvedValue(signInResponseDtoMock),
+            signIn: jest.fn().mockResolvedValue(returnSignInDtoMock),
           },
         },
       ],
@@ -33,7 +33,7 @@ describe('AuthController', () => {
     it('should return an access token', async () => {
       const signIn = await controller.signIn(signInDtoMock);
 
-      expect(signIn).toEqual(signInResponseDtoMock);
+      expect(signIn).toEqual(returnSignInDtoMock);
     });
   });
 });
