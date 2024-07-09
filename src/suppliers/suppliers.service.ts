@@ -8,7 +8,6 @@ import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { Supplier } from './entities/supplier.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ReturnSupplierDto } from './dto/return-supplier.dto';
 
 @Injectable()
 export class SuppliersService {
@@ -17,9 +16,7 @@ export class SuppliersService {
     private readonly repository: Repository<Supplier>,
   ) {}
 
-  async create(
-    createSupplierDto: CreateSupplierDto,
-  ): Promise<ReturnSupplierDto> {
+  async create(createSupplierDto: CreateSupplierDto): Promise<Supplier> {
     const suppliers = await this.findByCnpjOrEmail(
       createSupplierDto.cnpj,
       createSupplierDto.email,
@@ -31,17 +28,13 @@ export class SuppliersService {
       );
     }
 
-    const supplier = await this.repository.save(
+    return await this.repository.save(
       this.repository.create(createSupplierDto),
     );
-
-    return new ReturnSupplierDto(supplier);
   }
 
-  async findAll(): Promise<ReturnSupplierDto[]> {
-    const suppliers = await this.repository.find();
-
-    return suppliers.map((supplier) => new ReturnSupplierDto(supplier));
+  async findAll(): Promise<Supplier[]> {
+    return await this.repository.find();
   }
 
   async findByCnpjOrEmail(cnpj: string, email: string): Promise<Supplier[]> {
@@ -54,13 +47,11 @@ export class SuppliersService {
     }
   }
 
-  async findOne(id: number): Promise<ReturnSupplierDto> {
+  async findOne(id: number): Promise<Supplier> {
     try {
-      return new ReturnSupplierDto(
-        await this.repository.findOneOrFail({
-          where: { id },
-        }),
-      );
+      return await this.repository.findOneOrFail({
+        where: { id },
+      });
     } catch (error) {
       throw new NotFoundException('Supplier not found');
     }
@@ -69,14 +60,12 @@ export class SuppliersService {
   async update(
     id: number,
     updateSupplierDto: UpdateSupplierDto,
-  ): Promise<ReturnSupplierDto> {
+  ): Promise<Supplier> {
     const supplier = await this.findOne(id);
 
-    return new ReturnSupplierDto(
-      await this.repository.save({
-        ...supplier,
-        ...updateSupplierDto,
-      }),
-    );
+    return await this.repository.save({
+      ...supplier,
+      ...updateSupplierDto,
+    });
   }
 }

@@ -19,27 +19,29 @@ export class SuppliersController {
   constructor(private readonly suppliersService: SuppliersService) {}
 
   @Post()
-  create(
+  async create(
     @Body() createSupplierDto: CreateSupplierDto,
   ): Promise<ReturnSupplierDto> {
-    return this.suppliersService.create(createSupplierDto);
+    return await this.suppliersService.create(createSupplierDto);
   }
 
   @Get()
-  findAll(): Promise<ReturnSupplierDto[]> {
-    return this.suppliersService.findAll();
+  async findAll(): Promise<ReturnSupplierDto[]> {
+    return await this.suppliersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<ReturnSupplierDto> {
-    return this.suppliersService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ReturnSupplierDto> {
+    return await this.suppliersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateSupplierDto: UpdateSupplierDto,
   ): Promise<ReturnSupplierDto> {
-    return this.suppliersService.update(+id, updateSupplierDto);
+    return await this.suppliersService.update(+id, updateSupplierDto);
   }
 }

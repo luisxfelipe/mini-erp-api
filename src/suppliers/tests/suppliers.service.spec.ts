@@ -4,7 +4,6 @@ import { Supplier } from '../entities/supplier.entity';
 import { SuppliersService } from '../suppliers.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { supplierMock } from '../mocks/supplier.mock';
-import { ReturnSupplierDto } from '../dto/return-supplier.dto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { updateSupplierMock } from '../mocks/update-supplier.mock';
 import { createSupplierMock } from '../mocks/create-supplier.mock';
@@ -51,7 +50,7 @@ describe('SuppliersService', () => {
 
       const supplier = await service.create(createSupplierMock);
 
-      expect(supplier).toEqual(new ReturnSupplierDto(supplierMock));
+      expect(supplier).toEqual(supplierMock);
     });
 
     it('should return an error', async () => {
@@ -67,7 +66,7 @@ describe('SuppliersService', () => {
     it('should return an array of suppliers', async () => {
       const suppliers = await service.findAll();
 
-      expect(suppliers).toEqual([new ReturnSupplierDto(supplierMock)]);
+      expect(suppliers).toEqual([supplierMock]);
     });
 
     it('should return an empty array', async () => {
@@ -102,7 +101,7 @@ describe('SuppliersService', () => {
     it('should return a supplier', async () => {
       const supplier = await service.findOne(supplierMock.id);
 
-      expect(supplier).toEqual(new ReturnSupplierDto(supplierMock));
+      expect(supplier).toEqual(supplierMock);
     });
 
     it('should return an error', async () => {
@@ -126,7 +125,7 @@ describe('SuppliersService', () => {
         updateSupplierMock,
       );
 
-      expect(supplier).toEqual(new ReturnSupplierDto(supplierMock));
+      expect(supplier).toEqual(supplierMock);
       expect(spy).toBeCalledTimes(1);
     });
 
@@ -138,12 +137,10 @@ describe('SuppliersService', () => {
 
       console.log('spy: ', spy.mock.calls[0][0]);
 
-      expect(spy.mock.calls[0][0]).toEqual(
-        new ReturnSupplierDto({
-          ...supplierMock,
-          ...updateSupplierMock,
-        }),
-      );
+      expect(spy.mock.calls[0][0]).toEqual({
+        ...supplierMock,
+        ...updateSupplierMock,
+      });
     });
   });
 });
