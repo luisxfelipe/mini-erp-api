@@ -13,7 +13,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ReturnProductDto } from './dto/return-product.dto';
-import { PaginationDto } from 'src/dtos/pagination.dto';
+import { PaginationDto, PaginationMetaDto } from './../dtos/pagination.dto';
 import { Product } from './entities/product.entity';
 import { DeleteResult } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
@@ -24,8 +24,12 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+  async create(
+    @Body() createProductDto: CreateProductDto,
+  ): Promise<ReturnProductDto> {
+    return new ReturnProductDto(
+      await this.productsService.create(createProductDto),
+    );
   }
 
   @Get()
@@ -35,13 +39,30 @@ export class ProductsController {
     );
   }
 
+  //PaginationDto<ReturnProductDto[]>
   @Get('/page')
   async findAllPage(
     @Query('search') search?: string,
     @Query('take') take?: number,
     @Query('page') page?: number,
-  ): Promise<PaginationDto<ReturnProductDto[]>> {
-    return this.productsService.findAllPage(search, take, page);
+  ): Promise<any> {
+    const productsPaginated = await this.productsService.findAllPage(
+      search,
+      take,
+      page,
+    );
+
+    return new PaginationDto(
+      new PaginationMetaDto(
+        Number(take),
+        productsPaginated.total,
+        Number(page),
+        Math.ceil(productsPaginated.total / take),
+      ),
+      productsPaginated.products.map(
+        (product) => new ReturnProductDto(product),
+      ),
+    );
   }
 
   @Get(':id')
