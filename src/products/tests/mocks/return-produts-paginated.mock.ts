@@ -1,4 +1,4 @@
-import { ReturnProductsPaginatedDto } from '../dto/return-products-paginated.dto';
+import { ReturnProductsPaginatedDto } from '../../dto/return-products-paginated.dto';
 
 import { productMock } from './product.mock';
 

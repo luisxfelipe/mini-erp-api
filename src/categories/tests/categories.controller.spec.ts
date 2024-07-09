@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { categoryMock } from '../mocks/category.mock';
+import { categoryMock } from './mocks/category.mock';
 import { returnDeleteMock } from './../../mocks/return-delete.mock';
 import { CategoriesController } from '../categories.controller';
 import { CategoriesService } from '../categories.service';
-import { createCategoryMock } from '../mocks/create-category.mock';
-import { updateCategoryMock } from '../mocks/update-category.mock';
+import { createCategoryMock } from './mocks/create-category.mock';
+import { updateCategoryMock } from './mocks/update-category.mock';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;

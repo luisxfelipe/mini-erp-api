@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
-import { userMock } from '../mocks/user.mock';
+import { userMock } from './mocks/user.mock';
 import { UsersService } from '../users.service';
 import { Repository } from 'typeorm';
 import {
@@ -9,8 +9,8 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { createUserDtoMock } from '../mocks/create-user-dto.mock';
-import { updatePasswordDtoMock } from '../mocks/update-password-dto.mock';
+import { createUserDtoMock } from './mocks/create-user-dto.mock';
+import { updatePasswordDtoMock } from './mocks/update-password-dto.mock';
 
 describe('UserService', () => {
   let service: UsersService;

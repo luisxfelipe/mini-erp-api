@@ -1,5 +1,5 @@
-import { categoryMock } from './../../categories/mocks/category.mock';
-import { UpdateProductDto } from '../dto/update-product.dto';
+import { categoryMock } from '../../../categories/tests/mocks/category.mock';
+import { UpdateProductDto } from '../../dto/update-product.dto';
 
 export const updateProductMock: UpdateProductDto = {
   name: 'Product 01',

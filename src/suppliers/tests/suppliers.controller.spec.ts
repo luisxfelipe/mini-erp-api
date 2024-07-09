@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { supplierMock } from '../mocks/supplier.mock';
+import { supplierMock } from './mocks/supplier.mock';
 import { SuppliersController } from '../suppliers.controller';
 import { SuppliersService } from '../suppliers.service';
 

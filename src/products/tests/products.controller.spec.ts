@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsController } from '../products.controller';
 import { ProductsService } from '../products.service';
-import { paginationProductMock, productMock } from '../mocks/product.mock';
+import { paginationProductMock, productMock } from './mocks/product.mock';
 import { returnDeleteMock } from './../../mocks/return-delete.mock';
-import { updateProductMock } from '../mocks/update-product.mock';
+import { updateProductMock } from './mocks/update-product.mock';
 import { ReturnProductDto } from '../dto/return-product.dto';
 
 describe('ProductsController', () => {

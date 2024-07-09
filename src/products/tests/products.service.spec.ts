@@ -3,14 +3,14 @@ import { ProductsService } from '../products.service';
 import { ILike, In, Repository } from 'typeorm';
 import { Product } from '../entities/product.entity';
 import { CategoriesService } from './../../categories/categories.service';
-import { categoryMock } from './../../categories/mocks/category.mock';
-import { productMock } from '../mocks/product.mock';
+import { categoryMock } from '../../categories/tests/mocks/category.mock';
+import { productMock } from './mocks/product.mock';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { returnDeleteMock } from './../../mocks/return-delete.mock';
-import { createProductMock } from '../mocks/create-product.mock';
+import { createProductMock } from './mocks/create-product.mock';
 import { NotFoundException } from '@nestjs/common';
-import { updateProductMock } from '../mocks/update-product.mock';
-import { ReturnProductsPaginatedMock } from '../mocks/return-produts-paginated.mock';
+import { updateProductMock } from './mocks/update-product.mock';
+import { ReturnProductsPaginatedMock } from './mocks/return-produts-paginated.mock';
 
 describe('ProductsService', () => {
   let service: ProductsService;

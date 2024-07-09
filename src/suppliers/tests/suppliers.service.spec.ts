@@ -3,10 +3,10 @@ import { Repository } from 'typeorm';
 import { Supplier } from '../entities/supplier.entity';
 import { SuppliersService } from '../suppliers.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { supplierMock } from '../mocks/supplier.mock';
+import { supplierMock } from './../tests/mocks/supplier.mock';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { updateSupplierMock } from '../mocks/update-supplier.mock';
-import { createSupplierMock } from '../mocks/create-supplier.mock';
+import { updateSupplierMock } from './../tests/mocks/update-supplier.mock';
+import { createSupplierMock } from './../tests/mocks/create-supplier.mock';
 
 describe('SuppliersService', () => {
   let service: SuppliersService;

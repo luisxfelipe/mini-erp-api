@@ -1,4 +1,4 @@
-import { Category } from '../entities/category.entity';
+import { Category } from '../../entities/category.entity';
 
 export const categoryMock: Category = {
   id: 1,

@@ -3,15 +3,15 @@ import { CategoriesService } from './../categories.service';
 import { Repository } from 'typeorm';
 import { Category } from '../entities/category.entity';
 import { ProductsService } from './../../products/products.service';
-import { returnNumberProductsByCategoryDtoMock } from './../../products/mocks/return-number-products-category-dto.mock';
+import { returnNumberProductsByCategoryDtoMock } from '../../products/tests/mocks/return-number-products-category-dto.mock';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { categoryMock } from '../mocks/category.mock';
+import { categoryMock } from './mocks/category.mock';
 import { returnDeleteMock } from './../../mocks/return-delete.mock';
 import { ReturnCategoryDto } from '../dto/return-category.dto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { createCategoryMock } from '../mocks/create-category.mock';
-import { updateCategoryMock } from '../mocks/update-category.mock';
-import { productMock } from './../../products/mocks/product.mock';
+import { createCategoryMock } from './mocks/create-category.mock';
+import { updateCategoryMock } from './mocks/update-category.mock';
+import { productMock } from '../../products/tests/mocks/product.mock';
 
 describe('CategoriesService', () => {
   let service: CategoriesService;
