@@ -12,7 +12,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { ReturnUserDto } from './dto/return-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UserDecorator } from '../decorators/user.decorator';
-import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
@@ -21,8 +20,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto): Promise<ReturnUserDto> {
+    return new ReturnUserDto(await this.usersService.create(createUserDto));
   }
 
   @Get(':id')
@@ -34,7 +33,9 @@ export class UsersController {
   async updatePassword(
     @Body() updatePasswordDto: UpdatePasswordDto,
     @UserDecorator() userId: number,
-  ): Promise<User> {
-    return await this.usersService.updatePassword(userId, updatePasswordDto);
+  ): Promise<ReturnUserDto> {
+    return new ReturnUserDto(
+      await this.usersService.updatePassword(userId, updatePasswordDto),
+    );
   }
 }

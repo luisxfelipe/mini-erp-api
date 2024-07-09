@@ -25,6 +25,7 @@ describe('UserService', () => {
           useValue: {
             findOneOrFail: jest.fn().mockResolvedValue(userMock),
             findOneByOrFail: jest.fn().mockResolvedValue(userMock),
+            create: jest.fn().mockReturnValue(userMock),
             save: jest.fn().mockReturnValue(userMock),
           },
         },
