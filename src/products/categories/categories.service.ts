@@ -9,10 +9,10 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductsService } from './../products/products.service';
+import { ProductsService } from '../products.service';
 import { DeleteResult, Repository } from 'typeorm';
 import { ReturnCategoryDto } from './dto/return-category.dto';
-import { ReturnNumberProductsByCategoryDto } from './../products/dto/return-number-products-category.dto';
+import { ReturnNumberProductsByCategoryDto } from '../dto/return-number-products-category.dto';
 
 @Injectable()
 export class CategoriesService {

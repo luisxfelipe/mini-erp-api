@@ -5,6 +5,7 @@ import { paginationProductMock, productMock } from './mocks/product.mock';
 import { returnDeleteMock } from './../../mocks/return-delete.mock';
 import { updateProductMock } from './mocks/update-product.mock';
 import { ReturnProductDto } from '../dto/return-product.dto';
+import { returnProductMock } from './mocks/return-product.mock';
 
 describe('ProductsController', () => {
   let controller: ProductsController;
@@ -102,7 +103,7 @@ describe('ProductsController', () => {
         updateProductMock,
       );
 
-      expect(product).toEqual(productMock);
+      expect(product).toEqual(returnProductMock);
     });
   });
 

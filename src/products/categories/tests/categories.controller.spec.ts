@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { categoryMock } from './mocks/category.mock';
-import { returnDeleteMock } from './../../mocks/return-delete.mock';
+import { returnDeleteMock } from '../../../mocks/return-delete.mock';
 import { CategoriesController } from '../categories.controller';
 import { CategoriesService } from '../categories.service';
 import { createCategoryMock } from './mocks/create-category.mock';

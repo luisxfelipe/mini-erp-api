@@ -10,7 +10,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { DeleteResult, ILike, In, Repository } from 'typeorm';
-import { CategoriesService } from './../categories/categories.service';
+import { CategoriesService } from './categories/categories.service';
 import { ReturnNumberProductsByCategoryDto } from './dto/return-number-products-category.dto';
 import { ReturnProductsPaginatedDto } from './dto/return-products-paginated.dto';
 
@@ -34,7 +34,13 @@ export class ProductsService {
   }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    await this.categoriesService.findOne(createProductDto.categoryId);
+    if (createProductDto.categoryId) {
+      try {
+        await this.categoriesService.findOne(createProductDto.categoryId);
+      } catch (error) {
+        throw new NotFoundException('Category id does not exist!');
+      }
+    }
 
     return await this.productsRepository.save(
       this.productsRepository.create(createProductDto),

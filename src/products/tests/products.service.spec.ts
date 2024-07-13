@@ -2,15 +2,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsService } from '../products.service';
 import { ILike, In, Repository } from 'typeorm';
 import { Product } from '../entities/product.entity';
-import { CategoriesService } from './../../categories/categories.service';
-import { categoryMock } from '../../categories/tests/mocks/category.mock';
+import { CategoriesService } from '../categories/categories.service';
+import { categoryMock } from '../categories/tests/mocks/category.mock';
 import { productMock } from './mocks/product.mock';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { returnDeleteMock } from './../../mocks/return-delete.mock';
 import { createProductMock } from './mocks/create-product.mock';
 import { NotFoundException } from '@nestjs/common';
 import { updateProductMock } from './mocks/update-product.mock';
-import { ReturnProductsPaginatedMock } from './mocks/return-produts-paginated.mock';
+import { returnProductsPaginatedMock } from './mocks/return-produts-paginated.mock';
 
 describe('ProductsService', () => {
   let service: ProductsService;
@@ -101,7 +101,7 @@ describe('ProductsService', () => {
     it('should return an array of products', async () => {
       const products = await service.findAllPage();
 
-      expect(products).toEqual(ReturnProductsPaginatedMock);
+      expect(products).toEqual(returnProductsPaginatedMock);
     });
 
     it('should return an array of products paginated', async () => {
@@ -113,9 +113,9 @@ describe('ProductsService', () => {
         pageMock,
       );
 
-      expect(productsPagination).toEqual(ReturnProductsPaginatedMock);
+      expect(productsPagination).toEqual(returnProductsPaginatedMock);
       expect(productsPagination.total).toEqual(
-        ReturnProductsPaginatedMock.total,
+        returnProductsPaginatedMock.total,
       );
     });
 

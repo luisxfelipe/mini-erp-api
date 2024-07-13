@@ -5,6 +5,7 @@ export class CreateProductDto {
   name: string;
 
   @IsNumber()
+  @IsOptional()
   categoryId: number;
 
   @IsString()

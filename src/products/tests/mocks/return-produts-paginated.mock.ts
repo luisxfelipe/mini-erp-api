@@ -2,8 +2,7 @@ import { ReturnProductsPaginatedDto } from '../../dto/return-products-paginated.
 
 import { productMock } from './product.mock';
 
-export const ReturnProductsPaginatedMock: ReturnProductsPaginatedDto = {
+export const returnProductsPaginatedMock: ReturnProductsPaginatedDto = {
   products: [productMock],
-
   total: 1,
 };

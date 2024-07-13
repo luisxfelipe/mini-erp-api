@@ -1,6 +1,6 @@
 import { PaginationDto } from '../../../dtos/pagination.dto';
 import { Product } from '../../entities/product.entity';
-import { categoryMock } from '../../../categories/tests/mocks/category.mock';
+import { categoryMock } from '../../categories/tests/mocks/category.mock';
 
 export const productMock: Product = {
   id: 1,

@@ -135,8 +135,6 @@ describe('SuppliersService', () => {
         .mockResolvedValueOnce(supplierMock);
       await service.update(supplierMock.id, updateSupplierMock);
 
-      console.log('spy: ', spy.mock.calls[0][0]);
-
       expect(spy.mock.calls[0][0]).toEqual({
         ...supplierMock,
         ...updateSupplierMock,

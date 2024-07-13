@@ -14,7 +14,6 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ReturnProductDto } from './dto/return-product.dto';
 import { PaginationDto, PaginationMetaDto } from './../dtos/pagination.dto';
-import { Product } from './entities/product.entity';
 import { DeleteResult } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -39,7 +38,6 @@ export class ProductsController {
     );
   }
 
-  //PaginationDto<ReturnProductDto[]>
   @Get('/page')
   async findAllPage(
     @Query('search') search?: string,
@@ -76,8 +74,10 @@ export class ProductsController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
-    return await this.productsService.update(id, updateProductDto);
+  ): Promise<ReturnProductDto> {
+    return new ReturnProductDto(
+      await this.productsService.update(id, updateProductDto),
+    );
   }
 
   @Delete(':id')
