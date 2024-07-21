@@ -13,7 +13,7 @@ import { CreateProductVariationDto } from './dto/create-product-variation.dto';
 import { ReturnProductVariationDto } from './dto/return-product-variation.dto';
 import { UpdateProductVariationDto } from './dto/update-product-variation.dto';
 
-@Controller()
+@Controller('product-variations')
 @ApiTags('Product variations')
 export class ProductVariationsController {
   constructor(

@@ -18,6 +18,6 @@ import { ProductVariationsService } from './product-variations/product-variation
     ProductVariationsController,
   ],
   providers: [CategoriesService, ProductsService, ProductVariationsService],
-  exports: [ProductsService],
+  exports: [ProductsService, ProductVariationsService],
 })
 export class ProductsModule {}

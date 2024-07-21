@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ProductVariation } from '../product-variations/entities/product-variation.entity';
+import { PurchaseOrderItem } from 'src/purchase-orders/purchase-order-items/entities/purchase-order-item.entity';
 
 @Entity({ name: 'product' })
 export class Product {
@@ -40,6 +41,12 @@ export class Product {
     (productVariation: ProductVariation) => productVariation.product,
   )
   productVariations?: ProductVariation[];
+
+  @OneToMany(
+    () => PurchaseOrderItem,
+    (purchaseOrderItem: PurchaseOrderItem) => purchaseOrderItem.product,
+  )
+  purchaseOrderItem?: PurchaseOrderItem;
 
   constructor(partial: Partial<Product>) {
     Object.assign(this, partial);

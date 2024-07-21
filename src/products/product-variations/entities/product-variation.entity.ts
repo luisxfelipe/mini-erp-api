@@ -4,11 +4,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { Product } from '../../entities/product.entity';
+import { PurchaseOrderItem } from 'src/purchase-orders/purchase-order-items/entities/purchase-order-item.entity';
 
 @Entity({ name: 'product_variation' })
 export class ProductVariation {
@@ -30,6 +32,12 @@ export class ProductVariation {
   @ManyToOne(() => Product, (product: Product) => product.productVariations)
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product?: Product;
+
+  @OneToMany(
+    () => PurchaseOrderItem,
+    (purchaseOrderItem: PurchaseOrderItem) => purchaseOrderItem.product,
+  )
+  purchaseOrderItem?: PurchaseOrderItem;
 
   constructor(partial: Partial<ProductVariation>) {
     Object.assign(this, partial);
