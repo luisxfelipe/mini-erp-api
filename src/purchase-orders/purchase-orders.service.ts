@@ -6,17 +6,33 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SuppliersService } from 'src/suppliers/suppliers.service';
 import { PurchaseOrderStatusService } from './purchase-order-status/purchase-order-status.service';
+import { PurchaseOrderItemsService } from './purchase-order-items/purchase-order-items.service';
 
 @Injectable()
 export class PurchaseOrdersService {
   constructor(
     @InjectRepository(PurchaseOrder)
     private repository: Repository<PurchaseOrder>,
+    @Inject(PurchaseOrderItemsService)
+    private readonly purchaseOrderItemsService: PurchaseOrderItemsService,
     @Inject(PurchaseOrderStatusService)
     private readonly purchaseOrderStatusService: PurchaseOrderStatusService,
     @Inject(SuppliersService)
     private readonly suppliersService: SuppliersService,
   ) {}
+
+  async calculateTotalValue(purchaseOrderId: number): Promise<number> {
+    const purchaseOrder = await this.findOne(purchaseOrderId);
+
+    const totalValuePurchaseOrderItems =
+      await this.purchaseOrderItemsService.calculateTotalValue(purchaseOrderId);
+
+    const totalValue =
+      totalValuePurchaseOrderItems +
+      ((purchaseOrder.shippingCost || 0) - (purchaseOrder.discount || 0));
+
+    return parseFloat(totalValue.toFixed(2));
+  }
 
   async create(
     createPurchaseOrderDto: CreatePurchaseOrderDto,

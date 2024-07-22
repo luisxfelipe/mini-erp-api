@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePurchaseOrderRefundDto } from './dto/create-purchase-order-refund.dto';
 import { UpdatePurchaseOrderRefundDto } from './dto/update-purchase-order-refund.dto';
 import { PurchaseOrderRefund } from './entities/purchase-order-refund.entity';
@@ -15,11 +20,40 @@ export class PurchaseOrderRefundsService {
     private readonly purchaseOrdersService: PurchaseOrdersService,
   ) {}
 
+  async calculateTotalValue(purchaseOrderId: number): Promise<number> {
+    const purchaseOrderRefunds = await this.findAll(purchaseOrderId);
+    const totalValue = purchaseOrderRefunds.reduce(
+      (total, purchaseOrderRefund) => {
+        const amount = Number(purchaseOrderRefund.amount);
+        return isNaN(amount) ? total : total + amount;
+      },
+      0,
+    );
+    return Number(totalValue.toFixed(2));
+  }
+
   async create(
     purchaseOrderId: number,
     createPurchaseOrderRefundDto: CreatePurchaseOrderRefundDto,
   ): Promise<PurchaseOrderRefund> {
     await this.purchaseOrdersService.findOne(purchaseOrderId);
+
+    //Verifica se o valor a ser reebolsado é menor que o valor total da compra
+    const totalValuePurchaseOrder =
+      await this.purchaseOrdersService.calculateTotalValue(purchaseOrderId);
+
+    const totalValueRefunds = await this.calculateTotalValue(purchaseOrderId);
+
+    const totalValuePurchaseOrderWithRefunds =
+      totalValuePurchaseOrder - totalValueRefunds;
+
+    if (
+      createPurchaseOrderRefundDto.amount > totalValuePurchaseOrderWithRefunds
+    ) {
+      throw new BadRequestException(
+        'The value to be refunded is greater than the total value of the purchase order',
+      );
+    }
 
     return await this.repository.save(
       this.repository.create({
