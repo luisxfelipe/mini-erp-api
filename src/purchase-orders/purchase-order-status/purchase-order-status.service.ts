@@ -32,6 +32,8 @@ export class PurchaseOrderStatusService {
     );
   }
 
+  async;
+
   async findAll(): Promise<PurchaseOrderStatus[]> {
     return await this.repository.find();
   }

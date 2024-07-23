@@ -1,6 +1,6 @@
-import { Product } from 'src/products/entities/product.entity';
-import { ProductVariation } from 'src/products/product-variations/entities/product-variation.entity';
-import { PurchaseOrder } from 'src/purchase-orders/entities/purchase-order.entity';
+import { Product } from './../../../products/entities/product.entity';
+import { ProductVariation } from './../../../products/product-variations/entities/product-variation.entity';
+import { PurchaseOrder } from './../../../purchase-orders/entities/purchase-order.entity';
 import {
   Column,
   CreateDateColumn,

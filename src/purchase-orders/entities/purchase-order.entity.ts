@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { PurchaseOrderStatus } from '../purchase-order-status/entities/purchase-order-status.entity';
-import { Supplier } from 'src/suppliers/entities/supplier.entity';
+import { Supplier } from './../../suppliers/entities/supplier.entity';
 import { PurchaseOrderItem } from '../purchase-order-items/entities/purchase-order-item.entity';
 import { PurchaseOrderRefund } from '../purchase-order-refunds/entities/purchase-order-refund.entity';
 

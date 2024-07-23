@@ -1,4 +1,4 @@
-import { PurchaseOrder } from 'src/purchase-orders/entities/purchase-order.entity';
+import { PurchaseOrder } from './../../purchase-orders/entities/purchase-order.entity';
 import {
   Column,
   CreateDateColumn,

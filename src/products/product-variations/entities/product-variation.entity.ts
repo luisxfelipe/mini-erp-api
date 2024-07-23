@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 import { Product } from '../../entities/product.entity';
-import { PurchaseOrderItem } from 'src/purchase-orders/purchase-order-items/entities/purchase-order-item.entity';
+import { PurchaseOrderItem } from './../../../purchase-orders/purchase-order-items/entities/purchase-order-item.entity';
 
 @Entity({ name: 'product_variation' })
 export class ProductVariation {

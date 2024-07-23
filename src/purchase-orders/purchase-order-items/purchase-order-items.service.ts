@@ -10,8 +10,8 @@ import { PurchaseOrderItem } from './entities/purchase-order-item.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PurchaseOrdersService } from '../purchase-orders.service';
-import { ProductsService } from 'src/products/products.service';
-import { ProductVariationsService } from 'src/products/product-variations/product-variations.service';
+import { ProductsService } from './../../products/products.service';
+import { ProductVariationsService } from './../../products/product-variations/product-variations.service';
 
 @Injectable()
 export class PurchaseOrderItemsService {

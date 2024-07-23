@@ -4,7 +4,7 @@ import { UpdatePurchaseOrderDto } from './dto/update-purchase-order.dto';
 import { PurchaseOrder } from './entities/purchase-order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SuppliersService } from 'src/suppliers/suppliers.service';
+import { SuppliersService } from './../suppliers/suppliers.service';
 import { PurchaseOrderStatusService } from './purchase-order-status/purchase-order-status.service';
 import { PurchaseOrderItemsService } from './purchase-order-items/purchase-order-items.service';
 

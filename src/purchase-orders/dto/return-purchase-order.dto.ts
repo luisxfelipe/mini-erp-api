@@ -1,4 +1,4 @@
-import { ReturnSupplierDto } from 'src/suppliers/dto/return-supplier.dto';
+import { ReturnSupplierDto } from './../../suppliers/dto/return-supplier.dto';
 
 import { PurchaseOrder } from '../entities/purchase-order.entity';
 import { ReturnPurchaseOrderStatusDto } from '../purchase-order-status/dto/return-purchase-order-status.dto';
