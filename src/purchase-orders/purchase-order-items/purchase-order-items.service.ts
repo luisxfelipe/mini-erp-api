@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -47,6 +48,18 @@ export class PurchaseOrderItemsService {
     await this.productVariationsService.findOne(
       createPurchaseOrderItemDto.productVariationId,
     );
+
+    const purchaseOrderItem = await this.repository.findOneBy({
+      productId: createPurchaseOrderItemDto.productId,
+      productVariationId: createPurchaseOrderItemDto.productVariationId,
+      purchaseOrderId,
+    });
+
+    if (purchaseOrderItem) {
+      throw new BadRequestException(
+        `Purchase order item with productId ${createPurchaseOrderItemDto.productId} and productVariationId ${createPurchaseOrderItemDto.productVariationId} already exists`,
+      );
+    }
 
     return await this.repository.save(
       this.repository.create({

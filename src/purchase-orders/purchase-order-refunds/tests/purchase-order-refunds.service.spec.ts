@@ -5,7 +5,7 @@ import { PurchaseOrderRefundsService } from '../purchase-order-refunds.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { purchaseOrderRefundMock } from './mocks/purchase-order-refund.mock';
 import { createPurchaseOrderRefundMock } from './mocks/create-purchase-order-refund.mock';
-import { purchaseOrderMock } from './../../../purchase-orders/testes/mocks/purchase-order.mock';
+import { purchaseOrderMock } from '../../tests/mocks/purchase-order.mock';
 import { PurchaseOrdersService } from './../../../purchase-orders/purchase-orders.service';
 import { NotFoundException } from '@nestjs/common';
 import { updatePurchaseOrderRefundMock } from './mocks/update-purchase-order-refund.mock';
