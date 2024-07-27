@@ -1,5 +1,5 @@
 import { CreateSalePlatformDto } from '../../dto/create-sale-platform.dto';
 
-export const createSalePlaatformMock: CreateSalePlatformDto = {
+export const createSalePlatformMock: CreateSalePlatformDto = {
   name: 'Platform Mock',
 };

@@ -3,7 +3,7 @@ import { SalePlatformsService } from '../sale-platforms.service';
 import { Repository } from 'typeorm';
 import { SalePlatform } from '../entities/sale-platform.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { createSalePlaatformMock } from './mocks/create-sale-platform.mock';
+import { createSalePlatformMock } from './mocks/create-sale-platform.mock';
 import { updateSalePlatformMock } from './mocks/update-sale-platform.mock';
 import { platformMock } from './mocks/platform.mock';
 import { returnDeleteMock } from './../../../mocks/return-delete.mock';
@@ -46,7 +46,7 @@ describe('SalePlatformsService', () => {
     it('should create a platform', async () => {
       jest.spyOn(service, 'findOneByName').mockResolvedValueOnce(undefined);
 
-      const platform = await service.create(createSalePlaatformMock);
+      const platform = await service.create(createSalePlatformMock);
 
       expect(platform).toEqual(platformMock);
       expect(repository.save).toHaveBeenCalledWith(platformMock);
@@ -57,12 +57,12 @@ describe('SalePlatformsService', () => {
     it('should return an error', async () => {
       jest.spyOn(repository, 'save').mockRejectedValueOnce(new Error());
 
-      expect(service.create(createSalePlaatformMock)).rejects.toThrow(Error);
+      expect(service.create(createSalePlatformMock)).rejects.toThrow(Error);
     });
 
     it('should throw BadRequestException if platform already exists', async () => {
       jest.spyOn(service, 'findOneByName').mockResolvedValueOnce(platformMock);
-      await expect(service.create(createSalePlaatformMock)).rejects.toThrow(
+      await expect(service.create(createSalePlatformMock)).rejects.toThrow(
         BadRequestException,
       );
     });

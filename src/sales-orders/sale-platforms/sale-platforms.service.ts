@@ -16,7 +16,9 @@ export class SalePlatformsService {
     private readonly repository: Repository<SalePlatform>,
   ) {}
 
-  async create(createSalePlatformDto: CreateSalePlatformDto) {
+  async create(
+    createSalePlatformDto: CreateSalePlatformDto,
+  ): Promise<SalePlatform> {
     const salePlatform = await this.findOneByName(
       createSalePlatformDto.name,
     ).catch(() => undefined);
@@ -50,7 +52,10 @@ export class SalePlatformsService {
     }
   }
 
-  async update(id: number, updateSalePlatformDto: UpdateSalePlatformDto) {
+  async update(
+    id: number,
+    updateSalePlatformDto: UpdateSalePlatformDto,
+  ): Promise<SalePlatform> {
     const salePlatform = await this.findOne(id);
     return this.repository.save({ ...salePlatform, ...updateSalePlatformDto });
   }
