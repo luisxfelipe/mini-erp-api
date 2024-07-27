@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateSalePlatformDto } from './dto/create-sale-platform.dto';
 import { UpdateSalePlatformDto } from './dto/update-sale-platform.dto';
 import { SalePlatform } from './entities/sale-platform.entity';
@@ -18,10 +22,12 @@ export class SalePlatformsService {
     ).catch(() => undefined);
 
     if (salePlatform) {
-      throw new NotFoundException('Sale platform already exists');
+      throw new BadRequestException('Sale platform already exists');
     }
 
-    return this.repository.save(this.repository.create(createSalePlatformDto));
+    return await this.repository.save(
+      this.repository.create(createSalePlatformDto),
+    );
   }
 
   async findAll(): Promise<SalePlatform[]> {
@@ -30,7 +36,7 @@ export class SalePlatformsService {
 
   async findOneByName(name: string): Promise<SalePlatform> {
     try {
-      return await this.repository.findOne({ where: { name } });
+      return await this.repository.findOneByOrFail({ name });
     } catch (error) {
       throw new NotFoundException('Sale platform not found');
     }

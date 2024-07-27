@@ -1,34 +1,62 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { SalePlatformsService } from './sale-platforms.service';
 import { CreateSalePlatformDto } from './dto/create-sale-platform.dto';
 import { UpdateSalePlatformDto } from './dto/update-sale-platform.dto';
+import { ReturnSalePlatformDto } from './dto/return-sale-platform.dto';
+import { DeleteResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('sale-platforms')
+@ApiTags('Sale platforms')
 export class SalePlatformsController {
   constructor(private readonly salePlatformsService: SalePlatformsService) {}
 
   @Post()
-  create(@Body() createSalePlatformDto: CreateSalePlatformDto) {
-    return this.salePlatformsService.create(createSalePlatformDto);
+  async create(
+    @Body() createSalePlatformDto: CreateSalePlatformDto,
+  ): Promise<ReturnSalePlatformDto> {
+    return new ReturnSalePlatformDto(
+      await this.salePlatformsService.create(createSalePlatformDto),
+    );
   }
 
   @Get()
-  findAll() {
-    return this.salePlatformsService.findAll();
+  async findAll(): Promise<ReturnSalePlatformDto[]> {
+    return (await this.salePlatformsService.findAll()).map(
+      (salePlatform) => new ReturnSalePlatformDto(salePlatform),
+    );
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.salePlatformsService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ReturnSalePlatformDto> {
+    return new ReturnSalePlatformDto(
+      await this.salePlatformsService.findOne(id),
+    );
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSalePlatformDto: UpdateSalePlatformDto) {
-    return this.salePlatformsService.update(+id, updateSalePlatformDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateSalePlatformDto: UpdateSalePlatformDto,
+  ): Promise<ReturnSalePlatformDto> {
+    return new ReturnSalePlatformDto(
+      await this.salePlatformsService.update(id, updateSalePlatformDto),
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.salePlatformsService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
+    return await this.salePlatformsService.remove(id);
   }
 }

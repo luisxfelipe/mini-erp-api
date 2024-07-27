@@ -86,7 +86,7 @@ describe('PurchaseOrderStatusService', () => {
 
   describe('findOneByName', () => {
     it('should return a purchase order status by name', async () => {
-      const result = await service.findOneByName('Pending');
+      const result = await service.findOneByName(purchaseOrderStatusMock.name);
       expect(result).toEqual(purchaseOrderStatusMock);
     });
 
