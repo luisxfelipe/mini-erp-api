@@ -30,7 +30,9 @@ export class CategoriesController {
 
   @Get()
   async findAll(): Promise<ReturnCategoryDto[]> {
-    return await this.categoriesService.findAll();
+    return (await this.categoriesService.findAll()).map(
+      (category) => new ReturnCategoryDto(category),
+    );
   }
 
   @Get(':id')
@@ -43,15 +45,17 @@ export class CategoriesController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCategoryDto: UpdateCategoryDto,
-  ): Promise<Category> {
-    return this.categoriesService.update(id, updateCategoryDto);
+  ): Promise<ReturnCategoryDto> {
+    return new ReturnCategoryDto(
+      await this.categoriesService.update(id, updateCategoryDto),
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
-    return this.categoriesService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
+    return await this.categoriesService.remove(id);
   }
 }

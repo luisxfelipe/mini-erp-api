@@ -11,8 +11,6 @@ import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductsService } from '../products.service';
 import { DeleteResult, Repository } from 'typeorm';
-import { ReturnCategoryDto } from './dto/return-category.dto';
-import { ReturnNumberProductsByCategoryDto } from '../dto/return-number-products-category.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -37,33 +35,10 @@ export class CategoriesService {
     );
   }
 
-  async findAll(): Promise<ReturnCategoryDto[]> {
+  async findAll(): Promise<Category[]> {
     const categories = await this.repository.find();
 
-    const quantityProdutsByCategory =
-      await this.productsService.countProductsByCategory();
-
-    return categories.map(
-      (category) =>
-        new ReturnCategoryDto(
-          category,
-          this.findQuantityProductsByCategory(
-            category,
-            quantityProdutsByCategory,
-          ),
-        ),
-    );
-  }
-
-  findQuantityProductsByCategory(
-    category: Category,
-    countList: ReturnNumberProductsByCategoryDto[],
-  ): number {
-    const count = countList.find(
-      (itemCount) => itemCount.category_id === category.id,
-    );
-
-    return count ? count['total'] : 0;
+    return categories;
   }
 
   async findOne(id: number, isRelations?: boolean): Promise<Category> {

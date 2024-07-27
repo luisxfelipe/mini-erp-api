@@ -7,7 +7,6 @@ import { returnNumberProductsByCategoryDtoMock } from '../../tests/mocks/return-
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { categoryMock } from './mocks/category.mock';
 import { returnDeleteMock } from '../../../mocks/return-delete.mock';
-import { ReturnCategoryDto } from '../dto/return-category.dto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { createCategoryMock } from './mocks/create-category.mock';
 import { updateCategoryMock } from './mocks/update-category.mock';
@@ -60,12 +59,7 @@ describe('CategoriesService', () => {
     it('should return an array of categories', async () => {
       const categories = await service.findAll();
 
-      expect(categories).toEqual([
-        new ReturnCategoryDto(
-          categoryMock,
-          returnNumberProductsByCategoryDtoMock.numberProducts,
-        ),
-      ]);
+      expect(categories).toEqual([categoryMock]);
     });
 
     it('should return an empty array', async () => {
