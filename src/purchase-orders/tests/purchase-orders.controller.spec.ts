@@ -5,6 +5,7 @@ import { purchaseOrderMock } from './mocks/purchase-order.mock';
 import { returnPurchaseOrderMock } from './mocks/return-purchase-order.mock';
 import { createPurchaseOrderMock } from './mocks/create-purchase-order.mock';
 import { updatePurchaseOrderMock } from './mocks/update-purchase-order.mock';
+import { ReturnPurchaseOrderDto } from '../dto/return-purchase-order.dto';
 
 describe('PurchaseOrdersController', () => {
   let controller: PurchaseOrdersController;
@@ -38,7 +39,9 @@ describe('PurchaseOrdersController', () => {
   describe('create', () => {
     it('should return a purchase order', async () => {
       const purchaseOrder = await controller.create(createPurchaseOrderMock);
-      expect(purchaseOrder).toEqual(returnPurchaseOrderMock);
+      expect(purchaseOrder).toEqual(
+        new ReturnPurchaseOrderDto(purchaseOrderMock),
+      );
       expect(service.create).toHaveBeenCalledWith(createPurchaseOrderMock);
     });
   });
@@ -46,7 +49,9 @@ describe('PurchaseOrdersController', () => {
   describe('findAll', () => {
     it('should return an array of purchase orders', async () => {
       const purchaseOrders = await controller.findAll();
-      expect(purchaseOrders).toEqual([returnPurchaseOrderMock]);
+      expect(purchaseOrders).toEqual([
+        new ReturnPurchaseOrderDto(purchaseOrderMock),
+      ]);
       expect(service.findAll).toHaveBeenCalledWith(true);
     });
   });
@@ -54,7 +59,9 @@ describe('PurchaseOrdersController', () => {
   describe('findOne', () => {
     it('should return a purchase order', async () => {
       const purchaseOrder = await controller.findOne(purchaseOrderMock.id);
-      expect(purchaseOrder).toEqual(returnPurchaseOrderMock);
+      expect(purchaseOrder).toEqual(
+        new ReturnPurchaseOrderDto(purchaseOrderMock),
+      );
       expect(service.findOne).toHaveBeenCalledWith(purchaseOrderMock.id, true);
     });
   });
@@ -65,7 +72,9 @@ describe('PurchaseOrdersController', () => {
         purchaseOrderMock.id,
         updatePurchaseOrderMock,
       );
-      expect(purchaseOrder).toEqual(returnPurchaseOrderMock);
+      expect(purchaseOrder).toEqual(
+        new ReturnPurchaseOrderDto(purchaseOrderMock),
+      );
       expect(service.update).toHaveBeenCalledWith(
         purchaseOrderMock.id,
         updatePurchaseOrderMock,
