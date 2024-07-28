@@ -8,6 +8,5 @@ export const returnPurchaseOrderItemMock: ReturnPurchaseOrderItemDto = {
   productVariationId: purchaseOrderItemMock.productVariationId,
   supplierProductCode: purchaseOrderItemMock.supplierProductCode,
   price: purchaseOrderItemMock.price,
-  quantity: purchaseOrderItemMock.quantity,
   product_link: purchaseOrderItemMock.product_link,
 };

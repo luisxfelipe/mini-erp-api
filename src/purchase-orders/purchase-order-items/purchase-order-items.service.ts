@@ -29,13 +29,9 @@ export class PurchaseOrderItemsService {
 
   async calculateTotalValue(purchaseOrderId: number): Promise<number> {
     const purchaseOrderItems = await this.findAll(purchaseOrderId);
-    const totalValue = purchaseOrderItems.reduce(
-      (total, purchaseOrderItem) => {
-        return total + purchaseOrderItem.price * purchaseOrderItem.quantity;
-      },
-
-      0,
-    );
+    const totalValue = purchaseOrderItems.reduce((total, purchaseOrderItem) => {
+      return total + purchaseOrderItem.price;
+    }, 0);
     return parseFloat(totalValue.toFixed(2));
   }
 

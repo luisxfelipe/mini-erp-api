@@ -7,7 +7,6 @@ export class ReturnPurchaseOrderItemDto {
   productVariationId: number;
   supplierProductCode?: string;
   price: number;
-  quantity: number;
   product_link?: string;
 
   constructor(purchaseOrderItemEntity: PurchaseOrderItem) {
@@ -19,7 +18,6 @@ export class ReturnPurchaseOrderItemDto {
       ? purchaseOrderItemEntity.supplierProductCode
       : undefined;
     this.price = purchaseOrderItemEntity.price;
-    this.quantity = purchaseOrderItemEntity.quantity;
     this.product_link = purchaseOrderItemEntity.product_link
       ? purchaseOrderItemEntity.product_link
       : undefined;

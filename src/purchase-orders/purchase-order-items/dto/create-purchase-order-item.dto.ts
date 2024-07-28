@@ -6,7 +6,6 @@ import {
   IsPositive,
   IsString,
   IsUrl,
-  Min,
 } from 'class-validator';
 
 export class CreatePurchaseOrderItemDto {
@@ -26,8 +25,7 @@ export class CreatePurchaseOrderItemDto {
   price: number;
 
   @IsInt()
-  @Min(1, { message: 'The quantity must be greater than 0' })
-  quantity: number;
+  purchaseOrderItemStatusId: number;
 
   @IsUrl()
   @IsOptional()

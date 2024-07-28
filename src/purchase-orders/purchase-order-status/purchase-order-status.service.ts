@@ -19,12 +19,12 @@ export class PurchaseOrderStatusService {
   async create(
     createPurchaseOrderStatusDto: CreatePurchaseOrderStatusDto,
   ): Promise<PurchaseOrderStatus> {
-    const purchaseOrder = await this.findOneByName(
+    const result = await this.findOneByName(
       createPurchaseOrderStatusDto.name,
     ).catch(() => undefined);
 
-    if (purchaseOrder) {
-      throw new BadRequestException('Purchase order already exists');
+    if (result) {
+      throw new BadRequestException('Purchase order status already exists');
     }
 
     return await this.repository.save(
@@ -52,7 +52,7 @@ export class PurchaseOrderStatusService {
 
       return purchaseOrderStatus;
     } catch (error) {
-      throw new NotFoundException('Purchase order not found');
+      throw new NotFoundException('Purchase order status not found');
     }
   }
 
@@ -60,7 +60,7 @@ export class PurchaseOrderStatusService {
     try {
       return await this.repository.findOneByOrFail({ name });
     } catch (error) {
-      throw new NotFoundException('Purchase order not found');
+      throw new NotFoundException('Purchase order status not found');
     }
   }
 

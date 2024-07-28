@@ -1,3 +1,4 @@
+import { PurchaseOrderItemStatus } from './../../../purchase-orders/purchase-order-item-status/entities/purchase-order-item-status.entity';
 import { Product } from './../../../products/entities/product.entity';
 import { ProductVariation } from './../../../products/product-variations/entities/product-variation.entity';
 import { PurchaseOrder } from './../../../purchase-orders/entities/purchase-order.entity';
@@ -37,15 +38,11 @@ export class PurchaseOrderItem {
   })
   price: number;
 
-  @Column({
-    type: 'int',
-    name: 'quantity',
-    nullable: false,
-  })
-  quantity: number;
-
   @Column({ name: 'product_link' })
   product_link: string;
+
+  @Column({ name: 'purchase_order_item_status_id', nullable: false })
+  purchaseOrderItemStatusId: number;
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
@@ -74,4 +71,15 @@ export class PurchaseOrderItem {
   constructor(partial: Partial<PurchaseOrderItem>) {
     Object.assign(this, partial);
   }
+
+  @ManyToOne(
+    () => PurchaseOrderItemStatus,
+    (purchaseOrderItemStatus: PurchaseOrderItemStatus) =>
+      purchaseOrderItemStatus.purchaseOrderItems,
+  )
+  @JoinColumn({
+    name: 'purchase_order_item_status_id',
+    referencedColumnName: 'id',
+  })
+  purchaseOrderItemStatus?: PurchaseOrderItemStatus;
 }

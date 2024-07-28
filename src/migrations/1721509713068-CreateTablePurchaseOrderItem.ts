@@ -11,6 +11,7 @@ export class CreateTablePurchaseOrderItem1721509713068
           product_id INT NOT NULL,
           product_variation_id INT NOT NULL,
           supplier_product_code VARCHAR(255),
+          purchase_order_item_status_id INT NOT NULL,
           price DECIMAL(10, 2) NOT NULL,
           quantity INT NOT NULL,
           product_link TEXT,
@@ -19,7 +20,8 @@ export class CreateTablePurchaseOrderItem1721509713068
           PRIMARY KEY (id),
           FOREIGN KEY (purchase_order_id) REFERENCES purchase_order(id),
           FOREIGN KEY (product_id) REFERENCES product(id),
-          FOREIGN KEY (product_variation_id) REFERENCES product_variation(id)
+          FOREIGN KEY (product_variation_id) REFERENCES product_variation(id),
+          FOREIGN KEY (purchase_order_item_status_id) REFERENCES purchase_order_item_status(id)
         );
       `);
   }

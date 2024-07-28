@@ -6,7 +6,7 @@ export class CreateTableProduct1720379075754 implements MigrationInterface {
         CREATE TABLE IF NOT EXISTS product (
           id INT NOT NULL AUTO_INCREMENT,
           name VARCHAR(255) NOT NULL,
-          category_id INT NOT NULL,
+          category_id INT,
           description TEXT,
           created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

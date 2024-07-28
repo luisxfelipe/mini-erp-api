@@ -14,12 +14,16 @@ import { ProductsModule } from './../products/products.module';
 import { PurchaseOrderRefund } from './purchase-order-refunds/entities/purchase-order-refund.entity';
 import { PurchaseOrderRefundsController } from './purchase-order-refunds/purchase-order-refunds.controller';
 import { PurchaseOrderRefundsService } from './purchase-order-refunds/purchase-order-refunds.service';
+import { PurchaseOrderItemStatus } from './purchase-order-item-status/entities/purchase-order-item-status.entity';
+import { PurchaseOrderItemStatusController } from './purchase-order-item-status/purchase-order-item-status.controller';
+import { PurchaseOrderItemStatusService } from './purchase-order-item-status/purchase-order-item-status.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       PurchaseOrder,
       PurchaseOrderItem,
+      PurchaseOrderItemStatus,
       PurchaseOrderRefund,
       PurchaseOrderStatus,
     ]),
@@ -29,12 +33,14 @@ import { PurchaseOrderRefundsService } from './purchase-order-refunds/purchase-o
   controllers: [
     PurchaseOrdersController,
     PurchaseOrderItemsController,
+    PurchaseOrderItemStatusController,
     PurchaseOrderRefundsController,
     PurchaseOrderStatusController,
   ],
   providers: [
     PurchaseOrdersService,
     PurchaseOrderItemsService,
+    PurchaseOrderItemStatusService,
     PurchaseOrderRefundsService,
     PurchaseOrderStatusService,
   ],
