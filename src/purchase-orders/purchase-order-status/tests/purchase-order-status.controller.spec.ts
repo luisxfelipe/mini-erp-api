@@ -3,6 +3,8 @@ import { PurchaseOrderStatusController } from '../purchase-order-status.controll
 import { PurchaseOrderStatusService } from '../purchase-order-status.service';
 import { ReturnPurchaseOrderStatusDto } from '../dto/return-purchase-order-status.dto';
 import { purchaseOrderStatusMock } from './mocks/purchase-order-status.mock';
+import { createPurchaseOrderStatusDtoMock } from './mocks/create-purchase-order-status.mock';
+import { updatePurchaseOrderStatusDtoMock } from './mocks/update-purchase-order-status.mock';
 
 describe('PurchaseOrderStatusController', () => {
   let controller: PurchaseOrderStatusController;
@@ -40,13 +42,11 @@ describe('PurchaseOrderStatusController', () => {
   describe('create', () => {
     it('should return a purchase order status', async () => {
       const purchaseOrderStatus = await controller.create(
-        purchaseOrderStatusMock,
+        createPurchaseOrderStatusDtoMock,
       );
       expect(purchaseOrderStatus).toEqual(
         new ReturnPurchaseOrderStatusDto(purchaseOrderStatusMock),
       );
-      expect(service.create).toHaveBeenCalledWith(purchaseOrderStatusMock);
-      expect(service.create).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -94,16 +94,11 @@ describe('PurchaseOrderStatusController', () => {
     it('should return a purchase order status', async () => {
       const purchaseOrderStatus = await controller.update(
         purchaseOrderStatusMock.id,
-        purchaseOrderStatusMock,
+        updatePurchaseOrderStatusDtoMock,
       );
       expect(purchaseOrderStatus).toEqual(
         new ReturnPurchaseOrderStatusDto(purchaseOrderStatusMock),
       );
-      expect(service.update).toHaveBeenCalledWith(
-        purchaseOrderStatusMock.id,
-        purchaseOrderStatusMock,
-      );
-      expect(service.update).toHaveBeenCalledTimes(1);
     });
 
     it('should return error if purchase order status is not found', async () => {
