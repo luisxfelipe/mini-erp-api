@@ -11,11 +11,13 @@ import { saleStatusMock } from '../sale-status/tests/mocks/sale-status.mock';
 import { createSaleOrderMock } from './mocks/create-sale-order.mock';
 import { NotFoundException } from '@nestjs/common';
 import { updateSaleOrderMock } from './mocks/update-sale-order.mock';
+import { SaleOrderItemsService } from '../sale-order-items/sale-order-items.service';
 
 describe('SaleOrdersService', () => {
   let service: SaleOrdersService;
   let repository: Repository<SaleOrder>;
 
+  let saleOrderItemsService: SaleOrderItemsService;
   let salePlatformsService: SalePlatformsService;
   let saleStatusService: SaleStatusService;
 
@@ -31,6 +33,12 @@ describe('SaleOrdersService', () => {
             findOneByOrFail: jest.fn().mockResolvedValue(saleOrderMock),
             create: jest.fn().mockReturnValue(saleOrderMock),
             save: jest.fn().mockResolvedValue(saleOrderMock),
+          },
+        },
+        {
+          provide: SaleOrderItemsService,
+          useValue: {
+            calculateTotalValue: jest.fn().mockResolvedValue(100),
           },
         },
         {
@@ -53,6 +61,9 @@ describe('SaleOrdersService', () => {
       getRepositoryToken(SaleOrder),
     );
 
+    saleOrderItemsService = module.get<SaleOrderItemsService>(
+      SaleOrderItemsService,
+    );
     salePlatformsService =
       module.get<SalePlatformsService>(SalePlatformsService);
     saleStatusService = module.get<SaleStatusService>(SaleStatusService);
@@ -63,6 +74,7 @@ describe('SaleOrdersService', () => {
     expect(repository).toBeDefined();
     expect(salePlatformsService).toBeDefined();
     expect(saleStatusService).toBeDefined();
+    expect(saleOrderItemsService).toBeDefined();
   });
 
   describe('create', () => {
