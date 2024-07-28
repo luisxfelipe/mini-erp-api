@@ -1,26 +1,68 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateSaleOrderItemStatusDto } from './dto/create-sale-order-item-status.dto';
 import { UpdateSaleOrderItemStatusDto } from './dto/update-sale-order-item-status.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SaleOrderItemStatus } from './entities/sale-order-item-status.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SaleOrderItemStatusService {
-  create(createSaleOrderItemStatusDto: CreateSaleOrderItemStatusDto) {
-    return 'This action adds a new saleOrderItemStatus';
+  constructor(
+    @InjectRepository(SaleOrderItemStatus)
+    private readonly repository: Repository<SaleOrderItemStatus>,
+  ) {}
+
+  async create(
+    createSaleOrderItemStatusDto: CreateSaleOrderItemStatusDto,
+  ): Promise<SaleOrderItemStatus> {
+    const result = await this.findOneByName(
+      createSaleOrderItemStatusDto.name,
+    ).catch(() => undefined);
+
+    if (result) {
+      throw new BadRequestException('Sale order item status already exists');
+    }
+
+    return await this.repository.save(
+      this.repository.create(createSaleOrderItemStatusDto),
+    );
   }
 
-  findAll() {
-    return `This action returns all saleOrderItemStatus`;
+  async findAll(): Promise<SaleOrderItemStatus[]> {
+    return await this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} saleOrderItemStatus`;
+  async findOne(id: number): Promise<SaleOrderItemStatus> {
+    try {
+      return await this.repository.findOneOrFail({
+        where: { id },
+      });
+    } catch (error) {
+      throw new NotFoundException('Sale order item status not found');
+    }
   }
 
-  update(id: number, updateSaleOrderItemStatusDto: UpdateSaleOrderItemStatusDto) {
-    return `This action updates a #${id} saleOrderItemStatus`;
+  async findOneByName(name: string): Promise<SaleOrderItemStatus> {
+    try {
+      return await this.repository.findOneByOrFail({ name });
+    } catch (error) {
+      throw new NotFoundException('Sale order item status not found');
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} saleOrderItemStatus`;
+  async update(
+    id: number,
+    updateSaleOrderItemStatusDto: UpdateSaleOrderItemStatusDto,
+  ): Promise<SaleOrderItemStatus> {
+    const result = await this.findOne(id);
+
+    return await this.repository.save({
+      ...result,
+      ...updateSaleOrderItemStatusDto,
+    });
   }
 }
