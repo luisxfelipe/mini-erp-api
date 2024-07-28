@@ -1,7 +1,9 @@
+import { SaleOrder } from './../../../sales-orders/entities/sales-order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,6 +21,9 @@ export class SaleStatus {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @OneToMany(() => SaleOrder, (salesOrder: SaleOrder) => salesOrder.saleStatus)
+  salesOrders?: SaleOrder[];
 
   constructor(partial: Partial<SaleStatus>) {
     Object.assign(this, partial);

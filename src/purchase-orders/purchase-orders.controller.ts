@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { PurchaseOrdersService } from './purchase-orders.service';
 import { CreatePurchaseOrderDto } from './dto/create-purchase-order.dto';
 import { UpdatePurchaseOrderDto } from './dto/update-purchase-order.dto';
@@ -27,7 +35,9 @@ export class PurchaseOrdersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<ReturnPurchaseOrderDto> {
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ReturnPurchaseOrderDto> {
     return new ReturnPurchaseOrderDto(
       await this.purchaseOrdersService.findOne(+id, true),
     );
@@ -35,7 +45,7 @@ export class PurchaseOrdersController {
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updatePurchaseOrderDto: UpdatePurchaseOrderDto,
   ): Promise<ReturnPurchaseOrderDto> {
     return new ReturnPurchaseOrderDto(

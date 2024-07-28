@@ -5,12 +5,13 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { SalesOrdersService } from './sales-orders.service';
 import { CreateSalesOrderDto } from './dto/create-sales-order.dto';
 import { UpdateSalesOrderDto } from './dto/update-sales-order.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { ReturnSaleOrderDto } from './dto/return-sale-order.dto';
 
 @Controller('sales-orders')
 @ApiTags('Sales orders')
@@ -18,30 +19,38 @@ export class SalesOrdersController {
   constructor(private readonly salesOrdersService: SalesOrdersService) {}
 
   @Post()
-  create(@Body() createSalesOrderDto: CreateSalesOrderDto) {
-    return this.salesOrdersService.create(createSalesOrderDto);
+  async create(
+    @Body() createSalesOrderDto: CreateSalesOrderDto,
+  ): Promise<ReturnSaleOrderDto> {
+    return new ReturnSaleOrderDto(
+      await this.salesOrdersService.create(createSalesOrderDto),
+    );
   }
 
   @Get()
-  findAll() {
-    return this.salesOrdersService.findAll();
+  async findAll(): Promise<ReturnSaleOrderDto[]> {
+    return (await this.salesOrdersService.findAll(true)).map(
+      (saleOrder) => new ReturnSaleOrderDto(saleOrder),
+    );
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.salesOrdersService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ReturnSaleOrderDto> {
+    console.log(`id: ${id}`);
+    return new ReturnSaleOrderDto(
+      await this.salesOrdersService.findOne(id, true),
+    );
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
+  async update(
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateSalesOrderDto: UpdateSalesOrderDto,
-  ) {
-    return this.salesOrdersService.update(+id, updateSalesOrderDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.salesOrdersService.remove(+id);
+  ): Promise<ReturnSaleOrderDto> {
+    return new ReturnSaleOrderDto(
+      await this.salesOrdersService.update(id, updateSalesOrderDto),
+    );
   }
 }

@@ -13,8 +13,10 @@ import { CreateSaleStatusDto } from './dto/create-sale-status.dto';
 import { UpdateSaleStatusDto } from './dto/update-sale-status.dto';
 import { ReturnSaleStatusDto } from './dto/return-sale-status.dto';
 import { DeleteResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('sale-status')
+@ApiTags('sale status')
 export class SaleStatusController {
   constructor(private readonly saleStatusService: SaleStatusService) {}
 
