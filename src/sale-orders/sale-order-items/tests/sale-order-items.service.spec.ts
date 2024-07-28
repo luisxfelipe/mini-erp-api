@@ -1,6 +1,4 @@
 import { Repository } from 'typeorm';
-import { SaleOrderItemsService } from '../sale-order-items.service';
-import { SaleOrderItem } from '../entities/sale-order-item.entity';
 import { ProductsService } from './../../../products/products.service';
 import { ProductVariationsService } from './../../../products/product-variations/product-variations.service';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -13,6 +11,8 @@ import { saleOrderMock } from './../../../sale-orders/tests/mocks/sale-order.moc
 import { createSaleOrderItemMock } from './mocks/create-purchase-sale-item.mock';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { updateSaleOrderItemMock } from './mocks/update-purchase-sale-item.mock';
+import { SaleOrderItemsService } from './../sale-order-items.service';
+import { SaleOrderItem } from './../entities/sale-order-item.entity';
 
 describe('SaleOrderItemsService', () => {
   let service: SaleOrderItemsService;

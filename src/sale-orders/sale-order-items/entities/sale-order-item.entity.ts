@@ -1,3 +1,4 @@
+import { SaleOrderItemStatus } from './../../../sale-orders/sale-order-item-status/entities/sale-order-item-status.entity';
 import { Product } from './../../../products/entities/product.entity';
 import { ProductVariation } from './../../../products/product-variations/entities/product-variation.entity';
 import { SaleOrder } from './../../../sale-orders/entities/sale-order.entity';
@@ -25,6 +26,9 @@ export class SaleOrderItem {
   @Column({ name: 'product_variation_id', nullable: false })
   productVariationId: number;
 
+  @Column({ name: 'sale_order_item_status_id', nullable: false })
+  saleOrderItemStatusId: number;
+
   @Column({
     type: 'decimal',
     name: 'price',
@@ -33,9 +37,6 @@ export class SaleOrderItem {
     nullable: false,
   })
   price: number;
-
-  @Column({ name: 'quantity', nullable: false })
-  quantity: number;
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
@@ -60,4 +61,15 @@ export class SaleOrderItem {
   )
   @JoinColumn({ name: 'product_variation_id', referencedColumnName: 'id' })
   productVariation?: ProductVariation;
+
+  @ManyToOne(
+    () => SaleOrderItemStatus,
+    (saleOrderItemStatus: SaleOrderItemStatus) =>
+      saleOrderItemStatus.saleOrderItems,
+  )
+  @JoinColumn({
+    name: 'sale_order_item_status_id',
+    referencedColumnName: 'id',
+  })
+  saleOrderItemStatus?: SaleOrderItemStatus;
 }

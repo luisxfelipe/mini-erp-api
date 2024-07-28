@@ -6,6 +6,6 @@ export const returnsaleOrderItemMock: ReturnSaleOrderItemDto = {
   saleOrderId: saleOrderItemMock.saleOrderId,
   productId: saleOrderItemMock.productId,
   productVariationId: saleOrderItemMock.productVariationId,
+  saleOrderItemStatusId: saleOrderItemMock.saleOrderItemStatusId,
   price: saleOrderItemMock.price,
-  quantity: saleOrderItemMock.quantity,
 };

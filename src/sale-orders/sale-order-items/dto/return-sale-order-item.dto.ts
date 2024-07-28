@@ -5,15 +5,15 @@ export class ReturnSaleOrderItemDto {
   saleOrderId: number;
   productId: number;
   productVariationId: number;
+  saleOrderItemStatusId: number;
   price: number;
-  quantity: number;
 
   constructor(saleOrderItem: SaleOrderItem) {
     this.id = saleOrderItem.id;
     this.saleOrderId = saleOrderItem.saleOrderId;
     this.productId = saleOrderItem.productId;
     this.productVariationId = saleOrderItem.productVariationId;
+    this.saleOrderItemStatusId = saleOrderItem.saleOrderItemStatusId;
     this.price = saleOrderItem.price;
-    this.quantity = saleOrderItem.quantity;
   }
 }

@@ -5,5 +5,4 @@ export const purchaseOrderItemStatusMock: PurchaseOrderItemStatus = {
   name: 'pending',
   createdAt: new Date(),
   updatedAt: new Date(),
-  purchaseOrderItems: [],
 };

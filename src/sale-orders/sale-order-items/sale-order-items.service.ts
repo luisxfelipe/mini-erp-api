@@ -30,7 +30,7 @@ export class SaleOrderItemsService {
   async calculateTotalValue(saleOrderId: number): Promise<number> {
     const saleOrderItems = await this.findAll(saleOrderId);
     const totalValue = saleOrderItems.reduce((total, saleOrderItem) => {
-      return total + saleOrderItem.price * saleOrderItem.quantity;
+      return total + saleOrderItem.price;
     }, 0);
     return parseFloat(totalValue.toFixed(2));
   }

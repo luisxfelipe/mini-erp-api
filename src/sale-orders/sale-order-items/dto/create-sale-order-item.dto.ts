@@ -1,4 +1,4 @@
-import { IsInt, IsNumber, IsPositive, Min } from 'class-validator';
+import { IsInt, IsNumber, IsPositive } from 'class-validator';
 
 export class CreateSaleOrderItemDto {
   @IsInt()
@@ -7,11 +7,10 @@ export class CreateSaleOrderItemDto {
   @IsInt()
   productVariationId: number;
 
+  @IsInt()
+  saleOrderItemStatusId: number;
+
   @IsNumber({ maxDecimalPlaces: 2 })
   @IsPositive({ message: 'Price must be a positive number' })
   price: number;
-
-  @IsInt()
-  @Min(1, { message: 'The quantity must be greater than 0' })
-  quantity: number;
 }
