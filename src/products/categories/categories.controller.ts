@@ -12,7 +12,6 @@ import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Category } from './entities/category.entity';
 import { ReturnCategoryDto } from './dto/return-category.dto';
 import { DeleteResult } from 'typeorm';
 
@@ -24,8 +23,10 @@ export class CategoriesController {
   @Post()
   async create(
     @Body() createCategoryDto: CreateCategoryDto,
-  ): Promise<Category> {
-    return await this.categoriesService.create(createCategoryDto);
+  ): Promise<ReturnCategoryDto> {
+    return new ReturnCategoryDto(
+      await this.categoriesService.create(createCategoryDto),
+    );
   }
 
   @Get()

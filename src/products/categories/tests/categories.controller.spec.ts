@@ -5,7 +5,7 @@ import { CategoriesController } from '../categories.controller';
 import { CategoriesService } from '../categories.service';
 import { createCategoryMock } from './mocks/create-category.mock';
 import { updateCategoryMock } from './mocks/update-category.mock';
-import { returnCategoryMock } from './mocks/return-category.mock';
+import { ReturnCategoryDto } from '../dto/return-category.dto';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;
@@ -41,7 +41,7 @@ describe('CategoriesController', () => {
     it('should be able to create a new category', async () => {
       const category = await controller.create(createCategoryMock);
 
-      expect(category).toEqual(categoryMock);
+      expect(category).toEqual(new ReturnCategoryDto(categoryMock));
     });
   });
 
@@ -49,7 +49,7 @@ describe('CategoriesController', () => {
     it('should be able to return an array of categories', async () => {
       const categories = await controller.findAll();
 
-      expect(categories).toEqual([returnCategoryMock]);
+      expect(categories).toEqual([new ReturnCategoryDto(categoryMock)]);
     });
   });
 
@@ -57,7 +57,7 @@ describe('CategoriesController', () => {
     it('should be able to return a category by id', async () => {
       const category = await controller.findOne(categoryMock.id);
 
-      expect(category).toEqual(returnCategoryMock);
+      expect(category).toEqual(new ReturnCategoryDto(categoryMock));
     });
 
     it('should send id param to service', async () => {
@@ -76,7 +76,7 @@ describe('CategoriesController', () => {
         updateCategoryMock,
       );
 
-      expect(category).toEqual(returnCategoryMock);
+      expect(category).toEqual(new ReturnCategoryDto(categoryMock));
     });
 
     it('should send id param and updateCategoryDto to service', async () => {
