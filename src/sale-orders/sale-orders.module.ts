@@ -16,23 +16,26 @@ import { ProductsModule } from './../products/products.module';
 import { SaleOrderRefund } from './sale-order-refunds/entities/sale-order-refund.entity';
 import { SaleOrderRefundsController } from './sale-order-refunds/sale-order-refunds.controller';
 import { SaleOrderRefundsService } from './sale-order-refunds/sale-order-refunds.service';
-import { SaleOrderItemStatusModule } from './sale-order-item-status/sale-order-item-status.module';
+import { SaleOrderItemStatus } from './sale-order-item-status/entities/sale-order-item-status.entity';
+import { SaleOrderItemStatusController } from './sale-order-item-status/sale-order-item-status.controller';
+import { SaleOrderItemStatusService } from './sale-order-item-status/sale-order-item-status.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       SaleOrder,
       SaleOrderItem,
+      SaleOrderItemStatus,
       SaleOrderRefund,
       SalePlatform,
       SaleStatus,
     ]),
     ProductsModule,
-    SaleOrderItemStatusModule,
   ],
   controllers: [
     SaleOrdersController,
     SaleOrderItemsController,
+    SaleOrderItemStatusController,
     SaleOrderRefundsController,
     SalePlatformsController,
     SaleStatusController,
@@ -40,6 +43,7 @@ import { SaleOrderItemStatusModule } from './sale-order-item-status/sale-order-i
   providers: [
     SaleOrdersService,
     SaleOrderItemsService,
+    SaleOrderItemStatusService,
     SaleOrderRefundsService,
     SalePlatformsService,
     SaleStatusService,
