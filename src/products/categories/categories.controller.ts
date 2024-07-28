@@ -16,7 +16,7 @@ import { ReturnCategoryDto } from './dto/return-category.dto';
 import { DeleteResult } from 'typeorm';
 
 @Controller('categories')
-@ApiTags('categories')
+@ApiTags('Categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 

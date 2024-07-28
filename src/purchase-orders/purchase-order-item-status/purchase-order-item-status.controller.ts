@@ -11,8 +11,10 @@ import { PurchaseOrderItemStatusService } from './purchase-order-item-status.ser
 import { CreatePurchaseOrderItemStatusDto } from './dto/create-purchase-order-item-status.dto';
 import { UpdatePurchaseOrderItemStatusDto } from './dto/update-purchase-order-item-status.dto';
 import { ReturnPurchaseOrderItemStatusDto } from './dto/return-purchase-order-item-status';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('purchase-order-item-status')
+@ApiTags('Purchase order item status')
 export class PurchaseOrderItemStatusController {
   constructor(
     private readonly purchaseOrderItemStatusService: PurchaseOrderItemStatusService,

@@ -18,7 +18,7 @@ import { DeleteResult } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('products')
-@ApiTags('products')
+@ApiTags('Products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
