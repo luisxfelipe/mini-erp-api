@@ -16,6 +16,7 @@ import { ProductsModule } from './../products/products.module';
 import { SaleOrderRefund } from './sale-order-refunds/entities/sale-order-refund.entity';
 import { SaleOrderRefundsController } from './sale-order-refunds/sale-order-refunds.controller';
 import { SaleOrderRefundsService } from './sale-order-refunds/sale-order-refunds.service';
+import { SaleOrderItemStatusModule } from './sale-order-item-status/sale-order-item-status.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { SaleOrderRefundsService } from './sale-order-refunds/sale-order-refunds
       SaleStatus,
     ]),
     ProductsModule,
+    SaleOrderItemStatusModule,
   ],
   controllers: [
     SaleOrdersController,

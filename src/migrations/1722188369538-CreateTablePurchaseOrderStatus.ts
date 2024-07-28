@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateTableSalePlatform1722099681688
+export class CreateTablePurchaseOrderStatus1722188369538
   implements MigrationInterface
 {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      CREATE TABLE IF NOT EXISTS sale_platform (
+      CREATE TABLE IF NOT EXISTS purchase_order_status (
         id INT NOT NULL AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -16,6 +16,6 @@ export class CreateTableSalePlatform1722099681688
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE IF EXISTS sale_platform;`);
+    await queryRunner.query(`DROP TABLE IF EXISTS purchase_order_status;`);
   }
 }
