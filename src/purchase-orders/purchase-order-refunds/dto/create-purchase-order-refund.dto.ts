@@ -1,4 +1,4 @@
-import { IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class CreatePurchaseOrderRefundDto {
   @IsNumber({ maxDecimalPlaces: 2 })
@@ -6,5 +6,6 @@ export class CreatePurchaseOrderRefundDto {
   amount: number;
 
   @IsString()
+  @IsNotEmpty()
   reason: string;
 }

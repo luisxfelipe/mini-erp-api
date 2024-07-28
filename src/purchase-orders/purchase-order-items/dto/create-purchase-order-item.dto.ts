@@ -1,5 +1,6 @@
 import {
   IsInt,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -19,6 +20,7 @@ export class CreatePurchaseOrderItemDto {
   productVariationId: number;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   supplierProductCode: string;
 

@@ -1,13 +1,23 @@
-import { IsEmail, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+  IsUrl,
+} from 'class-validator';
 
 export class CreateSupplierDto {
   @IsString()
+  @IsNotEmpty()
   corporateName: string;
 
   @IsString()
+  @IsNotEmpty()
   tradeName: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   cnpj: string;
 
@@ -19,7 +29,7 @@ export class CreateSupplierDto {
   @IsOptional()
   phone: string;
 
-  @IsString()
+  @IsUrl()
   @IsOptional()
   website: string;
 }
