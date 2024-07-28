@@ -10,9 +10,6 @@ import {
 } from 'class-validator';
 
 export class CreatePurchaseOrderItemDto {
-  /*@IsInt()
-  purchaseOrderId: number;*/
-
   @IsInt()
   productId: number;
 

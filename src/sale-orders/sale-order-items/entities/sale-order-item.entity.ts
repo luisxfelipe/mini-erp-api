@@ -1,6 +1,6 @@
 import { Product } from './../../../products/entities/product.entity';
 import { ProductVariation } from './../../../products/product-variations/entities/product-variation.entity';
-import { PurchaseOrder } from './../../../purchase-orders/entities/purchase-order.entity';
+import { SaleOrder } from './../../../sale-orders/entities/sale-order.entity';
 import {
   Column,
   CreateDateColumn,
@@ -11,22 +11,19 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'purchase_order_item' })
-export class PurchaseOrderItem {
+@Entity({ name: 'sale_order_item' })
+export class SaleOrderItem {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'purchase_order_id', nullable: false })
-  purchaseOrderId: number;
+  @Column({ name: 'sale_order_id', nullable: false })
+  saleOrderId: number;
 
   @Column({ name: 'product_id', nullable: false })
   productId: number;
 
   @Column({ name: 'product_variation_id', nullable: false })
   productVariationId: number;
-
-  @Column({ name: 'supplier_product_code' })
-  supplierProductCode: string;
 
   @Column({
     type: 'decimal',
@@ -37,15 +34,8 @@ export class PurchaseOrderItem {
   })
   price: number;
 
-  @Column({
-    type: 'int',
-    name: 'quantity',
-    nullable: false,
-  })
+  @Column({ name: 'quantity', nullable: false })
   quantity: number;
-
-  @Column({ name: 'product_link' })
-  product_link: string;
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
@@ -54,24 +44,20 @@ export class PurchaseOrderItem {
   updatedAt: Date;
 
   @ManyToOne(
-    () => PurchaseOrder,
-    (purchaseOrder: PurchaseOrder) => purchaseOrder.purchaseOrderItems,
+    () => SaleOrder,
+    (saleOrder: SaleOrder) => saleOrder.saleOrderItems,
   )
-  @JoinColumn({ name: 'purchase_order_id', referencedColumnName: 'id' })
-  purchaseOrder?: PurchaseOrder;
+  @JoinColumn({ name: 'sale_order_id', referencedColumnName: 'id' })
+  saleOrder?: SaleOrder;
 
-  @ManyToOne(() => Product, (product: Product) => product.purchaseOrderItem)
+  @ManyToOne(() => Product, (product: Product) => product.saleOrderItem)
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product?: Product;
 
   @ManyToOne(
     () => ProductVariation,
-    (productVariation: ProductVariation) => productVariation.purchaseOrderItems,
+    (productVariation: ProductVariation) => productVariation.saleOrderItems,
   )
   @JoinColumn({ name: 'product_variation_id', referencedColumnName: 'id' })
   productVariation?: ProductVariation;
-
-  constructor(partial: Partial<PurchaseOrderItem>) {
-    Object.assign(this, partial);
-  }
 }
