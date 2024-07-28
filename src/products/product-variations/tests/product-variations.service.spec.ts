@@ -7,10 +7,14 @@ import { productVariationMock } from './mocks/product-variation.mock';
 import { createProductVariationMock } from './mocks/create-product-variation.mock';
 import { updateProductVariationMock } from './mocks/update-product-variation.mock';
 import { NotFoundException } from '@nestjs/common';
+import { productMock } from './../../../products/tests/mocks/product.mock';
+import { ProductsService } from './../../../products/products.service';
 
 describe('ProductVariationsService', () => {
   let service: ProductVariationsService;
   let repository: Repository<ProductVariation>;
+
+  let productsService: ProductsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,6 +30,12 @@ describe('ProductVariationsService', () => {
             save: jest.fn().mockResolvedValue(productVariationMock),
           },
         },
+        {
+          provide: ProductsService,
+          useValue: {
+            findOne: jest.fn().mockResolvedValue(productMock),
+          },
+        },
       ],
     }).compile();
 
@@ -33,11 +43,14 @@ describe('ProductVariationsService', () => {
     repository = module.get<Repository<ProductVariation>>(
       getRepositoryToken(ProductVariation),
     );
+
+    productsService = module.get<ProductsService>(ProductsService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
     expect(repository).toBeDefined();
+    expect(productsService).toBeDefined();
   });
 
   describe('findAll', () => {
@@ -74,7 +87,10 @@ describe('ProductVariationsService', () => {
 
   describe('create', () => {
     it('should create a new product variation', async () => {
-      const product = await service.create(createProductVariationMock);
+      const product = await service.create(
+        productMock.id,
+        createProductVariationMock,
+      );
 
       expect(product).toEqual(productVariationMock);
     });
@@ -82,7 +98,9 @@ describe('ProductVariationsService', () => {
     it('should throw an error', async () => {
       jest.spyOn(repository, 'save').mockRejectedValueOnce(new Error());
 
-      await expect(service.create(productVariationMock)).rejects.toThrow();
+      await expect(
+        service.create(productMock.id, productVariationMock),
+      ).rejects.toThrow();
     });
   });
 

@@ -5,6 +5,7 @@ import { productVariationMock } from './mocks/product-variation.mock';
 import { ReturnProductVariationDto } from '../dto/return-product-variation.dto';
 import { returnProductVariationDtoMock } from './mocks/return-product-variation-dto.mock';
 import { updateProductVariationMock } from './mocks/update-product-variation.mock';
+import { productMock } from './../../../products/tests/mocks/product.mock';
 
 describe('ProductVariationsController', () => {
   let controller: ProductVariationsController;
@@ -39,7 +40,10 @@ describe('ProductVariationsController', () => {
 
   describe('create', () => {
     it('should return a product variation', async () => {
-      const product = await controller.create(productVariationMock);
+      const product = await controller.create(
+        productMock.id,
+        productVariationMock,
+      );
 
       expect(product).toEqual(
         new ReturnProductVariationDto(productVariationMock),
