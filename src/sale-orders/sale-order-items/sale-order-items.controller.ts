@@ -11,8 +11,10 @@ import { SaleOrderItemsService } from './sale-order-items.service';
 import { CreateSaleOrderItemDto } from './dto/create-sale-order-item.dto';
 import { UpdateSaleOrderItemDto } from './dto/update-sale-order-item.dto';
 import { ReturnSaleOrderItemDto } from './dto/return-sale-order-item.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('sale-order-items')
+@Controller('sale-orders/:saleOrderId/sale-order-items')
+@ApiTags('Sale order items')
 export class SaleOrderItemsController {
   constructor(private readonly saleOrderItemsService: SaleOrderItemsService) {}
 
