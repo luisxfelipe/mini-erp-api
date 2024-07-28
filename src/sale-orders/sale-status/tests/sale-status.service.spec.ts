@@ -46,9 +46,9 @@ describe('SaleStatusService', () => {
     it('should create a sale status', async () => {
       jest.spyOn(service, 'findOneByName').mockResolvedValueOnce(undefined);
 
-      const platform = await service.create(createSaleStatusMock);
+      const result = await service.create(createSaleStatusMock);
 
-      expect(platform).toEqual(saleStatusMock);
+      expect(result).toEqual(saleStatusMock);
       expect(repository.save).toHaveBeenCalledWith(saleStatusMock);
       expect(repository.create).toHaveBeenCalledTimes(1);
       expect(service.findOneByName).toHaveBeenCalledTimes(1);
@@ -71,7 +71,7 @@ describe('SaleStatusService', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of platforms', async () => {
+    it('should return an array of sale status', async () => {
       const saleStatus = await service.findAll();
 
       expect(saleStatus).toEqual([saleStatusMock]);
