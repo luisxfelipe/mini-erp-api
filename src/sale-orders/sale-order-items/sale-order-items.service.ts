@@ -27,6 +27,14 @@ export class SaleOrderItemsService {
     private readonly productVariationsService: ProductVariationsService,
   ) {}
 
+  async calculateTotalValue(saleOrderId: number): Promise<number> {
+    const saleOrderItems = await this.findAll(saleOrderId);
+    const totalValue = saleOrderItems.reduce((total, saleOrderItem) => {
+      return total + saleOrderItem.price * saleOrderItem.quantity;
+    }, 0);
+    return parseFloat(totalValue.toFixed(2));
+  }
+
   async create(
     saleOrderId: number,
     createSaleOrderItemDto: CreateSaleOrderItemDto,
@@ -37,13 +45,13 @@ export class SaleOrderItemsService {
       createSaleOrderItemDto.productVariationId,
     );
 
-    const purchaseOrderItem = await this.repository.findOneBy({
+    const saleOrderItem = await this.repository.findOneBy({
       productId: createSaleOrderItemDto.productId,
       productVariationId: createSaleOrderItemDto.productVariationId,
       saleOrderId,
     });
 
-    if (purchaseOrderItem) {
+    if (saleOrderItem) {
       throw new BadRequestException(
         `Sale order item with productId ${createSaleOrderItemDto.productId} and productVariationId ${createSaleOrderItemDto.productVariationId} already exists`,
       );

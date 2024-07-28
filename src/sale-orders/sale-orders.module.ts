@@ -12,13 +12,17 @@ import { SaleStatusController } from './sale-status/sale-status.controller';
 import { SaleOrderItem } from './sale-order-items/entities/sale-order-item.entity';
 import { SaleOrderItemsService } from './sale-order-items/sale-order-items.service';
 import { SaleOrderItemsController } from './sale-order-items/sale-order-items.controller';
-import { ProductsModule } from 'src/products/products.module';
+import { ProductsModule } from './../products/products.module';
+import { SaleOrderRefund } from './sale-order-refunds/entities/sale-order-refund.entity';
+import { SaleOrderRefundsController } from './sale-order-refunds/sale-order-refunds.controller';
+import { SaleOrderRefundsService } from './sale-order-refunds/sale-order-refunds.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       SaleOrder,
       SaleOrderItem,
+      SaleOrderRefund,
       SalePlatform,
       SaleStatus,
     ]),
@@ -27,12 +31,14 @@ import { ProductsModule } from 'src/products/products.module';
   controllers: [
     SaleOrdersController,
     SaleOrderItemsController,
+    SaleOrderRefundsController,
     SalePlatformsController,
     SaleStatusController,
   ],
   providers: [
     SaleOrdersService,
     SaleOrderItemsService,
+    SaleOrderRefundsService,
     SalePlatformsService,
     SaleStatusService,
   ],

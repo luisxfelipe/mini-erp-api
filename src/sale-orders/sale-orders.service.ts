@@ -6,17 +6,33 @@ import { Repository } from 'typeorm';
 import { SalePlatformsService } from './sale-platforms/sale-platforms.service';
 import { SaleStatusService } from './sale-status/sale-status.service';
 import { SaleOrder } from './entities/sale-order.entity';
+import { SaleOrderItemsService } from './sale-order-items/sale-order-items.service';
 
 @Injectable()
 export class SaleOrdersService {
   constructor(
     @InjectRepository(SaleOrder)
     private repository: Repository<SaleOrder>,
+    @Inject(SaleOrderItemsService)
+    private readonly saleOrderItemsService: SaleOrderItemsService,
     @Inject(SalePlatformsService)
     private readonly salePlatformsService: SalePlatformsService,
     @Inject(SaleStatusService)
     private readonly saleStatusService: SaleStatusService,
   ) {}
+
+  async calculateTotalValue(saleOrderId: number): Promise<number> {
+    const saleOrder = await this.findOne(saleOrderId);
+
+    const totalValueSaleOrderItems =
+      await this.saleOrderItemsService.calculateTotalValue(saleOrderId);
+
+    const totalValue =
+      totalValueSaleOrderItems +
+      ((saleOrder.shippingCost || 0) - (saleOrder.discount || 0));
+
+    return parseFloat(totalValue.toFixed(2));
+  }
 
   async create(createSaleOrderDto: CreateSaleOrderDto): Promise<SaleOrder> {
     await this.salePlatformsService.findOne(createSaleOrderDto.platformId);
@@ -64,10 +80,10 @@ export class SaleOrdersService {
       await this.saleStatusService.findOne(updateSaleOrderDto.statusId);
     }
 
-    const purchaseOrder = await this.findOne(id);
+    const saleOrder = await this.findOne(id);
 
     return await this.repository.save({
-      ...purchaseOrder,
+      ...saleOrder,
       ...updateSaleOrderDto,
     });
   }

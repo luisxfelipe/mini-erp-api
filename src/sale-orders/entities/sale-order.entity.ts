@@ -11,6 +11,7 @@ import {
 import { SaleStatus } from '../sale-status/entities/sale-status.entity';
 import { SalePlatform } from '../sale-platforms/entities/sale-platform.entity';
 import { SaleOrderItem } from '../sale-order-items/entities/sale-order-item.entity';
+import { SaleOrderRefund } from '../sale-order-refunds/entities/sale-order-refund.entity';
 
 @Entity({ name: 'sale_order' })
 export class SaleOrder {
@@ -70,6 +71,12 @@ export class SaleOrder {
   )
   @JoinColumn({ name: 'status_id', referencedColumnName: 'id' })
   saleStatus?: SaleStatus;
+
+  @OneToMany(
+    () => SaleOrderRefund,
+    (saleOrderRefund: SaleOrderRefund) => saleOrderRefund.saleOrder,
+  )
+  saleOrderRefunds?: SaleOrderRefund[];
 
   constructor(partial: Partial<SaleOrder>) {
     Object.assign(this, partial);
