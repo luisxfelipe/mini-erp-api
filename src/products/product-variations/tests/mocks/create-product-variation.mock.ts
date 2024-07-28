@@ -1,7 +1,6 @@
-import { productMock } from './../../../tests/mocks/product.mock';
 import { CreateProductVariationDto } from '../../dto/create-product-variation.dto';
+import { productVariationMock } from './product-variation.mock';
 
 export const createProductVariationMock: CreateProductVariationDto = {
-  name: 'Product Variation 1',
-  productId: productMock.id,
+  name: productVariationMock.name,
 };

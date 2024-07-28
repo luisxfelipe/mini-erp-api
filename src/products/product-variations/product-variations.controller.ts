@@ -13,23 +13,27 @@ import { CreateProductVariationDto } from './dto/create-product-variation.dto';
 import { ReturnProductVariationDto } from './dto/return-product-variation.dto';
 import { UpdateProductVariationDto } from './dto/update-product-variation.dto';
 
-@Controller('product-variations')
+@Controller('products/:productId/product-variations')
 @ApiTags('Product variations')
 export class ProductVariationsController {
   constructor(
     private readonly productVariationsService: ProductVariationsService,
   ) {}
 
-  @Post('product-variations')
+  @Post()
   async create(
+    @Param('productId', ParseIntPipe) productId: number,
     @Body() createProductVariationDto: CreateProductVariationDto,
   ): Promise<ReturnProductVariationDto> {
     return new ReturnProductVariationDto(
-      await this.productVariationsService.create(createProductVariationDto),
+      await this.productVariationsService.create(
+        productId,
+        createProductVariationDto,
+      ),
     );
   }
 
-  @Get(':productId/product-variations')
+  @Get()
   async findAll(
     @Param('productId', ParseIntPipe) productId: number,
   ): Promise<ReturnProductVariationDto[]> {
@@ -38,7 +42,7 @@ export class ProductVariationsController {
     );
   }
 
-  @Get('product-variations/:id')
+  @Get(':id')
   async findOne(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ReturnProductVariationDto> {
@@ -47,7 +51,7 @@ export class ProductVariationsController {
     );
   }
 
-  @Patch('product-variations/:id')
+  @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductVariationDto: UpdateProductVariationDto,

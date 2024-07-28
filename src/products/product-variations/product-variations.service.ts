@@ -1,28 +1,31 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductVariation } from './entities/product-variation.entity';
 import { Repository } from 'typeorm';
 import { CreateProductVariationDto } from './dto/create-product-variation.dto';
 import { UpdateProductVariationDto } from './dto/update-product-variation.dto';
+import { ProductsService } from '../products.service';
 
 @Injectable()
 export class ProductVariationsService {
   constructor(
     @InjectRepository(ProductVariation)
     private productsVariationRepository: Repository<ProductVariation>,
+    @Inject(ProductsService)
+    private readonly productsService: ProductsService,
   ) {}
 
   async create(
+    productId: number,
     createProductVariationDto: CreateProductVariationDto,
   ): Promise<ProductVariation> {
-    try {
-      await this.findOne(createProductVariationDto.productId);
-    } catch (error) {
-      throw new NotFoundException('Product id does not exist!');
-    }
+    await this.productsService.findOne(productId);
 
     return await this.productsVariationRepository.save(
-      this.productsVariationRepository.create(createProductVariationDto),
+      this.productsVariationRepository.create({
+        ...createProductVariationDto,
+        productId,
+      }),
     );
   }
 
@@ -46,7 +49,7 @@ export class ProductVariationsService {
   ): Promise<ProductVariation> {
     const productVariation = await this.findOne(id);
 
-    await this.findOne(updateProductVariationDto.productId);
+    await this.findOne(id);
 
     return await this.productsVariationRepository.save({
       ...productVariation,
