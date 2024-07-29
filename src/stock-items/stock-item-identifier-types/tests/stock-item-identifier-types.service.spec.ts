@@ -3,20 +3,20 @@ import { Repository } from 'typeorm';
 import { StockItemIdentifierType } from '../entities/stock-item-identifier-type.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { stockItemIdentifierTypeMock } from './mocks/stock-item-identifier-type.mock';
-import { returnDeleteMock } from './../../../mocks/return-delete.mock';
+import { returnDeleteMock } from '../../../mocks/return-delete.mock';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { StockItemIdentifierTypeService } from '../stock-item-identifier-type.service';
+import { StockItemIdentifierTypesService } from '../stock-item-identifier-types.service';
 import { createStockItemIdentifierTypeMock } from './mocks/create-stock-item-identifier-type.mock';
 import { updateStockItemIdentifierTypeMock } from './mocks/update-stock-item-identifier-type.mock';
 
-describe('StockItemIdentifierTypeService', () => {
-  let service: StockItemIdentifierTypeService;
+describe('StockItemIdentifierTypesService', () => {
+  let service: StockItemIdentifierTypesService;
   let repository: Repository<StockItemIdentifierType>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        StockItemIdentifierTypeService,
+        StockItemIdentifierTypesService,
         {
           provide: getRepositoryToken(StockItemIdentifierType),
           useValue: {
@@ -35,8 +35,8 @@ describe('StockItemIdentifierTypeService', () => {
       ],
     }).compile();
 
-    service = module.get<StockItemIdentifierTypeService>(
-      StockItemIdentifierTypeService,
+    service = module.get<StockItemIdentifierTypesService>(
+      StockItemIdentifierTypesService,
     );
     repository = module.get<Repository<StockItemIdentifierType>>(
       getRepositoryToken(StockItemIdentifierType),

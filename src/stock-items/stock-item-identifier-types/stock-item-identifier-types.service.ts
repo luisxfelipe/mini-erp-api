@@ -10,7 +10,7 @@ import { StockItemIdentifierType } from './entities/stock-item-identifier-type.e
 import { DeleteResult, Repository } from 'typeorm';
 
 @Injectable()
-export class StockItemIdentifierTypeService {
+export class StockItemIdentifierTypesService {
   constructor(
     @InjectRepository(StockItemIdentifierType)
     private readonly repository: Repository<StockItemIdentifierType>,

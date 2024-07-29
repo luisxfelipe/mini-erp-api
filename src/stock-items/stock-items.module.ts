@@ -5,14 +5,18 @@ import { StockItemStatus } from './stock-item-status/entities/stock-item-status.
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StockItemStatusController } from './stock-item-status/stock-item-status.controller';
 import { StockItemStatusService } from './stock-item-status/stock-item-status.service';
-import { StockItemIdentifierType } from './stock-item-identifier-type/entities/stock-item-identifier-type.entity';
+import { StockItemIdentifierType } from './stock-item-identifier-types/entities/stock-item-identifier-type.entity';
 import { StockItem } from './entities/stock-item.entity';
-import { StockItemIdentifierTypeController } from './stock-item-identifier-type/stock-item-identifier-type.controller';
-import { StockItemIdentifierTypeService } from './stock-item-identifier-type/stock-item-identifier-type.service';
+import { StockItemIdentifierTypesController } from './stock-item-identifier-types/stock-item-identifier-types.controller';
+import { StockItemIdentifierTypesService } from './stock-item-identifier-types/stock-item-identifier-types.service';
+import { StockItemIdentifier } from './stock-item-identifiers/entities/stock-item-identifier.entity';
+import { StockItemIdentifiersController } from './stock-item-identifiers/stock-item-identifiers.controller';
+import { StockItemIdentifiersService } from './stock-item-identifiers/stock-item-identifiers.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
+      StockItemIdentifier,
       StockItemIdentifierType,
       StockItem,
       StockItemStatus,
@@ -20,12 +24,14 @@ import { StockItemIdentifierTypeService } from './stock-item-identifier-type/sto
   ],
   controllers: [
     StockItemsController,
-    StockItemIdentifierTypeController,
+    StockItemIdentifiersController,
+    StockItemIdentifierTypesController,
     StockItemStatusController,
   ],
   providers: [
     StockItemsService,
-    StockItemIdentifierTypeService,
+    StockItemIdentifiersService,
+    StockItemIdentifierTypesService,
     StockItemStatusService,
   ],
 })
