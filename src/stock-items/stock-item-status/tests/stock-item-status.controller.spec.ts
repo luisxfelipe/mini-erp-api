@@ -4,6 +4,8 @@ import { StockItemStatusService } from '../stock-item-status.service';
 import { stockItemStatusMock } from './mocks/stock-item-status.mock';
 import { returnDeleteMock } from './../../../mocks/return-delete.mock';
 import { ReturnStockItemStatusDto } from '../dto/return-stock-item-status.dto';
+import { createStockItemStatusMock } from './mocks/create-stock-item-status.mock';
+import { updateStockItemStatusMock } from './mocks/update-stock-item-status.mock';
 
 describe('StockItemStatusController', () => {
   let controller: StockItemStatusController;
@@ -39,7 +41,7 @@ describe('StockItemStatusController', () => {
 
   describe('create', () => {
     it('should return a stock item status', async () => {
-      const result = await controller.create(stockItemStatusMock);
+      const result = await controller.create(createStockItemStatusMock);
       expect(result).toEqual(new ReturnStockItemStatusDto(stockItemStatusMock));
     });
   });
@@ -76,12 +78,12 @@ describe('StockItemStatusController', () => {
     it('should return a stock item status', async () => {
       const result = await controller.update(
         stockItemStatusMock.id,
-        stockItemStatusMock,
+        updateStockItemStatusMock,
       );
       expect(result).toEqual(new ReturnStockItemStatusDto(stockItemStatusMock));
       expect(service.update).toHaveBeenCalledWith(
         stockItemStatusMock.id,
-        stockItemStatusMock,
+        updateStockItemStatusMock,
       );
       expect(service.update).toHaveBeenCalledTimes(1);
     });
@@ -89,11 +91,11 @@ describe('StockItemStatusController', () => {
     it('should return error if stock item status is not found', async () => {
       jest.spyOn(service, 'update').mockRejectedValueOnce(new Error());
       await expect(
-        controller.update(stockItemStatusMock.id, stockItemStatusMock),
+        controller.update(stockItemStatusMock.id, updateStockItemStatusMock),
       ).rejects.toThrow();
       expect(service.update).toHaveBeenCalledWith(
         stockItemStatusMock.id,
-        stockItemStatusMock,
+        updateStockItemStatusMock,
       );
       expect(service.update).toHaveBeenCalledTimes(1);
     });
