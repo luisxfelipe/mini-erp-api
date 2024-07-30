@@ -1,21 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { stockItemIdentifierTypeMock } from './mocks/stock-item-identifier-type.mock';
-import { returnDeleteMock } from './../../../mocks/return-delete.mock';
+import { returnDeleteMock } from '../../../mocks/return-delete.mock';
 import { ReturnStockItemIdentifierTypeDto } from '../dto/return-stock-item-identifier-type';
-import { StockItemIdentifierTypeController } from '../stock-item-identifier-type.controller';
-import { StockItemIdentifierTypeService } from '../stock-item-identifier-type.service';
+import { StockItemIdentifierTypesController } from '../stock-item-identifier-types.controller';
+import { StockItemIdentifierTypesService } from '../stock-item-identifier-types.service';
 import { updateStockItemIdentifierTypeMock } from './mocks/update-stock-item-identifier-type.mock';
 
-describe('StockItemIdentifierTypeController', () => {
-  let controller: StockItemIdentifierTypeController;
-  let service: StockItemIdentifierTypeService;
+describe('StockItemIdentifierTypesController', () => {
+  let controller: StockItemIdentifierTypesController;
+  let service: StockItemIdentifierTypesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [StockItemIdentifierTypeController],
+      controllers: [StockItemIdentifierTypesController],
       providers: [
         {
-          provide: StockItemIdentifierTypeService,
+          provide: StockItemIdentifierTypesService,
           useValue: {
             findAll: jest.fn().mockResolvedValue([stockItemIdentifierTypeMock]),
             create: jest.fn().mockResolvedValue(stockItemIdentifierTypeMock),
@@ -27,11 +27,11 @@ describe('StockItemIdentifierTypeController', () => {
       ],
     }).compile();
 
-    controller = module.get<StockItemIdentifierTypeController>(
-      StockItemIdentifierTypeController,
+    controller = module.get<StockItemIdentifierTypesController>(
+      StockItemIdentifierTypesController,
     );
-    service = module.get<StockItemIdentifierTypeService>(
-      StockItemIdentifierTypeService,
+    service = module.get<StockItemIdentifierTypesService>(
+      StockItemIdentifierTypesService,
     );
   });
 

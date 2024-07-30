@@ -8,7 +8,7 @@ import {
   Delete,
   ParseIntPipe,
 } from '@nestjs/common';
-import { StockItemIdentifierTypeService } from './stock-item-identifier-type.service';
+import { StockItemIdentifierTypesService } from './stock-item-identifier-types.service';
 import { CreateStockItemIdentifierTypeDto } from './dto/create-stock-item-identifier-type.dto';
 import { UpdateStockItemIdentifierTypeDto } from './dto/update-stock-item-identifier-type.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -17,9 +17,9 @@ import { DeleteResult } from 'typeorm';
 
 @Controller('stock-item-identifier-type')
 @ApiTags('Stock item identifier type')
-export class StockItemIdentifierTypeController {
+export class StockItemIdentifierTypesController {
   constructor(
-    private readonly stockItemIdentifierTypeService: StockItemIdentifierTypeService,
+    private readonly stockItemIdentifierTypesService: StockItemIdentifierTypesService,
   ) {}
 
   @Post()
@@ -27,7 +27,7 @@ export class StockItemIdentifierTypeController {
     @Body() createStockItemIdentifierTypeDto: CreateStockItemIdentifierTypeDto,
   ): Promise<ReturnStockItemIdentifierTypeDto> {
     return new ReturnStockItemIdentifierTypeDto(
-      await this.stockItemIdentifierTypeService.create(
+      await this.stockItemIdentifierTypesService.create(
         createStockItemIdentifierTypeDto,
       ),
     );
@@ -35,7 +35,7 @@ export class StockItemIdentifierTypeController {
 
   @Get()
   async findAll(): Promise<ReturnStockItemIdentifierTypeDto[]> {
-    return (await this.stockItemIdentifierTypeService.findAll()).map(
+    return (await this.stockItemIdentifierTypesService.findAll()).map(
       (saleOrder) => new ReturnStockItemIdentifierTypeDto(saleOrder),
     );
   }
@@ -46,7 +46,7 @@ export class StockItemIdentifierTypeController {
   ): Promise<ReturnStockItemIdentifierTypeDto> {
     console.log(`id: ${id}`);
     return new ReturnStockItemIdentifierTypeDto(
-      await this.stockItemIdentifierTypeService.findOne(id),
+      await this.stockItemIdentifierTypesService.findOne(id),
     );
   }
 
@@ -56,7 +56,7 @@ export class StockItemIdentifierTypeController {
     @Body() updateStockItemIdentifierTypeDto: UpdateStockItemIdentifierTypeDto,
   ): Promise<ReturnStockItemIdentifierTypeDto> {
     return new ReturnStockItemIdentifierTypeDto(
-      await this.stockItemIdentifierTypeService.update(
+      await this.stockItemIdentifierTypesService.update(
         id,
         updateStockItemIdentifierTypeDto,
       ),
@@ -65,6 +65,6 @@ export class StockItemIdentifierTypeController {
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
-    return await this.stockItemIdentifierTypeService.remove(id);
+    return await this.stockItemIdentifierTypesService.remove(id);
   }
 }
