@@ -5,48 +5,62 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { StockItemIdentifiersService } from './stock-item-identifiers.service';
 import { CreateStockItemIdentifierDto } from './dto/create-stock-item-identifier.dto';
 import { UpdateStockItemIdentifierDto } from './dto/update-stock-item-identifier.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { ReturnStockItemIdentifierDto } from './dto/return-stock-item-identifier.dto';
 
-@Controller('stock-item-identifier')
+@Controller('stock-item-identifiers')
+@ApiTags('Stock item identifiers')
 export class StockItemIdentifiersController {
   constructor(
     private readonly stockItemIdentifiersService: StockItemIdentifiersService,
   ) {}
 
   @Post()
-  create(@Body() createStockItemIdentifierDto: CreateStockItemIdentifierDto) {
-    return this.stockItemIdentifiersService.create(
-      createStockItemIdentifierDto,
+  async create(
+    @Body() createStockItemIdentifierDto: CreateStockItemIdentifierDto,
+  ): Promise<ReturnStockItemIdentifierDto> {
+    return new ReturnStockItemIdentifierDto(
+      await this.stockItemIdentifiersService.create(
+        createStockItemIdentifierDto,
+      ),
     );
   }
 
   @Get()
-  findAll() {
-    return this.stockItemIdentifiersService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.stockItemIdentifiersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateStockItemIdentifierDto: UpdateStockItemIdentifierDto,
-  ) {
-    return this.stockItemIdentifiersService.update(
-      +id,
-      updateStockItemIdentifierDto,
+  async findAll(): Promise<ReturnStockItemIdentifierDto[]> {
+    return (await this.stockItemIdentifiersService.findAll()).map(
+      (stockItemIdentifier) =>
+        new ReturnStockItemIdentifierDto(stockItemIdentifier),
     );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stockItemIdentifiersService.remove(+id);
+  @Get(':id')
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ReturnStockItemIdentifierDto> {
+    console.log(
+      `result : ${await this.stockItemIdentifiersService.findOne(id)}`,
+    );
+    return new ReturnStockItemIdentifierDto(
+      await this.stockItemIdentifiersService.findOne(id),
+    );
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateStockItemIdentifierDto: UpdateStockItemIdentifierDto,
+  ): Promise<ReturnStockItemIdentifierDto> {
+    return new ReturnStockItemIdentifierDto(
+      await this.stockItemIdentifiersService.update(
+        id,
+        updateStockItemIdentifierDto,
+      ),
+    );
   }
 }
