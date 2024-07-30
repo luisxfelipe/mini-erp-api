@@ -1,4 +1,4 @@
-import { StockItemIdentifierType } from 'src/stock-items/stock-item-identifier-types/entities/stock-item-identifier-type.entity';
+import { StockItemIdentifierType } from './../../../stock-items/stock-item-identifier-types/entities/stock-item-identifier-type.entity';
 import {
   Column,
   CreateDateColumn,
