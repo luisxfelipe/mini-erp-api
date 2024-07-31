@@ -12,6 +12,7 @@ import {
 import { ProductVariation } from '../product-variations/entities/product-variation.entity';
 import { PurchaseOrderItem } from './../../purchase-orders/purchase-order-items/entities/purchase-order-item.entity';
 import { SaleOrderItem } from './../../sale-orders/sale-order-items/entities/sale-order-item.entity';
+import { StockItem } from './../../stock-items/entities/stock-item.entity';
 
 @Entity({ name: 'product' })
 export class Product {
@@ -54,6 +55,9 @@ export class Product {
     (saleOrderItem: SaleOrderItem) => saleOrderItem.product,
   )
   saleOrderItem?: SaleOrderItem;
+
+  @OneToMany(() => StockItem, (stockItem: StockItem) => stockItem.product)
+  stockItems?: PurchaseOrderItem[];
 
   constructor(partial: Partial<Product>) {
     Object.assign(this, partial);

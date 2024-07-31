@@ -1,7 +1,10 @@
+import { PurchaseOrderItem } from './../../../purchase-orders/purchase-order-items/entities/purchase-order-item.entity';
+import { StockItem } from './../../../stock-items/entities/stock-item.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,6 +22,9 @@ export class StockItemStatus {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @OneToMany(() => StockItem, (stockItem: StockItem) => stockItem.product)
+  stockItems?: PurchaseOrderItem[];
 
   constructor(partial: Partial<StockItemStatus>) {
     Object.assign(this, partial);

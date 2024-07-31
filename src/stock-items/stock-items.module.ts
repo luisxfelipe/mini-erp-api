@@ -12,15 +12,21 @@ import { StockItemIdentifierTypesService } from './stock-item-identifier-types/s
 import { StockItemIdentifier } from './stock-item-identifiers/entities/stock-item-identifier.entity';
 import { StockItemIdentifiersController } from './stock-item-identifiers/stock-item-identifiers.controller';
 import { StockItemIdentifiersService } from './stock-item-identifiers/stock-item-identifiers.service';
+import { PurchaseOrdersModule } from './../purchase-orders/purchase-orders.module';
+import { ProductsModule } from './../products/products.module';
+import { SaleOrdersModule } from './../sale-orders/sale-orders.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
+      StockItem,
       StockItemIdentifier,
       StockItemIdentifierType,
-      StockItem,
       StockItemStatus,
     ]),
+    ProductsModule,
+    PurchaseOrdersModule,
+    SaleOrdersModule,
   ],
   controllers: [
     StockItemsController,

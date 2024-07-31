@@ -48,5 +48,6 @@ import { SaleOrderItemStatusService } from './sale-order-item-status/sale-order-
     SalePlatformsService,
     SaleStatusService,
   ],
+  exports: [SaleOrderItemsService],
 })
 export class SaleOrdersModule {}

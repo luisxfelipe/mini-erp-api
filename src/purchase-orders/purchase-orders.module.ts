@@ -44,5 +44,6 @@ import { PurchaseOrderItemStatusService } from './purchase-order-item-status/pur
     PurchaseOrderRefundsService,
     PurchaseOrderStatusService,
   ],
+  exports: [PurchaseOrderItemsService],
 })
 export class PurchaseOrdersModule {}
