@@ -25,6 +25,6 @@ export class AuthController {
       throw new UnauthorizedException('Authorization token is missing');
     }
 
-    return this.authService.signIn(signInDto);
+    return new ReturnSignInDto(await this.authService.signIn(signInDto));
   }
 }
