@@ -40,9 +40,7 @@ export class CategoriesController {
   async findOne(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ReturnCategoryDto> {
-    return new ReturnCategoryDto(
-      await this.categoriesService.findOne(id, true),
-    );
+    return new ReturnCategoryDto(await this.categoriesService.findOne(id));
   }
 
   @Patch(':id')
