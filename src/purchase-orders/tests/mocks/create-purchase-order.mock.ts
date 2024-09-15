@@ -3,6 +3,7 @@ import { purchaseOrderStatusMock } from './../../../purchase-orders/purchase-ord
 import { supplierMock } from './../../../suppliers/tests/mocks/supplier.mock';
 
 export const createPurchaseOrderMock: CreatePurchaseOrderDto = {
+  date: new Date(),
   supplierId: supplierMock.id,
   orderNumber: '123456789',
   trackingCode: 'BR123456789SP',

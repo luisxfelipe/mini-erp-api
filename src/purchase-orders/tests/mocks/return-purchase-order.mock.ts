@@ -4,6 +4,7 @@ import { returnSupplierMock } from './../../../suppliers/tests/mocks/return-supp
 
 export const returnPurchaseOrderMock: ReturnPurchaseOrderDto = {
   id: purchaseOrderMock.id,
+  date: purchaseOrderMock.date,
   supplier: returnSupplierMock,
   orderNumber: purchaseOrderMock.orderNumber,
   trackingCode: purchaseOrderMock.trackingCode,

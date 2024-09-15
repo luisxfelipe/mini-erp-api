@@ -18,6 +18,9 @@ export class PurchaseOrder {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'date', name: 'date', nullable: false })
+  date: Date;
+
   @Column({ name: 'supplier_id', nullable: false })
   supplierId: number;
 

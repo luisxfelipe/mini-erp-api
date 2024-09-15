@@ -5,6 +5,7 @@ import { ReturnPurchaseOrderStatusDto } from '../purchase-order-status/dto/retur
 
 export class ReturnPurchaseOrderDto {
   id: number;
+  date: Date;
   supplier?: ReturnSupplierDto;
   orderNumber?: string;
   trackingCode?: string;
@@ -14,6 +15,7 @@ export class ReturnPurchaseOrderDto {
 
   constructor(purchaseOrderEntity: PurchaseOrder) {
     this.id = purchaseOrderEntity.id;
+    this.date = purchaseOrderEntity.date;
     this.supplier = purchaseOrderEntity.supplier
       ? new ReturnSupplierDto(purchaseOrderEntity.supplier)
       : undefined;
