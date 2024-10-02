@@ -66,7 +66,14 @@ export class PurchaseOrderItemsService {
   }
 
   async findAll(purchaseOrderId: number): Promise<PurchaseOrderItem[]> {
-    return await this.repository.findBy({ purchaseOrderId });
+    const findOptions = {
+      where: { purchaseOrderId },
+      relations: {
+        product: true,
+        productVariation: true,
+      },
+    };
+    return await this.repository.find(findOptions);
   }
 
   async findOne(id: number, isRelations?: boolean): Promise<PurchaseOrderItem> {
