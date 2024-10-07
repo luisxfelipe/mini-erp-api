@@ -47,7 +47,7 @@ export class PurchaseOrderItemsController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ReturnPurchaseOrderItemDto> {
     return new ReturnPurchaseOrderItemDto(
-      await this.purchaseOrderItemsService.findOne(id),
+      await this.purchaseOrderItemsService.findOne(id, true),
     );
   }
 
