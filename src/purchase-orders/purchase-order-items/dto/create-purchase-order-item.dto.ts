@@ -29,5 +29,5 @@ export class CreatePurchaseOrderItemDto {
 
   @IsUrl()
   @IsOptional()
-  product_link: string;
+  productLink: string;
 }

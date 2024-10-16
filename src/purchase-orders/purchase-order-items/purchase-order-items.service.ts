@@ -71,6 +71,7 @@ export class PurchaseOrderItemsService {
       relations: {
         product: true,
         productVariation: true,
+        purchaseOrderItemStatus: true,
       },
     };
     return await this.repository.find(findOptions);
@@ -84,6 +85,7 @@ export class PurchaseOrderItemsService {
           purchaseOrder: isRelations ? true : false,
           product: isRelations ? true : false,
           productVariation: isRelations ? true : false,
+          purchaseOrderItemStatus: isRelations ? true : false,
         },
       });
 

@@ -43,9 +43,6 @@ export class StockItemIdentifiersController {
   async findOne(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ReturnStockItemIdentifierDto> {
-    console.log(
-      `result : ${await this.stockItemIdentifiersService.findOne(id)}`,
-    );
     return new ReturnStockItemIdentifierDto(
       await this.stockItemIdentifiersService.findOne(id),
     );

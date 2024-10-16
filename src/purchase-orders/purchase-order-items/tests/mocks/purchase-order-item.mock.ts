@@ -11,7 +11,7 @@ export const purchaseOrderItemMock: PurchaseOrderItem = {
   supplierProductCode: '12707070',
   purchaseOrderItemStatusId: purchaseOrderItemStatusMock.id,
   price: 48.97,
-  product_link: 'https://www.amazon.com.br/dp/B07YXB2345',
+  productLink: 'https://www.amazon.com.br/dp/B07YXB2345',
   createdAt: new Date(),
   updatedAt: new Date(),
 };

@@ -39,7 +39,7 @@ export class PurchaseOrderItem {
   price: number;
 
   @Column({ name: 'product_link' })
-  product_link: string;
+  productLink: string;
 
   @Column({ name: 'purchase_order_item_status_id', nullable: false })
   purchaseOrderItemStatusId: number;
@@ -57,13 +57,16 @@ export class PurchaseOrderItem {
   @JoinColumn({ name: 'purchase_order_id', referencedColumnName: 'id' })
   purchaseOrder?: PurchaseOrder;
 
-  @ManyToOne(() => Product, (product: Product) => product.purchaseOrderItem)
+  @ManyToOne(() => Product, (product: Product) => product.purchaseOrderItem, {
+    eager: true,
+  })
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product?: Product;
 
   @ManyToOne(
     () => ProductVariation,
     (productVariation: ProductVariation) => productVariation.purchaseOrderItems,
+    { eager: true },
   )
   @JoinColumn({ name: 'product_variation_id', referencedColumnName: 'id' })
   productVariation?: ProductVariation;
@@ -76,6 +79,7 @@ export class PurchaseOrderItem {
     () => PurchaseOrderItemStatus,
     (purchaseOrderItemStatus: PurchaseOrderItemStatus) =>
       purchaseOrderItemStatus.purchaseOrderItems,
+    { eager: true },
   )
   @JoinColumn({
     name: 'purchase_order_item_status_id',

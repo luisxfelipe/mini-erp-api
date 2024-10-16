@@ -38,7 +38,6 @@ export class SaleOrdersController {
   async findOne(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ReturnSaleOrderDto> {
-    console.log(`id: ${id}`);
     return new ReturnSaleOrderDto(
       await this.saleOrdersService.findOne(id, true),
     );
