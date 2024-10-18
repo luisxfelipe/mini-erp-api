@@ -1,5 +1,5 @@
 import { SaleOrder } from '../entities/sale-order.entity';
-import { ReturnPlatformDto } from '../platforms/dto/return-platform.dto';
+import { ReturnPlatformDto } from '../../platforms/dto/return-platform.dto';
 
 import { ReturnSaleStatusDto } from '../sale-status/dto/return-sale-status.dto';
 

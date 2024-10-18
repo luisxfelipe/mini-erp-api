@@ -2,9 +2,6 @@ import { Module } from '@nestjs/common';
 import { SaleOrdersService } from './sale-orders.service';
 import { SaleOrdersController } from './sale-orders.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Platform } from './platforms/entities/platform.entity';
-import { PlatformsController } from './platforms/platforms.controller';
-import { PlatformsService } from './platforms/platforms.service';
 import { SaleOrder } from './entities/sale-order.entity';
 import { SaleStatus } from './sale-status/entities/sale-status.entity';
 import { SaleStatusService } from './sale-status/sale-status.service';
@@ -19,6 +16,7 @@ import { SaleOrderRefundsService } from './sale-order-refunds/sale-order-refunds
 import { SaleOrderItemStatus } from './sale-order-item-status/entities/sale-order-item-status.entity';
 import { SaleOrderItemStatusController } from './sale-order-item-status/sale-order-item-status.controller';
 import { SaleOrderItemStatusService } from './sale-order-item-status/sale-order-item-status.service';
+import { PlatformsModule } from 'src/platforms/platforms.module';
 
 @Module({
   imports: [
@@ -27,9 +25,9 @@ import { SaleOrderItemStatusService } from './sale-order-item-status/sale-order-
       SaleOrderItem,
       SaleOrderItemStatus,
       SaleOrderRefund,
-      Platform,
       SaleStatus,
     ]),
+    PlatformsModule,
     ProductsModule,
   ],
   controllers: [
@@ -37,7 +35,6 @@ import { SaleOrderItemStatusService } from './sale-order-item-status/sale-order-
     SaleOrderItemsController,
     SaleOrderItemStatusController,
     SaleOrderRefundsController,
-    PlatformsController,
     SaleStatusController,
   ],
   providers: [
@@ -45,7 +42,6 @@ import { SaleOrderItemStatusService } from './sale-order-item-status/sale-order-
     SaleOrderItemsService,
     SaleOrderItemStatusService,
     SaleOrderRefundsService,
-    PlatformsService,
     SaleStatusService,
   ],
   exports: [SaleOrderItemsService],

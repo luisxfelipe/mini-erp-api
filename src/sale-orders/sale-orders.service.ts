@@ -3,7 +3,7 @@ import { CreateSaleOrderDto } from './dto/create-sales-order.dto';
 import { UpdateSaleOrderDto } from './dto/update-sale-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PlatformsService } from './platforms/platforms.service';
+import { PlatformsService } from '../platforms/platforms.service';
 import { SaleStatusService } from './sale-status/sale-status.service';
 import { SaleOrder } from './entities/sale-order.entity';
 import { SaleOrderItemsService } from './sale-order-items/sale-order-items.service';

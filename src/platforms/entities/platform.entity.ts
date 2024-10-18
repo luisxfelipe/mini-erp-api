@@ -1,4 +1,4 @@
-import { SaleOrder } from '../../entities/sale-order.entity';
+import { SaleOrder } from '../../sale-orders/entities/sale-order.entity';
 import {
   Column,
   CreateDateColumn,

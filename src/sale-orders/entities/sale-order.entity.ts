@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { SaleStatus } from '../sale-status/entities/sale-status.entity';
-import { Platform } from '../platforms/entities/platform.entity';
+import { Platform } from '../../platforms/entities/platform.entity';
 import { SaleOrderItem } from '../sale-order-items/entities/sale-order-item.entity';
 import { SaleOrderRefund } from '../sale-order-refunds/entities/sale-order-refund.entity';
 

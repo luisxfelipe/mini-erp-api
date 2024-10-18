@@ -10,6 +10,7 @@ import { SuppliersModule } from './suppliers/suppliers.module';
 import { PurchaseOrdersModule } from './purchase-orders/purchase-orders.module';
 import { SaleOrdersModule } from './sale-orders/sale-orders.module';
 import { StockItemsModule } from './stock-items/stock-items.module';
+import { PlatformsModule } from './platforms/platforms.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { StockItemsModule } from './stock-items/stock-items.module';
     UsersModule,
     ProductsModule,
     SuppliersModule,
+    PlatformsModule,
     PurchaseOrdersModule,
     SaleOrdersModule,
     StockItemsModule,

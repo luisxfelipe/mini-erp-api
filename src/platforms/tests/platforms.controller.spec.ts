@@ -3,7 +3,7 @@ import { PlatformsController } from '../platforms.controller';
 import { PlatformsService } from '../platforms.service';
 import { platformMock } from './mocks/platform.mock';
 import { ReturnPlatformDto } from '../dto/return-platform.dto';
-import { returnDeleteMock } from '../../../mocks/return-delete.mock';
+import { returnDeleteMock } from '../../mocks/return-delete.mock';
 
 describe('PlatformsController', () => {
   let controller: PlatformsController;

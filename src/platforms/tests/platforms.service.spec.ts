@@ -6,7 +6,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { createPlatformMock } from './mocks/create-platform.mock';
 import { updatePlatformMock } from './mocks/update-platform.mock';
 import { platformMock } from './mocks/platform.mock';
-import { returnDeleteMock } from '../../../mocks/return-delete.mock';
+import { returnDeleteMock } from '../../mocks/return-delete.mock';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('PlatformsService', () => {

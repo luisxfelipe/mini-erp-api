@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SaleOrder } from '../entities/sale-order.entity';
 import { Repository } from 'typeorm';
-import { PlatformsService } from '../platforms/platforms.service';
+import { PlatformsService } from '../../platforms/platforms.service';
 import { SaleStatusService } from '../sale-status/sale-status.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { SaleOrdersService } from '../sale-orders.service';
 import { saleOrderMock } from './mocks/sale-order.mock';
-import { platformMock } from '../platforms/tests/mocks/platform.mock';
+import { platformMock } from '../../platforms/tests/mocks/platform.mock';
 import { saleStatusMock } from '../sale-status/tests/mocks/sale-status.mock';
 import { createSaleOrderMock } from './mocks/create-sale-order.mock';
 import { NotFoundException } from '@nestjs/common';
