@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SaleOrder } from '../entities/sale-order.entity';
 import { Repository } from 'typeorm';
-import { SalePlatformsService } from '../sale-platforms/sale-platforms.service';
+import { PlatformsService } from '../platforms/platforms.service';
 import { SaleStatusService } from '../sale-status/sale-status.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { SaleOrdersService } from '../sale-orders.service';
 import { saleOrderMock } from './mocks/sale-order.mock';
-import { platformMock } from '../sale-platforms/tests/mocks/platform.mock';
+import { platformMock } from '../platforms/tests/mocks/platform.mock';
 import { saleStatusMock } from '../sale-status/tests/mocks/sale-status.mock';
 import { createSaleOrderMock } from './mocks/create-sale-order.mock';
 import { NotFoundException } from '@nestjs/common';
@@ -18,7 +18,7 @@ describe('SaleOrdersService', () => {
   let repository: Repository<SaleOrder>;
 
   let saleOrderItemsService: SaleOrderItemsService;
-  let salePlatformsService: SalePlatformsService;
+  let platformsService: PlatformsService;
   let saleStatusService: SaleStatusService;
 
   beforeEach(async () => {
@@ -42,7 +42,7 @@ describe('SaleOrdersService', () => {
           },
         },
         {
-          provide: SalePlatformsService,
+          provide: PlatformsService,
           useValue: {
             findOne: jest.fn().mockResolvedValue(platformMock),
           },
@@ -64,24 +64,21 @@ describe('SaleOrdersService', () => {
     saleOrderItemsService = module.get<SaleOrderItemsService>(
       SaleOrderItemsService,
     );
-    salePlatformsService =
-      module.get<SalePlatformsService>(SalePlatformsService);
+    platformsService = module.get<PlatformsService>(PlatformsService);
     saleStatusService = module.get<SaleStatusService>(SaleStatusService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
     expect(repository).toBeDefined();
-    expect(salePlatformsService).toBeDefined();
+    expect(platformsService).toBeDefined();
     expect(saleStatusService).toBeDefined();
     expect(saleOrderItemsService).toBeDefined();
   });
 
   describe('create', () => {
     it('should create a sale order', async () => {
-      jest
-        .spyOn(salePlatformsService, 'findOne')
-        .mockResolvedValue(platformMock);
+      jest.spyOn(platformsService, 'findOne').mockResolvedValue(platformMock);
       jest
         .spyOn(saleStatusService, 'findOne')
         .mockResolvedValue(saleStatusMock);
@@ -90,7 +87,7 @@ describe('SaleOrdersService', () => {
 
       expect(repository.create).toHaveBeenCalledWith(createSaleOrderMock);
       expect(repository.save).toHaveBeenCalledWith(saleOrderMock);
-      expect(salePlatformsService.findOne).toHaveBeenCalledWith(
+      expect(platformsService.findOne).toHaveBeenCalledWith(
         createSaleOrderMock.platformId,
       );
       expect(saleStatusService.findOne).toHaveBeenCalledWith(
@@ -100,7 +97,7 @@ describe('SaleOrdersService', () => {
 
     it('should throw an error if platform not found', async () => {
       jest
-        .spyOn(salePlatformsService, 'findOne')
+        .spyOn(platformsService, 'findOne')
         .mockRejectedValueOnce(new NotFoundException());
 
       jest
@@ -113,9 +110,7 @@ describe('SaleOrdersService', () => {
     });
 
     it('should throw an error if sale status not found', async () => {
-      jest
-        .spyOn(salePlatformsService, 'findOne')
-        .mockResolvedValue(platformMock);
+      jest.spyOn(platformsService, 'findOne').mockResolvedValue(platformMock);
 
       jest
         .spyOn(saleStatusService, 'findOne')

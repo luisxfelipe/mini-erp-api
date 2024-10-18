@@ -1,24 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SalePlatformsService } from '../sale-platforms.service';
+import { PlatformsService } from '../platforms.service';
 import { Repository } from 'typeorm';
-import { SalePlatform } from '../entities/sale-platform.entity';
+import { Platform } from '../entities/platform.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { createSalePlatformMock } from './mocks/create-sale-platform.mock';
-import { updateSalePlatformMock } from './mocks/update-sale-platform.mock';
+import { createPlatformMock } from './mocks/create-platform.mock';
+import { updatePlatformMock } from './mocks/update-platform.mock';
 import { platformMock } from './mocks/platform.mock';
 import { returnDeleteMock } from '../../../mocks/return-delete.mock';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 
-describe('SalePlatformsService', () => {
-  let service: SalePlatformsService;
-  let repository: Repository<SalePlatform>;
+describe('PlatformsService', () => {
+  let service: PlatformsService;
+  let repository: Repository<Platform>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        SalePlatformsService,
+        PlatformsService,
         {
-          provide: getRepositoryToken(SalePlatform),
+          provide: getRepositoryToken(Platform),
           useValue: {
             find: jest.fn().mockResolvedValue([platformMock]),
             findOneOrFail: jest.fn().mockResolvedValue(platformMock),
@@ -31,10 +31,8 @@ describe('SalePlatformsService', () => {
       ],
     }).compile();
 
-    service = module.get<SalePlatformsService>(SalePlatformsService);
-    repository = module.get<Repository<SalePlatform>>(
-      getRepositoryToken(SalePlatform),
-    );
+    service = module.get<PlatformsService>(PlatformsService);
+    repository = module.get<Repository<Platform>>(getRepositoryToken(Platform));
   });
 
   it('should be defined', () => {
@@ -46,7 +44,7 @@ describe('SalePlatformsService', () => {
     it('should create a platform', async () => {
       jest.spyOn(service, 'findOneByName').mockResolvedValueOnce(undefined);
 
-      const platform = await service.create(createSalePlatformMock);
+      const platform = await service.create(createPlatformMock);
 
       expect(platform).toEqual(platformMock);
       expect(repository.save).toHaveBeenCalledWith(platformMock);
@@ -57,12 +55,12 @@ describe('SalePlatformsService', () => {
     it('should return an error', async () => {
       jest.spyOn(repository, 'save').mockRejectedValueOnce(new Error());
 
-      expect(service.create(createSalePlatformMock)).rejects.toThrow(Error);
+      expect(service.create(createPlatformMock)).rejects.toThrow(Error);
     });
 
     it('should throw BadRequestException if platform already exists', async () => {
       jest.spyOn(service, 'findOneByName').mockResolvedValueOnce(platformMock);
-      await expect(service.create(createSalePlatformMock)).rejects.toThrow(
+      await expect(service.create(createPlatformMock)).rejects.toThrow(
         BadRequestException,
       );
     });
@@ -120,10 +118,7 @@ describe('SalePlatformsService', () => {
 
   describe('update', () => {
     it('should update a platform', async () => {
-      const result = await service.update(
-        platformMock.id,
-        updateSalePlatformMock,
-      );
+      const result = await service.update(platformMock.id, updatePlatformMock);
 
       expect(result).toEqual(platformMock);
     });
@@ -133,7 +128,7 @@ describe('SalePlatformsService', () => {
         .spyOn(repository, 'findOneOrFail')
         .mockRejectedValueOnce(new Error());
       await expect(
-        service.update(platformMock.id, updateSalePlatformMock),
+        service.update(platformMock.id, updatePlatformMock),
       ).rejects.toThrow(NotFoundException);
     });
   });

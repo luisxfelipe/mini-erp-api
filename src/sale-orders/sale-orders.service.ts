@@ -3,7 +3,7 @@ import { CreateSaleOrderDto } from './dto/create-sales-order.dto';
 import { UpdateSaleOrderDto } from './dto/update-sale-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SalePlatformsService } from './sale-platforms/sale-platforms.service';
+import { PlatformsService } from './platforms/platforms.service';
 import { SaleStatusService } from './sale-status/sale-status.service';
 import { SaleOrder } from './entities/sale-order.entity';
 import { SaleOrderItemsService } from './sale-order-items/sale-order-items.service';
@@ -15,8 +15,8 @@ export class SaleOrdersService {
     private repository: Repository<SaleOrder>,
     @Inject(SaleOrderItemsService)
     private readonly saleOrderItemsService: SaleOrderItemsService,
-    @Inject(SalePlatformsService)
-    private readonly salePlatformsService: SalePlatformsService,
+    @Inject(PlatformsService)
+    private readonly platformsService: PlatformsService,
     @Inject(SaleStatusService)
     private readonly saleStatusService: SaleStatusService,
   ) {}
@@ -35,7 +35,7 @@ export class SaleOrdersService {
   }
 
   async create(createSaleOrderDto: CreateSaleOrderDto): Promise<SaleOrder> {
-    await this.salePlatformsService.findOne(createSaleOrderDto.platformId);
+    await this.platformsService.findOne(createSaleOrderDto.platformId);
     await this.saleStatusService.findOne(createSaleOrderDto.statusId);
 
     return await this.repository.save(
@@ -50,7 +50,7 @@ export class SaleOrdersService {
         ...findOptions,
         relations: {
           saleStatus: true,
-          salePlatform: true,
+          platform: true,
         },
       };
     }
@@ -62,7 +62,7 @@ export class SaleOrdersService {
     try {
       return await this.repository.findOneOrFail({
         where: { id },
-        ...(isRelation && { relations: ['saleStatus', 'salePlatform'] }),
+        ...(isRelation && { relations: ['saleStatus', 'platform'] }),
       });
     } catch (error) {
       throw new NotFoundException('Sale order not found');
@@ -74,7 +74,7 @@ export class SaleOrdersService {
     updateSaleOrderDto: UpdateSaleOrderDto,
   ): Promise<SaleOrder> {
     if (updateSaleOrderDto.platformId) {
-      await this.salePlatformsService.findOne(updateSaleOrderDto.platformId);
+      await this.platformsService.findOne(updateSaleOrderDto.platformId);
     }
     if (updateSaleOrderDto.statusId) {
       await this.saleStatusService.findOne(updateSaleOrderDto.statusId);

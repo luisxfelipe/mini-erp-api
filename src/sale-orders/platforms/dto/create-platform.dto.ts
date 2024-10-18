@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateSalePlatformDto {
+export class CreatePlatformDto {
   @IsString()
   @IsNotEmpty()
   name: string;

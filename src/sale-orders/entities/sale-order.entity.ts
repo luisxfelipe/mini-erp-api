@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { SaleStatus } from '../sale-status/entities/sale-status.entity';
-import { SalePlatform } from '../sale-platforms/entities/sale-platform.entity';
+import { Platform } from '../platforms/entities/platform.entity';
 import { SaleOrderItem } from '../sale-order-items/entities/sale-order-item.entity';
 import { SaleOrderRefund } from '../sale-order-refunds/entities/sale-order-refund.entity';
 
@@ -61,12 +61,9 @@ export class SaleOrder {
   )
   saleOrderItems?: SaleOrderItem[];
 
-  @ManyToOne(
-    () => SalePlatform,
-    (salePlatform: SalePlatform) => salePlatform.salesOrders,
-  )
+  @ManyToOne(() => Platform, (platform: Platform) => platform.salesOrders)
   @JoinColumn({ name: 'platform_id', referencedColumnName: 'id' })
-  salePlatform?: SalePlatform;
+  platform?: Platform;
 
   @ManyToOne(
     () => SaleStatus,

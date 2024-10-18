@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'sale_platform' })
-export class SalePlatform {
+export class Platform {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,13 +22,10 @@ export class SalePlatform {
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
 
-  @OneToMany(
-    () => SaleOrder,
-    (salesOrder: SaleOrder) => salesOrder.salePlatform,
-  )
+  @OneToMany(() => SaleOrder, (salesOrder: SaleOrder) => salesOrder.platform)
   salesOrders?: SaleOrder[];
 
-  constructor(partial: Partial<SalePlatform>) {
+  constructor(partial: Partial<Platform>) {
     Object.assign(this, partial);
   }
 }

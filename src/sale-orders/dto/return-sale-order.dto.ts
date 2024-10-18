@@ -1,12 +1,12 @@
 import { SaleOrder } from '../entities/sale-order.entity';
-import { ReturnSalePlatformDto } from '../sale-platforms/dto/return-sale-platform.dto';
+import { ReturnPlatformDto } from '../platforms/dto/return-platform.dto';
 
 import { ReturnSaleStatusDto } from '../sale-status/dto/return-sale-status.dto';
 
 export class ReturnSaleOrderDto {
   id: number;
   date: Date;
-  salePlatform?: ReturnSalePlatformDto;
+  platform?: ReturnPlatformDto;
   orderNumber?: string;
   trackingCode?: string;
   saleStatus?: ReturnSaleStatusDto;
@@ -16,8 +16,8 @@ export class ReturnSaleOrderDto {
   constructor(saleOrder: SaleOrder) {
     this.id = saleOrder.id;
     this.date = saleOrder.date;
-    this.salePlatform = saleOrder.salePlatform
-      ? new ReturnSalePlatformDto(saleOrder.salePlatform)
+    this.platform = saleOrder.platform
+      ? new ReturnPlatformDto(saleOrder.platform)
       : undefined;
     this.orderNumber = saleOrder.orderNumber
       ? saleOrder.orderNumber

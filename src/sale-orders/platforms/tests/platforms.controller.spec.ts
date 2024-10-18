@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SalePlatformsController } from '../sale-platforms.controller';
-import { SalePlatformsService } from '../sale-platforms.service';
+import { PlatformsController } from '../platforms.controller';
+import { PlatformsService } from '../platforms.service';
 import { platformMock } from './mocks/platform.mock';
-import { ReturnSalePlatformDto } from '../dto/return-sale-platform.dto';
+import { ReturnPlatformDto } from '../dto/return-platform.dto';
 import { returnDeleteMock } from '../../../mocks/return-delete.mock';
 
-describe('SalePlatformsController', () => {
-  let controller: SalePlatformsController;
-  let service: SalePlatformsService;
+describe('PlatformsController', () => {
+  let controller: PlatformsController;
+  let service: PlatformsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [SalePlatformsController],
+      controllers: [PlatformsController],
       providers: [
         {
-          provide: SalePlatformsService,
+          provide: PlatformsService,
           useValue: {
             findAll: jest.fn().mockResolvedValue([platformMock]),
             create: jest.fn().mockResolvedValue(platformMock),
@@ -26,8 +26,8 @@ describe('SalePlatformsController', () => {
       ],
     }).compile();
 
-    controller = module.get<SalePlatformsController>(SalePlatformsController);
-    service = module.get<SalePlatformsService>(SalePlatformsService);
+    controller = module.get<PlatformsController>(PlatformsController);
+    service = module.get<PlatformsService>(PlatformsService);
   });
 
   it('should be defined', () => {
@@ -38,7 +38,7 @@ describe('SalePlatformsController', () => {
   describe('create', () => {
     it('should return a platform', async () => {
       const platform = await controller.create(platformMock);
-      expect(platform).toEqual(new ReturnSalePlatformDto(platformMock));
+      expect(platform).toEqual(new ReturnPlatformDto(platformMock));
       expect(service.create).toHaveBeenCalledWith(platformMock);
       expect(service.create).toHaveBeenCalledTimes(1);
     });
@@ -47,7 +47,7 @@ describe('SalePlatformsController', () => {
   describe('findAll', () => {
     it('should return an array of platform', async () => {
       const platforms = await controller.findAll();
-      expect(platforms).toEqual([new ReturnSalePlatformDto(platformMock)]);
+      expect(platforms).toEqual([new ReturnPlatformDto(platformMock)]);
       expect(service.findAll).toHaveBeenCalledTimes(1);
     });
   });
@@ -55,7 +55,7 @@ describe('SalePlatformsController', () => {
   describe('findOne', () => {
     it('should return a platform', async () => {
       const platform = await controller.findOne(platformMock.id);
-      expect(platform).toEqual(new ReturnSalePlatformDto(platformMock));
+      expect(platform).toEqual(new ReturnPlatformDto(platformMock));
       expect(service.findOne).toHaveBeenCalledWith(platformMock.id);
       expect(service.findOne).toHaveBeenCalledTimes(1);
     });
@@ -71,7 +71,7 @@ describe('SalePlatformsController', () => {
   describe('update', () => {
     it('should return a platform', async () => {
       const platform = await controller.update(platformMock.id, platformMock);
-      expect(platform).toEqual(new ReturnSalePlatformDto(platformMock));
+      expect(platform).toEqual(new ReturnPlatformDto(platformMock));
       expect(service.update).toHaveBeenCalledWith(
         platformMock.id,
         platformMock,
