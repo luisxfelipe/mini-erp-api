@@ -18,6 +18,9 @@ export class SaleOrder {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'date', name: 'date', nullable: false })
+  date: Date;
+
   @Column({ name: 'order_number' })
   orderNumber: string;
 

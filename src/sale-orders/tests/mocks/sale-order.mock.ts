@@ -4,6 +4,7 @@ import { saleStatusMock } from '../../sale-status/tests/mocks/sale-status.mock';
 
 export const saleOrderMock: SaleOrder = {
   id: 1,
+  date: new Date(),
   orderNumber: '123456789',
   trackingCode: 'BR123456789SP',
   platformId: platformMock.id,

@@ -1,4 +1,5 @@
 import {
+  IsDateString,
   IsInt,
   IsNotEmpty,
   IsNumber,
@@ -8,6 +9,9 @@ import {
 } from 'class-validator';
 
 export class CreateSaleOrderDto {
+  @IsDateString()
+  date: Date;
+
   @IsString()
   @IsNotEmpty()
   @IsOptional()

@@ -5,6 +5,7 @@ import { ReturnSaleStatusDto } from '../sale-status/dto/return-sale-status.dto';
 
 export class ReturnSaleOrderDto {
   id: number;
+  date: Date;
   salePlatform?: ReturnSalePlatformDto;
   orderNumber?: string;
   trackingCode?: string;
@@ -14,6 +15,7 @@ export class ReturnSaleOrderDto {
 
   constructor(saleOrder: SaleOrder) {
     this.id = saleOrder.id;
+    this.date = saleOrder.date;
     this.salePlatform = saleOrder.salePlatform
       ? new ReturnSalePlatformDto(saleOrder.salePlatform)
       : undefined;

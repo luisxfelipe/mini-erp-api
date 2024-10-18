@@ -5,6 +5,7 @@ import { returnPlatformMock } from '../../sale-platforms/tests/mocks/return-plat
 
 export const returnSaleOrderMock: ReturnSaleOrderDto = {
   id: saleOrderMock.id,
+  date: saleOrderMock.date,
   orderNumber: saleOrderMock.orderNumber,
   trackingCode: saleOrderMock.trackingCode,
   salePlatform: returnPlatformMock,
