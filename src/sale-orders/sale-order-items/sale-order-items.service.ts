@@ -13,6 +13,7 @@ import { Repository } from 'typeorm';
 import { SaleOrdersService } from '../sale-orders.service';
 import { ProductsService } from './../../products/products.service';
 import { ProductVariationsService } from './../../products/product-variations/product-variations.service';
+import { SaleOrderItemStatusService } from '../sale-order-item-status/sale-order-item-status.service';
 
 @Injectable()
 export class SaleOrderItemsService {
@@ -21,6 +22,8 @@ export class SaleOrderItemsService {
     private readonly repository: Repository<SaleOrderItem>,
     @Inject(forwardRef(() => SaleOrdersService))
     private readonly saleOrdersService: SaleOrdersService,
+    @Inject(SaleOrderItemStatusService)
+    private readonly saleOrderItemStatusService: SaleOrderItemStatusService,
     @Inject(ProductsService)
     private readonly productsService: ProductsService,
     @Inject(ProductVariationsService)
@@ -101,13 +104,24 @@ export class SaleOrderItemsService {
   ): Promise<SaleOrderItem> {
     const saleOrderItem = await this.findOne(id);
 
-    console.log(
-      `updateSaleOrderItemDto: ${JSON.stringify(updateSaleOrderItemDto)}`,
+    const product = await this.productsService.findOne(
+      updateSaleOrderItemDto.productId,
+    );
+
+    const productVariation = await this.productVariationsService.findOne(
+      updateSaleOrderItemDto.productVariationId,
+    );
+
+    const saleOrderItemStatus = await this.saleOrderItemStatusService.findOne(
+      updateSaleOrderItemDto.saleOrderItemStatusId,
     );
 
     return await this.repository.save({
       ...saleOrderItem,
       ...updateSaleOrderItemDto,
+      product,
+      productVariation,
+      saleOrderItemStatus,
     });
   }
 }
