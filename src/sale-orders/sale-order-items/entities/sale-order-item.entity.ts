@@ -51,13 +51,18 @@ export class SaleOrderItem {
   @JoinColumn({ name: 'sale_order_id', referencedColumnName: 'id' })
   saleOrder?: SaleOrder;
 
-  @ManyToOne(() => Product, (product: Product) => product.saleOrderItem)
+  @ManyToOne(() => Product, (product: Product) => product.saleOrderItem, {
+    eager: true,
+  })
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product?: Product;
 
   @ManyToOne(
     () => ProductVariation,
     (productVariation: ProductVariation) => productVariation.saleOrderItems,
+    {
+      eager: true,
+    },
   )
   @JoinColumn({ name: 'product_variation_id', referencedColumnName: 'id' })
   productVariation?: ProductVariation;
@@ -66,6 +71,9 @@ export class SaleOrderItem {
     () => SaleOrderItemStatus,
     (saleOrderItemStatus: SaleOrderItemStatus) =>
       saleOrderItemStatus.saleOrderItems,
+    {
+      eager: true,
+    },
   )
   @JoinColumn({
     name: 'sale_order_item_status_id',

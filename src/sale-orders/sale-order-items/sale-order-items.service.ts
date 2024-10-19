@@ -66,7 +66,15 @@ export class SaleOrderItemsService {
   }
 
   async findAll(saleOrderId: number): Promise<SaleOrderItem[]> {
-    return await this.repository.findBy({ saleOrderId });
+    const findOptions = {
+      where: { saleOrderId },
+      relations: {
+        product: true,
+        productVariation: true,
+        saleOrderItemStatus: true,
+      },
+    };
+    return await this.repository.find(findOptions);
   }
 
   async findOne(id: number, isRelations?: boolean): Promise<SaleOrderItem> {
@@ -77,6 +85,7 @@ export class SaleOrderItemsService {
           saleOrder: isRelations ? true : false,
           product: isRelations ? true : false,
           productVariation: isRelations ? true : false,
+          saleOrderItemStatus: isRelations ? true : false,
         },
       });
 
@@ -91,6 +100,10 @@ export class SaleOrderItemsService {
     updateSaleOrderItemDto: UpdateSaleOrderItemDto,
   ): Promise<SaleOrderItem> {
     const saleOrderItem = await this.findOne(id);
+
+    console.log(
+      `updateSaleOrderItemDto: ${JSON.stringify(updateSaleOrderItemDto)}`,
+    );
 
     return await this.repository.save({
       ...saleOrderItem,
