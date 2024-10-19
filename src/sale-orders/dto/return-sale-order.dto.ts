@@ -9,7 +9,7 @@ export class ReturnSaleOrderDto {
   platform?: ReturnPlatformDto;
   orderNumber?: string;
   trackingCode?: string;
-  saleStatus?: ReturnSaleStatusDto;
+  status?: ReturnSaleStatusDto;
   discount?: number;
   shippingCost?: number;
 
@@ -25,7 +25,7 @@ export class ReturnSaleOrderDto {
     this.trackingCode = saleOrder.trackingCode
       ? saleOrder.trackingCode
       : undefined;
-    this.saleStatus = saleOrder.saleStatus
+    this.status = saleOrder.saleStatus
       ? new ReturnSaleStatusDto(saleOrder.saleStatus)
       : undefined;
     this.discount = saleOrder.discount ? saleOrder.discount : undefined;

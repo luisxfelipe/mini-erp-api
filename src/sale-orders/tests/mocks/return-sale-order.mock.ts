@@ -9,7 +9,7 @@ export const returnSaleOrderMock: ReturnSaleOrderDto = {
   orderNumber: saleOrderMock.orderNumber,
   trackingCode: saleOrderMock.trackingCode,
   platform: returnPlatformMock,
-  saleStatus: saleOrderMock.saleStatus,
+  status: saleOrderMock.saleStatus,
   discount: saleOrderMock.discount,
   shippingCost: saleOrderMock.shippingCost,
 };
