@@ -13,6 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PurchaseOrdersService } from '../purchase-orders.service';
 import { ProductsService } from './../../products/products.service';
 import { ProductVariationsService } from './../../products/product-variations/product-variations.service';
+import { PurchaseOrderItemStatusService } from '../purchase-order-item-status/purchase-order-item-status.service';
 
 @Injectable()
 export class PurchaseOrderItemsService {
@@ -21,6 +22,8 @@ export class PurchaseOrderItemsService {
     private readonly repository: Repository<PurchaseOrderItem>,
     @Inject(forwardRef(() => PurchaseOrdersService))
     private readonly purchaseOrdersService: PurchaseOrdersService,
+    @Inject(forwardRef(() => PurchaseOrdersService))
+    private readonly purchaseOrderItemStatusService: PurchaseOrderItemStatusService,
     @Inject(ProductsService)
     private readonly productsService: ProductsService,
     @Inject(ProductVariationsService)
@@ -101,9 +104,25 @@ export class PurchaseOrderItemsService {
   ): Promise<PurchaseOrderItem> {
     const purchaseOrderItem = await this.findOne(id);
 
+    const product = await this.productsService.findOne(
+      updatePurchaseOrderItemDto.productId,
+    );
+
+    const productVariation = await this.productVariationsService.findOne(
+      updatePurchaseOrderItemDto.productVariationId,
+    );
+
+    const purchaseOrderItemStatus =
+      await this.purchaseOrderItemStatusService.findOne(
+        updatePurchaseOrderItemDto.purchaseOrderItemStatusId,
+      );
+
     return await this.repository.save({
       ...purchaseOrderItem,
       ...updatePurchaseOrderItemDto,
+      product,
+      productVariation,
+      purchaseOrderItemStatus,
     });
   }
 }
