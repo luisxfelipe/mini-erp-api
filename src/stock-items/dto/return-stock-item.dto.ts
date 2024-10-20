@@ -7,7 +7,6 @@ export class ReturnStockItemDto {
   productVariationId: number;
   saleOrderItemId?: number;
   stockItemStatusId: number;
-  batchNumber: number;
   manufactureDate?: Date;
   expirationDate?: Date;
 
@@ -20,7 +19,6 @@ export class ReturnStockItemDto {
       ? stockItemEntity.saleOrderItemId
       : undefined;
     this.stockItemStatusId = stockItemEntity.stockItemStatusId;
-    this.batchNumber = stockItemEntity.batchNumber;
     this.manufactureDate = stockItemEntity.manufactureDate
       ? stockItemEntity.manufactureDate
       : undefined;

@@ -21,7 +21,7 @@ export class StockItemsController {
   @Post()
   @ApiBody({
     type: [CreateStockItemDto],
-    description: 'Array de itens de estoque para criar',
+    description: 'Array of stock items to be created',
     examples: [
       {
         value: [
@@ -31,7 +31,6 @@ export class StockItemsController {
             productVariationId: 0,
             saleOrderItemId: 0,
             stockItemStatusId: 0,
-            batchNumber: 0,
             manufactureDate: '2024-10-20T18:29:33.342Z',
             expirationDate: '2024-10-20T18:29:33.342Z',
           },

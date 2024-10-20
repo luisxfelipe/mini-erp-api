@@ -17,9 +17,6 @@ export class CreateStockItemDto {
   @IsInt()
   stockItemStatusId: number;
 
-  @IsInt()
-  batchNumber: number;
-
   @IsDate()
   @IsOptional()
   manufactureDate: Date;

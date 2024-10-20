@@ -34,9 +34,6 @@ export class StockItem {
   @Column({ name: 'stock_item_status_id', nullable: false })
   stockItemStatusId: number;
 
-  @Column({ name: 'batch_number', nullable: false })
-  batchNumber: number;
-
   @Column({ name: 'manufacture_date' })
   manufactureDate: Date;
 
