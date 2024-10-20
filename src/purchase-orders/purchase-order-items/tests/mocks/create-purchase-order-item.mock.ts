@@ -6,6 +6,7 @@ import { purchaseOrderItemStatusMock } from './../../../../purchase-orders/purch
 export const createPurchaseOrderItemMock: CreatePurchaseOrderItemDto = {
   productId: productMock.id,
   productVariationId: productVariationMock.id,
+  quantity: 5,
   supplierProductCode: '12707070',
   purchaseOrderItemStatusId: purchaseOrderItemStatusMock.id,
   price: 48.97,

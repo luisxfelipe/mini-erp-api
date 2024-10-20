@@ -24,12 +24,14 @@ export class PurchaseOrderItemsController {
   async create(
     @Body() createPurchaseOrderItemDto: CreatePurchaseOrderItemDto,
     @Param('purchaseOrderId', ParseIntPipe) purchaseOrderId: number,
-  ): Promise<ReturnPurchaseOrderItemDto> {
-    return new ReturnPurchaseOrderItemDto(
+  ): Promise<ReturnPurchaseOrderItemDto[]> {
+    return (
       await this.purchaseOrderItemsService.create(
         purchaseOrderId,
         createPurchaseOrderItemDto,
-      ),
+      )
+    ).map(
+      (purchaseOrderItem) => new ReturnPurchaseOrderItemDto(purchaseOrderItem),
     );
   }
 

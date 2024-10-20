@@ -15,6 +15,10 @@ export class CreatePurchaseOrderItemDto {
   @IsInt()
   productVariationId: number;
 
+  @IsInt()
+  @IsPositive()
+  quantity: number;
+
   @IsString()
   @IsNotEmpty()
   @IsOptional()

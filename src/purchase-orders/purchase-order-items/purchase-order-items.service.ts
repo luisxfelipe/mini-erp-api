@@ -41,31 +41,31 @@ export class PurchaseOrderItemsService {
   async create(
     purchaseOrderId: number,
     createPurchaseOrderItemDto: CreatePurchaseOrderItemDto,
-  ): Promise<PurchaseOrderItem> {
+  ): Promise<PurchaseOrderItem[]> {
     await this.purchaseOrdersService.findOne(purchaseOrderId);
-    await this.productsService.findOne(createPurchaseOrderItemDto.productId);
-    await this.productVariationsService.findOne(
+    const product = await this.productsService.findOne(
+      createPurchaseOrderItemDto.productId,
+    );
+    const productVariation = await this.productVariationsService.findOne(
       createPurchaseOrderItemDto.productVariationId,
     );
 
-    const purchaseOrderItem = await this.repository.findOneBy({
-      productId: createPurchaseOrderItemDto.productId,
-      productVariationId: createPurchaseOrderItemDto.productVariationId,
-      purchaseOrderId,
-    });
-
-    if (purchaseOrderItem) {
+    if (productVariation.productId !== product.id) {
       throw new BadRequestException(
-        `Purchase order item with productId ${createPurchaseOrderItemDto.productId} and productVariationId ${createPurchaseOrderItemDto.productVariationId} already exists`,
+        'The variation does not belong to this product',
       );
     }
 
-    return await this.repository.save(
-      this.repository.create({
+    const purchaseOrderItems = [];
+    for (let i = 0; i < createPurchaseOrderItemDto.quantity; i++) {
+      const purchaseOrderItem = this.repository.create({
         ...createPurchaseOrderItemDto,
         purchaseOrderId,
-      }),
-    );
+      });
+      purchaseOrderItems.push(purchaseOrderItem);
+    }
+
+    return await this.repository.save(purchaseOrderItems);
   }
 
   async findAll(purchaseOrderId: number): Promise<PurchaseOrderItem[]> {
