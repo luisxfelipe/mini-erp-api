@@ -27,25 +27,33 @@ export class StockItemsService {
     private readonly stockItemStatusService: StockItemStatusService,
   ) {}
 
-  async create(createStockItemDto: CreateStockItemDto): Promise<StockItem> {
-    await this.purchaseOrderItemsService.findOne(
-      createStockItemDto.purchaseOrderItemId,
-    );
-    await this.productsService.findOne(createStockItemDto.productId);
-    await this.productVariationsService.findOne(
-      createStockItemDto.productVariationId,
-    );
-    if (createStockItemDto.saleOrderItemId) {
-      await this.saleOrderItemsService.findOne(
-        createStockItemDto.saleOrderItemId,
+  async create(
+    createStockItemDtos: CreateStockItemDto[],
+  ): Promise<StockItem[]> {
+    const stockItems = [];
+
+    for (const createStockItemDto of createStockItemDtos) {
+      await this.purchaseOrderItemsService.findOne(
+        createStockItemDto.purchaseOrderItemId,
       );
+      await this.productsService.findOne(createStockItemDto.productId);
+      await this.productVariationsService.findOne(
+        createStockItemDto.productVariationId,
+      );
+      if (createStockItemDto.saleOrderItemId) {
+        await this.saleOrderItemsService.findOne(
+          createStockItemDto.saleOrderItemId,
+        );
+      }
+      await this.stockItemStatusService.findOne(
+        createStockItemDto.stockItemStatusId,
+      );
+
+      const stockItem = this.repository.create(createStockItemDto);
+      stockItems.push(stockItem);
     }
-    await this.stockItemStatusService.findOne(
-      createStockItemDto.stockItemStatusId,
-    );
-    return await this.repository.save(
-      this.repository.create(createStockItemDto),
-    );
+
+    return await this.repository.save(stockItems);
   }
 
   async findAll(): Promise<StockItem[]> {

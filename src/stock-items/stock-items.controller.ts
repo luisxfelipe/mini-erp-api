@@ -1,8 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  BadRequestException,
+} from '@nestjs/common';
 import { StockItemsService } from './stock-items.service';
 import { CreateStockItemDto } from './dto/create-stock-item.dto';
 import { UpdateStockItemDto } from './dto/update-stock-item.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { ReturnStockItemDto } from './dto/return-stock-item.dto';
 
 @Controller('stock-items')
@@ -11,12 +19,37 @@ export class StockItemsController {
   constructor(private readonly stockItemsService: StockItemsService) {}
 
   @Post()
+  @ApiBody({
+    type: [CreateStockItemDto],
+    description: 'Array de itens de estoque para criar',
+    examples: [
+      {
+        value: [
+          {
+            purchaseOrderItemId: 0,
+            productId: 0,
+            productVariationId: 0,
+            saleOrderItemId: 0,
+            stockItemStatusId: 0,
+            batchNumber: 0,
+            manufactureDate: '2024-10-20T18:29:33.342Z',
+            expirationDate: '2024-10-20T18:29:33.342Z',
+          },
+          // ...
+        ],
+      },
+    ] as any,
+  })
   async create(
-    @Body() createStockItemDto: CreateStockItemDto,
-  ): Promise<ReturnStockItemDto> {
-    return await new ReturnStockItemDto(
-      await this.stockItemsService.create(createStockItemDto),
-    );
+    @Body() createStockItemDtos: CreateStockItemDto[],
+  ): Promise<ReturnStockItemDto[]> {
+    if (!createStockItemDtos || createStockItemDtos.length === 0) {
+      throw new BadRequestException(
+        'A lista de itens de estoque não pode estar vazia',
+      );
+    }
+    const stockItems = await this.stockItemsService.create(createStockItemDtos);
+    return stockItems.map((stockItem) => new ReturnStockItemDto(stockItem));
   }
 
   @Get()
