@@ -7,8 +7,6 @@ export class ReturnStockItemDto {
   productVariationId: number;
   saleOrderItemId?: number;
   stockItemStatusId: number;
-  manufactureDate?: Date;
-  expirationDate?: Date;
 
   constructor(stockItemEntity: StockItem) {
     this.id = stockItemEntity.id;
@@ -19,11 +17,5 @@ export class ReturnStockItemDto {
       ? stockItemEntity.saleOrderItemId
       : undefined;
     this.stockItemStatusId = stockItemEntity.stockItemStatusId;
-    this.manufactureDate = stockItemEntity.manufactureDate
-      ? stockItemEntity.manufactureDate
-      : undefined;
-    this.expirationDate = stockItemEntity.expirationDate
-      ? stockItemEntity.expirationDate
-      : undefined;
   }
 }

@@ -12,8 +12,6 @@ export const stockItemMock: StockItem = {
   productVariationId: productVariationMock.id,
   saleOrderItemId: saleOrderItemMock.id,
   stockItemStatusId: stockItemStatusMock.id,
-  manufactureDate: new Date(),
-  expirationDate: new Date(),
   createdAt: new Date(),
   updatedAt: new Date(),
 };

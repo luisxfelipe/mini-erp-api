@@ -34,12 +34,6 @@ export class StockItem {
   @Column({ name: 'stock_item_status_id', nullable: false })
   stockItemStatusId: number;
 
-  @Column({ name: 'manufacture_date' })
-  manufactureDate: Date;
-
-  @Column({ name: 'expiration_date' })
-  expirationDate: Date;
-
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
 

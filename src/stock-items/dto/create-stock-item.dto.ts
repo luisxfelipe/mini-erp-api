@@ -1,4 +1,4 @@
-import { IsDate, IsInt, IsOptional } from 'class-validator';
+import { IsInt, IsOptional } from 'class-validator';
 
 export class CreateStockItemDto {
   @IsInt()
@@ -16,12 +16,4 @@ export class CreateStockItemDto {
 
   @IsInt()
   stockItemStatusId: number;
-
-  @IsDate()
-  @IsOptional()
-  manufactureDate: Date;
-
-  @IsDate()
-  @IsOptional()
-  expirationDate: Date;
 }

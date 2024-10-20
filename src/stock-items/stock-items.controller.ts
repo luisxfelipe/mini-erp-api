@@ -31,8 +31,6 @@ export class StockItemsController {
             productVariationId: 0,
             saleOrderItemId: 0,
             stockItemStatusId: 0,
-            manufactureDate: '2024-10-20T18:29:33.342Z',
-            expirationDate: '2024-10-20T18:29:33.342Z',
           },
           // ...
         ],
