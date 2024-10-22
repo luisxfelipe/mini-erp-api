@@ -9,6 +9,7 @@ import { ProductVariationsService } from './../products/product-variations/produ
 import { PurchaseOrderItemsService } from './../purchase-orders/purchase-order-items/purchase-order-items.service';
 import { SaleOrderItemsService } from './../sale-orders/sale-order-items/sale-order-items.service';
 import { StockItemStatusService } from './stock-item-status/stock-item-status.service';
+import { UpdatePurchaseOrderItemDto } from 'src/purchase-orders/purchase-order-items/dto/update-purchase-order-item.dto';
 
 @Injectable()
 export class StockItemsService {
@@ -53,7 +54,19 @@ export class StockItemsService {
       stockItems.push(stockItem);
     }
 
-    return await this.repository.save(stockItems);
+    const result = await this.repository.save(stockItems);
+
+    for (const stockItem of result) {
+      const updatePurchaseOrderItemDto: UpdatePurchaseOrderItemDto = {
+        purchaseOrderItemStatusId: stockItem.purchaseOrderItemStatusId,
+      };
+      await this.purchaseOrderItemsService.update(
+        stockItem.purchaseOrderItemId,
+        updatePurchaseOrderItemDto,
+      );
+    }
+
+    return result;
   }
 
   async findAll(): Promise<StockItem[]> {
