@@ -34,6 +34,13 @@ export class StockItemsService {
     const stockItems = [];
 
     for (const createStockItemDto of createStockItemDtos) {
+      if (
+        !createStockItemDto.identifier ||
+        !createStockItemDto.identifierTypeId
+      ) {
+        delete createStockItemDto.identifier;
+        delete createStockItemDto.identifierTypeId;
+      }
       await this.purchaseOrderItemsService.findOne(
         createStockItemDto.purchaseOrderItemId,
       );

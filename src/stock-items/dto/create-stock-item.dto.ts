@@ -1,4 +1,10 @@
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 
 export class CreateStockItemDto {
   @IsInt()
@@ -18,10 +24,13 @@ export class CreateStockItemDto {
   stockItemStatusId: number;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
-  identifier: string;
+  identifier?: string;
 
   @IsInt()
+  @IsPositive()
+  @IsNotEmpty()
   @IsOptional()
-  identifierTypeId: number;
+  identifierTypeId?: number;
 }
