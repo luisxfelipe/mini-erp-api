@@ -7,6 +7,8 @@ export class ReturnStockItemDto {
   productVariationId: number;
   saleOrderItemId?: number;
   stockItemStatusId: number;
+  identifier?: string;
+  identifierTypeId?: number;
 
   constructor(stockItemEntity: StockItem) {
     this.id = stockItemEntity.id;
@@ -17,5 +19,7 @@ export class ReturnStockItemDto {
       ? stockItemEntity.saleOrderItemId
       : undefined;
     this.stockItemStatusId = stockItemEntity.stockItemStatusId;
+    this.identifier = stockItemEntity.identifier;
+    this.identifierTypeId = stockItemEntity.identifierTypeId;
   }
 }

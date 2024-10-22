@@ -7,4 +7,6 @@ export const createStockItemMock: CreateStockItemDto = {
   productVariationId: stockItemMock.productVariationId,
   saleOrderItemId: stockItemMock.saleOrderItemId,
   stockItemStatusId: stockItemMock.stockItemStatusId,
+  identifier: stockItemMock.identifier,
+  identifierTypeId: stockItemMock.identifierTypeId,
 };

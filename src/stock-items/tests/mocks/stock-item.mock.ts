@@ -1,3 +1,4 @@
+import { stockItemIdentifierTypeMock } from 'src/stock-items/stock-item-identifier-types/tests/mocks/stock-item-identifier-type.mock';
 import { productVariationMock } from './../../../products/product-variations/tests/mocks/product-variation.mock';
 import { productMock } from './../../../products/tests/mocks/product.mock';
 import { purchaseOrderItemMock } from './../../../purchase-orders/purchase-order-items/tests/mocks/purchase-order-item.mock';
@@ -12,6 +13,8 @@ export const stockItemMock: StockItem = {
   productVariationId: productVariationMock.id,
   saleOrderItemId: saleOrderItemMock.id,
   stockItemStatusId: stockItemStatusMock.id,
+  identifier: 'identifier',
+  identifierTypeId: stockItemIdentifierTypeMock.id,
   createdAt: new Date(),
   updatedAt: new Date(),
 };

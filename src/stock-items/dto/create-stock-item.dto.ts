@@ -1,4 +1,4 @@
-import { IsInt, IsOptional } from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class CreateStockItemDto {
   @IsInt()
@@ -16,4 +16,12 @@ export class CreateStockItemDto {
 
   @IsInt()
   stockItemStatusId: number;
+
+  @IsString()
+  @IsOptional()
+  identifier: string;
+
+  @IsInt()
+  @IsOptional()
+  identifierTypeId: number;
 }

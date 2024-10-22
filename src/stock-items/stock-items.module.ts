@@ -9,9 +9,6 @@ import { StockItemIdentifierType } from './stock-item-identifier-types/entities/
 import { StockItem } from './entities/stock-item.entity';
 import { StockItemIdentifierTypesController } from './stock-item-identifier-types/stock-item-identifier-types.controller';
 import { StockItemIdentifierTypesService } from './stock-item-identifier-types/stock-item-identifier-types.service';
-import { StockItemIdentifier } from './stock-item-identifiers/entities/stock-item-identifier.entity';
-import { StockItemIdentifiersController } from './stock-item-identifiers/stock-item-identifiers.controller';
-import { StockItemIdentifiersService } from './stock-item-identifiers/stock-item-identifiers.service';
 import { PurchaseOrdersModule } from './../purchase-orders/purchase-orders.module';
 import { ProductsModule } from './../products/products.module';
 import { SaleOrdersModule } from './../sale-orders/sale-orders.module';
@@ -20,7 +17,6 @@ import { SaleOrdersModule } from './../sale-orders/sale-orders.module';
   imports: [
     TypeOrmModule.forFeature([
       StockItem,
-      StockItemIdentifier,
       StockItemIdentifierType,
       StockItemStatus,
     ]),
@@ -30,13 +26,11 @@ import { SaleOrdersModule } from './../sale-orders/sale-orders.module';
   ],
   controllers: [
     StockItemsController,
-    StockItemIdentifiersController,
     StockItemIdentifierTypesController,
     StockItemStatusController,
   ],
   providers: [
     StockItemsService,
-    StockItemIdentifiersService,
     StockItemIdentifierTypesService,
     StockItemStatusService,
   ],

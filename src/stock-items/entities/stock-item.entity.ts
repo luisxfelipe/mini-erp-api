@@ -13,6 +13,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { StockItemStatus } from '../stock-item-status/entities/stock-item-status.entity';
+import { StockItemIdentifierType } from '../stock-item-identifier-types/entities/stock-item-identifier-type.entity';
 
 @Entity({ name: 'stock_item' })
 export class StockItem {
@@ -33,6 +34,12 @@ export class StockItem {
 
   @Column({ name: 'stock_item_status_id', nullable: false })
   stockItemStatusId: number;
+
+  @Column({ name: 'identifier' })
+  identifier: string;
+
+  @Column({ name: 'identifier_type_id' })
+  identifierTypeId: number;
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
@@ -69,6 +76,17 @@ export class StockItem {
   )
   @JoinColumn({ name: 'stock_item_status_id', referencedColumnName: 'id' })
   stockItemStatus?: StockItemStatus;
+
+  @ManyToOne(
+    () => StockItemIdentifierType,
+    (stockItemIdentifierType: StockItemIdentifierType) =>
+      stockItemIdentifierType.stockItems,
+  )
+  @JoinColumn({
+    name: 'identifier_type_id',
+    referencedColumnName: 'id',
+  })
+  stockItemIdentifierType?: StockItemIdentifierType;
 
   constructor(partial: Partial<StockItem>) {
     Object.assign(this, partial);

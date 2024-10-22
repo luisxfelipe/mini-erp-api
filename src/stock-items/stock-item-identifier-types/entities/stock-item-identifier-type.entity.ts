@@ -1,4 +1,4 @@
-import { StockItemIdentifier } from './../../../stock-items/stock-item-identifiers/entities/stock-item-identifier.entity';
+import { StockItem } from 'src/stock-items/entities/stock-item.entity';
 import {
   Column,
   CreateDateColumn,
@@ -23,11 +23,10 @@ export class StockItemIdentifierType {
   updatedAt: Date;
 
   @OneToMany(
-    () => StockItemIdentifier,
-    (stockItemIdentifier: StockItemIdentifier) =>
-      stockItemIdentifier.stockItemIdentifierType,
+    () => StockItem,
+    (stockItem: StockItem) => stockItem.identifierTypeId,
   )
-  stockItemIdentifiers?: StockItemIdentifier[];
+  stockItems?: StockItem[];
 
   constructor(partial: Partial<StockItemIdentifierType>) {
     Object.assign(this, partial);
