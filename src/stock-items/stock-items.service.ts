@@ -34,9 +34,11 @@ export class StockItemsService {
     const stockItems = [];
 
     for (const createStockItemDto of createStockItemDtos) {
-      const stockItem = await this.purchaseOrderItemsService.findOne(
-        createStockItemDto.purchaseOrderItemId,
-      );
+      const stockItem = await this.repository.findOne({
+        where: {
+          purchaseOrderItemId: createStockItemDto.purchaseOrderItemId,
+        },
+      });
 
       if (stockItem) {
         throw new NotFoundException(
