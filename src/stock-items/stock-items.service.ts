@@ -34,6 +34,18 @@ export class StockItemsService {
     const stockItems = [];
 
     for (const createStockItemDto of createStockItemDtos) {
+      const stockItem = await this.purchaseOrderItemsService.findOne(
+        createStockItemDto.purchaseOrderItemId,
+      );
+
+      if (stockItem) {
+        throw new NotFoundException(
+          `The purchase order item ${createStockItemDto.purchaseOrderItemId} has already been released in stock`,
+        );
+      }
+    }
+
+    for (const createStockItemDto of createStockItemDtos) {
       if (
         !createStockItemDto.identifier ||
         !createStockItemDto.identifierTypeId
