@@ -104,25 +104,24 @@ export class PurchaseOrderItemsService {
   ): Promise<PurchaseOrderItem> {
     const purchaseOrderItem = await this.findOne(id);
 
-    const product = await this.productsService.findOne(
-      updatePurchaseOrderItemDto.productId,
-    );
+    await this.productsService.findOne(updatePurchaseOrderItemDto.productId);
 
-    const productVariation = await this.productVariationsService.findOne(
+    await this.productVariationsService.findOne(
       updatePurchaseOrderItemDto.productVariationId,
     );
 
-    const purchaseOrderItemStatus =
-      await this.purchaseOrderItemStatusService.findOne(
-        updatePurchaseOrderItemDto.purchaseOrderItemStatusId,
+    await this.purchaseOrderItemStatusService.findOne(
+      updatePurchaseOrderItemDto.purchaseOrderItemStatusId,
+    );
+    try {
+      await this.repository.update(
+        purchaseOrderItem.id,
+        updatePurchaseOrderItemDto,
       );
 
-    return await this.repository.save({
-      ...purchaseOrderItem,
-      ...updatePurchaseOrderItemDto,
-      product,
-      productVariation,
-      purchaseOrderItemStatus,
-    });
+      return await this.findOne(purchaseOrderItem.id);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }
