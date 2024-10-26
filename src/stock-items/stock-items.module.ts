@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { StockItemsService } from './stock-items.service';
 import { StockItemsController } from './stock-items.controller';
 import { StockItemStatus } from './stock-item-status/entities/stock-item-status.entity';
@@ -22,7 +22,7 @@ import { SaleOrdersModule } from './../sale-orders/sale-orders.module';
     ]),
     ProductsModule,
     PurchaseOrdersModule,
-    SaleOrdersModule,
+    forwardRef(() => SaleOrdersModule),
   ],
   controllers: [
     StockItemsController,
@@ -34,5 +34,6 @@ import { SaleOrdersModule } from './../sale-orders/sale-orders.module';
     StockItemIdentifierTypesService,
     StockItemStatusService,
   ],
+  exports: [StockItemsService],
 })
 export class StockItemsModule {}

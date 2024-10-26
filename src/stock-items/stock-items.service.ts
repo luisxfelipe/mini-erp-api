@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateStockItemDto } from './dto/create-stock-item.dto';
 import { UpdateStockItemDto } from './dto/update-stock-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,11 +27,34 @@ export class StockItemsService {
     private readonly productsService: ProductsService,
     @Inject(ProductVariationsService)
     private readonly productVariationsService: ProductVariationsService,
-    @Inject(SaleOrderItemsService)
+    @Inject(forwardRef(() => SaleOrderItemsService))
     private readonly saleOrderItemsService: SaleOrderItemsService,
     @Inject(StockItemStatusService)
     private readonly stockItemStatusService: StockItemStatusService,
   ) {}
+
+  async postSoldItem(saleOrderId: number, productVariationId: number) {
+    const product = await this.repository.findOne({
+      where: {
+        productVariationId,
+        stockItemStatusId: 1,
+        saleOrderItemId: null,
+      },
+    });
+
+    if (!product) {
+      throw new NotFoundException(
+        `Product variation ${productVariationId} is out of stock`,
+      );
+    }
+
+    const stockItem = await this.repository.update(product.id, {
+      saleOrderItemId: saleOrderId,
+      stockItemStatusId: 2,
+    });
+
+    return stockItem;
+  }
 
   async create(
     createStockItemDtos: CreateStockItemDto[],

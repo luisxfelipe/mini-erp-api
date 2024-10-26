@@ -14,6 +14,7 @@ import { SaleOrdersService } from '../sale-orders.service';
 import { ProductsService } from './../../products/products.service';
 import { ProductVariationsService } from './../../products/product-variations/product-variations.service';
 import { SaleOrderItemStatusService } from '../sale-order-item-status/sale-order-item-status.service';
+import { StockItemsService } from 'src/stock-items/stock-items.service';
 
 @Injectable()
 export class SaleOrderItemsService {
@@ -28,6 +29,8 @@ export class SaleOrderItemsService {
     private readonly productsService: ProductsService,
     @Inject(ProductVariationsService)
     private readonly productVariationsService: ProductVariationsService,
+    @Inject(StockItemsService)
+    private readonly stockItemsService: StockItemsService,
   ) {}
 
   async calculateTotalValue(saleOrderId: number): Promise<number> {
@@ -57,6 +60,17 @@ export class SaleOrderItemsService {
     if (saleOrderItem) {
       throw new BadRequestException(
         `Sale order item with productId ${createSaleOrderItemDto.productId} and productVariationId ${createSaleOrderItemDto.productVariationId} already exists`,
+      );
+    }
+
+    const stockItem = await this.stockItemsService.postSoldItem(
+      saleOrderId,
+      createSaleOrderItemDto.productVariationId,
+    );
+
+    if (!stockItem) {
+      throw new BadRequestException(
+        `Product variation ${createSaleOrderItemDto.productVariationId} is out of stock`,
       );
     }
 

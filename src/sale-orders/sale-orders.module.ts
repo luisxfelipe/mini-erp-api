@@ -17,6 +17,7 @@ import { SaleOrderItemStatus } from './sale-order-item-status/entities/sale-orde
 import { SaleOrderItemStatusController } from './sale-order-item-status/sale-order-item-status.controller';
 import { SaleOrderItemStatusService } from './sale-order-item-status/sale-order-item-status.service';
 import { PlatformsModule } from 'src/platforms/platforms.module';
+import { StockItemsModule } from 'src/stock-items/stock-items.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PlatformsModule } from 'src/platforms/platforms.module';
     ]),
     PlatformsModule,
     ProductsModule,
+    StockItemsModule,
   ],
   controllers: [
     SaleOrdersController,
