@@ -107,7 +107,7 @@ export class StockItemsService {
 
     for (const stockItem of result) {
       const updatePurchaseOrderItemDto: UpdatePurchaseOrderItemDto = {
-        purchaseOrderItemStatusId: stockItem.purchaseOrderItemStatusId,
+        purchaseOrderItemStatusId: 1,
       };
       await this.purchaseOrderItemsService.update(
         stockItem.purchaseOrderItemId,
