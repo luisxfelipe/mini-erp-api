@@ -1,3 +1,4 @@
+import { SalesPlatformCommission } from 'src/pricing/sales-platform-commissions/entities/sales-platform-commission.entity';
 import { SaleOrder } from '../../sale-orders/entities/sale-order.entity';
 import {
   Column,
@@ -24,6 +25,13 @@ export class Platform {
 
   @OneToMany(() => SaleOrder, (salesOrder: SaleOrder) => salesOrder.platform)
   salesOrders?: SaleOrder[];
+
+  @OneToMany(
+    () => SalesPlatformCommission,
+    (salesPlatformCommission: SalesPlatformCommission) =>
+      salesPlatformCommission.salePlatform,
+  )
+  salesPlatformCommissions?: SalesPlatformCommission[];
 
   constructor(partial: Partial<Platform>) {
     Object.assign(this, partial);
