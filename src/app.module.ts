@@ -12,6 +12,7 @@ import { SaleOrdersModule } from './sale-orders/sale-orders.module';
 import { StockItemsModule } from './stock-items/stock-items.module';
 import { PlatformsModule } from './platforms/platforms.module';
 import { SalesPlatformCommissionsModule } from './pricing/sales-platform-commissions/sales-platform-commissions.module';
+import { PricingModule } from './pricing/pricing.module';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { SalesPlatformCommissionsModule } from './pricing/sales-platform-commiss
     SaleOrdersModule,
     StockItemsModule,
     SalesPlatformCommissionsModule,
+    PricingModule,
   ],
   controllers: [],
   providers: [AppService],

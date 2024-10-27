@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Pricing } from 'src/pricing/entities/pricing.entity';
 
 @Entity({ name: 'sale_platform' })
 export class Platform {
@@ -32,6 +33,9 @@ export class Platform {
       salesPlatformCommission.salePlatform,
   )
   salesPlatformCommissions?: SalesPlatformCommission[];
+
+  @OneToMany(() => Pricing, (pricing: Pricing) => pricing.salePlatform)
+  pricing?: Pricing[];
 
   constructor(partial: Partial<Platform>) {
     Object.assign(this, partial);
