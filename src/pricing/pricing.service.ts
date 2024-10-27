@@ -12,6 +12,8 @@ import { Repository } from 'typeorm';
 import { PlatformsService } from 'src/platforms/platforms.service';
 import { ProductsService } from 'src/products/products.service';
 import { ProductVariationsService } from 'src/products/product-variations/product-variations.service';
+import { Product } from 'src/products/entities/product.entity';
+import { ProductVariation } from 'src/products/product-variations/entities/product-variation.entity';
 
 @Injectable()
 export class PricingService {
@@ -54,6 +56,10 @@ export class PricingService {
       throw new BadRequestException('Pricing already exists');
     }
 
+    if (product.id !== productVariation.productId) {
+      throw new BadRequestException('Variation is not related to the product');
+    }
+
     const result = await this.repository.save(
       this.repository.create({ ...createPricingDto }),
     );
@@ -87,18 +93,45 @@ export class PricingService {
   ): Promise<Pricing> {
     const pricing = await this.findOne(id).catch(() => undefined);
 
+    let product: Product;
+    let productVariation: ProductVariation;
+
     if (!pricing) {
       throw new NotFoundException('Pricing not found');
     }
 
     if (updatePricingDto.productId) {
-      await this.productsService.findOne(updatePricingDto.productId);
+      product = await this.productsService.findOne(updatePricingDto.productId);
     }
 
     if (updatePricingDto.productVariationId) {
-      await this.productVariationsService.findOne(
+      productVariation = await this.productVariationsService.findOne(
         updatePricingDto.productVariationId,
       );
+    }
+
+    if (product || productVariation) {
+      if (
+        product &&
+        productVariation &&
+        product.id !== productVariation.productId
+      ) {
+        throw new BadRequestException(
+          'Variation is not related to the product',
+        );
+      }
+      if (product && !productVariation && pricing.productId !== product.id) {
+        throw new BadRequestException('Product is not related to variation');
+      }
+      if (
+        productVariation &&
+        !product &&
+        pricing.product.id !== productVariation.productId
+      ) {
+        throw new BadRequestException(
+          'Variation is not related to the product',
+        );
+      }
     }
 
     try {
