@@ -39,6 +39,15 @@ export class SalesPlatformCommissionsController {
     );
   }
 
+  @Get('by-platform/:platformId')
+  async findByPlatformId(
+    @Param('platformId') platformId: string,
+  ): Promise<ReturnSalePlatformCommissionDto> {
+    return new ReturnSalePlatformCommissionDto(
+      await this.salesPlatformCommissionsService.findByPlatformId(+platformId),
+    );
+  }
+
   @Get(':id')
   async findOne(
     @Param('id') id: string,

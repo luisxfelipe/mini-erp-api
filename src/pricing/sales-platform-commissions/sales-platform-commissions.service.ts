@@ -47,6 +47,16 @@ export class SalesPlatformCommissionsService {
     return this.repository.find();
   }
 
+  async findByPlatformId(platformId: number): Promise<SalesPlatformCommission> {
+    try {
+      return await this.repository.findOne({
+        where: { salePlatformId: platformId },
+      });
+    } catch (error) {
+      throw new NotFoundException('Sales platform commission not found');
+    }
+  }
+
   async findOne(id: number): Promise<SalesPlatformCommission> {
     try {
       return await this.repository.findOneOrFail({ where: { id } });
