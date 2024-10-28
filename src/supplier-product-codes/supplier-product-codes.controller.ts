@@ -31,6 +31,18 @@ export class SupplierProductCodesController {
     );
   }
 
+  @Get('by-supplier/:supplierId')
+  async findBySupplierId(
+    @Param('supplierId') supplierId: string,
+  ): Promise<ReturnSupplierProductCodeDto[]> {
+    return (
+      await this.supplierProductCodesService.findBySupplierId(+supplierId)
+    ).map(
+      (supplierProductCode) =>
+        new ReturnSupplierProductCodeDto(supplierProductCode),
+    );
+  }
+
   @Get(':id')
   async findOne(
     @Param('id') id: string,

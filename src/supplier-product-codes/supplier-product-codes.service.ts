@@ -75,6 +75,14 @@ export class SupplierProductCodesService {
     return await this.repository.find(findOptions);
   }
 
+  async findBySupplierId(supplierId: number): Promise<SupplierProductCode[]> {
+    const findOptions = {
+      where: { supplierId },
+      relations: ['product', 'productVariation', 'supplier'],
+    };
+    return await this.repository.find(findOptions);
+  }
+
   async findOne(id: number): Promise<SupplierProductCode> {
     try {
       return await this.repository.findOneOrFail({ where: { id } });
