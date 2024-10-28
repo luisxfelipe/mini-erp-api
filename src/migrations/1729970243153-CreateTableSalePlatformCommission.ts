@@ -9,7 +9,6 @@ export class CreateTableSalePlatformCommission1729970243153
         id INT NOT NULL AUTO_INCREMENT,
         sale_platform_id INT NOT NULL,
         commission_percentage INTEGER NOT NULL,
-        max_commission DECIMAL(10, 2),
         cost_per_item_sold DECIMAL(10, 2),
         default_profit_percentage INTEGER NOT NULL,
         additional_profit DECIMAL(10, 2),

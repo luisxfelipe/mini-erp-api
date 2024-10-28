@@ -5,7 +5,6 @@ export class ReturnSalePlatformCommissionDto {
   id: number;
   salePlatform?: ReturnPlatformDto;
   commissionPercentage: number;
-  maxCommission?: number;
   costPerItemSold?: number;
   defaultProfitPercentage: number;
   additionalProfit?: number;
@@ -16,9 +15,6 @@ export class ReturnSalePlatformCommissionDto {
       ? new ReturnPlatformDto(entity.salePlatform)
       : undefined;
     this.commissionPercentage = entity.commissionPercentage;
-    this.maxCommission = entity.maxCommission
-      ? entity.maxCommission
-      : undefined;
     this.costPerItemSold = entity.costPerItemSold
       ? entity.costPerItemSold
       : undefined;

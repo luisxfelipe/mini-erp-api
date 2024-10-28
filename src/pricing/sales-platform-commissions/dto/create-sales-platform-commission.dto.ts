@@ -9,11 +9,6 @@ export class CreateSalesPlatformCommissionDto {
   commissionPercentage: number;
 
   @IsNumber({ maxDecimalPlaces: 2 })
-  @IsPositive({ message: 'Max commission must be a positive number' })
-  @IsOptional()
-  maxCommission: number;
-
-  @IsNumber({ maxDecimalPlaces: 2 })
   @IsPositive({ message: 'Cost per item sold must be a positive number' })
   @IsOptional()
   costPerItemSold: number;

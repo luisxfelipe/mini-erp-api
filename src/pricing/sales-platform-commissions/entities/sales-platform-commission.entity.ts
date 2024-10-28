@@ -22,15 +22,6 @@ export class SalesPlatformCommission {
 
   @Column({
     type: 'decimal',
-    name: 'max_commission',
-    precision: 10,
-    scale: 2,
-    nullable: true,
-  })
-  maxCommission: number;
-
-  @Column({
-    type: 'decimal',
     name: 'cost_per_item_sold',
     precision: 10,
     scale: 2,
