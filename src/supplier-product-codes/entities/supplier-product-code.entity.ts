@@ -56,6 +56,7 @@ export class SupplierProductCode {
   @ManyToOne(
     () => Supplier,
     (supplier: Supplier) => supplier.supplierProductCodes,
+    { eager: true },
   )
   @JoinColumn({ name: 'supplier_id', referencedColumnName: 'id' })
   supplier?: Supplier;
