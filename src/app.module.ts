@@ -13,6 +13,7 @@ import { StockItemsModule } from './stock-items/stock-items.module';
 import { PlatformsModule } from './platforms/platforms.module';
 import { SalesPlatformCommissionsModule } from './pricing/sales-platform-commissions/sales-platform-commissions.module';
 import { PricingModule } from './pricing/pricing.module';
+import { SupplierProductCodesModule } from './supplier-product-codes/supplier-product-codes.module';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { PricingModule } from './pricing/pricing.module';
     StockItemsModule,
     SalesPlatformCommissionsModule,
     PricingModule,
+    SupplierProductCodesModule,
   ],
   controllers: [],
   providers: [AppService],

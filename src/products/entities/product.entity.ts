@@ -14,6 +14,7 @@ import { PurchaseOrderItem } from './../../purchase-orders/purchase-order-items/
 import { SaleOrderItem } from './../../sale-orders/sale-order-items/entities/sale-order-item.entity';
 import { StockItem } from './../../stock-items/entities/stock-item.entity';
 import { Pricing } from 'src/pricing/entities/pricing.entity';
+import { SupplierProductCode } from 'src/supplier-product-codes/entities/supplier-product-code.entity';
 
 @Entity({ name: 'product' })
 export class Product {
@@ -62,6 +63,12 @@ export class Product {
 
   @OneToMany(() => Pricing, (pricing: Pricing) => pricing.product)
   pricing?: Pricing;
+
+  @OneToMany(
+    () => SupplierProductCode,
+    (supplierProductCode: SupplierProductCode) => supplierProductCode.product,
+  )
+  supplierProductCodes?: SupplierProductCode;
 
   constructor(partial: Partial<Product>) {
     Object.assign(this, partial);
