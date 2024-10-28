@@ -10,12 +10,15 @@ export class CreateTableStockItem1722210753571 implements MigrationInterface {
         product_variation_id INT NOT NULL,
         sale_order_item_id INT,
         stock_item_status_id INT NOT NULL,
+        identifier VARCHAR(255),
+        identifier_type_id INT,
         batch_number int NOT NULL,
         manufacture_date DATE,
         expiration_date DATE,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+        CONSTRAINT uc_stock_item_identifier UNIQUE (identifier, identifier_type_id)
       );
     `);
   }
