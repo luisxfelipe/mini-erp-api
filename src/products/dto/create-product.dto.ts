@@ -10,7 +10,6 @@ export class CreateProductDto {
   categoryId: number;
 
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
   description?: string;
 }
