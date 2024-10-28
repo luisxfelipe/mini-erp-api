@@ -44,7 +44,9 @@ export class SalesPlatformCommissionsController {
     @Param('platformId') platformId: string,
   ): Promise<ReturnSalePlatformCommissionDto> {
     return new ReturnSalePlatformCommissionDto(
-      await this.salesPlatformCommissionsService.findByPlatformId(+platformId),
+      await this.salesPlatformCommissionsService.findOneByPlatformId(
+        +platformId,
+      ),
     );
   }
 

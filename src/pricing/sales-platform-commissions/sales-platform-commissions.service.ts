@@ -17,7 +17,7 @@ export class SalesPlatformCommissionsService {
   async create(
     createSalesPlatformCommissionDto: CreateSalesPlatformCommissionDto,
   ): Promise<SalesPlatformCommission> {
-    const salePlatformCommision = await this.findOne(
+    const salePlatformCommision = await this.findOneByPlatformId(
       createSalesPlatformCommissionDto.salePlatformId,
     ).catch(() => undefined);
 
@@ -47,7 +47,9 @@ export class SalesPlatformCommissionsService {
     return this.repository.find();
   }
 
-  async findByPlatformId(platformId: number): Promise<SalesPlatformCommission> {
+  async findOneByPlatformId(
+    platformId: number,
+  ): Promise<SalesPlatformCommission> {
     try {
       return await this.repository.findOne({
         where: { salePlatformId: platformId },
