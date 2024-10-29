@@ -28,6 +28,9 @@ export class SupplierProductCode {
   @Column({ name: 'supplier_product_code' })
   supplierProductCode: string;
 
+  @Column({ name: 'link', nullable: true })
+  link: string;
+
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
 
