@@ -4,11 +4,19 @@ import { CreatePricingDto } from './dto/create-pricing.dto';
 import { UpdatePricingDto } from './dto/update-pricing.dto';
 import { ReturnPricingDto } from './dto/return-pricing.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateSalePriceDto } from './dto/create-sale-price.dto';
 
 @Controller('pricing')
 @ApiTags('Pricing')
 export class PricingController {
   constructor(private readonly pricingService: PricingService) {}
+
+  @Post('/calculate')
+  async calculate(
+    @Body() createSalePriceDto: CreateSalePriceDto,
+  ): Promise<number> {
+    return await this.pricingService.calculateSalePrice(createSalePriceDto);
+  }
 
   @Post()
   async create(

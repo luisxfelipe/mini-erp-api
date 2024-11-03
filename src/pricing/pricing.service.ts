@@ -14,6 +14,8 @@ import { ProductsService } from 'src/products/products.service';
 import { ProductVariationsService } from 'src/products/product-variations/product-variations.service';
 import { Product } from 'src/products/entities/product.entity';
 import { ProductVariation } from 'src/products/product-variations/entities/product-variation.entity';
+import { CreateSalePriceDto } from './dto/create-sale-price.dto';
+import { SalesPlatformCommissionsService } from './sales-platform-commissions/sales-platform-commissions.service';
 
 @Injectable()
 export class PricingService {
@@ -26,7 +28,46 @@ export class PricingService {
     private readonly productsService: ProductsService,
     @Inject(ProductVariationsService)
     private readonly productVariationsService: ProductVariationsService,
+    @Inject(SalesPlatformCommissionsService)
+    private readonly salesPlatformCommissionsService: SalesPlatformCommissionsService,
   ) {}
+
+  async calculateSalePrice(
+    createSalePriceDto: CreateSalePriceDto,
+  ): Promise<number> {
+    const salePlatformCommission =
+      await this.salesPlatformCommissionsService.findOneByPlatformId(
+        createSalePriceDto.salePlatformId,
+      );
+
+    if (!salePlatformCommission) {
+      throw new BadRequestException('Sale platform commission not found');
+    }
+
+    const costPrice = createSalePriceDto.costPrice;
+    const additionalProfit =
+      createSalePriceDto.additionalProfit ||
+      salePlatformCommission.additionalProfit;
+    const costPerItemSold = Number(
+      createSalePriceDto.costPerItemSold ||
+        salePlatformCommission.costPerItemSold,
+    );
+
+    const costs = costPrice + additionalProfit + costPerItemSold;
+
+    const defaultProfitPercentage =
+      createSalePriceDto.profitPercentage ||
+      salePlatformCommission.defaultProfitPercentage;
+
+    const commissionPercentage = salePlatformCommission.commissionPercentage;
+
+    const profitPercentage =
+      (100 - (defaultProfitPercentage + commissionPercentage)) / 100;
+
+    const salePrice = Number((costs / profitPercentage).toFixed(2));
+
+    return salePrice;
+  }
 
   async create(createPricingDto: CreatePricingDto): Promise<Pricing> {
     await this.productsService.findOne(createPricingDto.productId);

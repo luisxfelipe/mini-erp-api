@@ -12,5 +12,6 @@ import { PlatformsModule } from 'src/platforms/platforms.module';
   ],
   controllers: [SalesPlatformCommissionsController],
   providers: [SalesPlatformCommissionsService],
+  exports: [SalesPlatformCommissionsService],
 })
 export class SalesPlatformCommissionsModule {}
