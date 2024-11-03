@@ -25,7 +25,7 @@ export class CreateSupplierProductCodeDto {
 
   @IsString()
   @IsOptional()
-  link: string;
+  supplierProductLink: string;
 
   @IsNumber()
   blingProductId: number;
