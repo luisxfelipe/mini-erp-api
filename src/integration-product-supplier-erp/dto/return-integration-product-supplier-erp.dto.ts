@@ -3,19 +3,19 @@ import { ReturnProductDto } from 'src/products/dto/return-product.dto';
 import { ReturnProductVariationDto } from 'src/products/product-variations/dto/return-product-variation.dto';
 
 import { ReturnSupplierDto } from 'src/suppliers/dto/return-supplier.dto';
-import { SupplierProductCode } from '../entities/supplier-product-code.entity';
+import { IntegrationProductSupplierErp } from '../entities/integration-product-supplier-erp.entity';
 
-export class ReturnSupplierProductCodeDto {
+export class ReturnIntegrationProductSupplierErpDto {
   id: number;
   product?: ReturnProductDto;
   productVariation?: ReturnProductVariationDto;
   supplier?: ReturnSupplierDto;
-  supplierProductCode: string;
+  integrationProductSupplierErp: string;
   inStockInTheSupplier: boolean;
   supplierProductLink?: string;
   blingProductId: number;
 
-  constructor(entity: SupplierProductCode) {
+  constructor(entity: IntegrationProductSupplierErp) {
     this.id = entity.id;
     this.product = entity.product
       ? new ReturnProductDto(entity.product)
@@ -26,7 +26,7 @@ export class ReturnSupplierProductCodeDto {
     this.supplier = entity.supplier
       ? new ReturnSupplierDto(entity.supplier)
       : undefined;
-    this.supplierProductCode = entity.supplierProductCode;
+    this.integrationProductSupplierErp = entity.integrationProductSupplierErp;
     this.inStockInTheSupplier = entity.inStockInTheSupplier;
     this.supplierProductLink = entity.supplierProductLink
       ? entity.supplierProductLink

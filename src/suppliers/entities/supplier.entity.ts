@@ -1,4 +1,4 @@
-import { SupplierProductCode } from 'src/supplier-product-codes/entities/supplier-product-code.entity';
+import { IntegrationProductSupplierErp } from 'src/integration-product-supplier-erp/entities/integration-product-supplier-erp.entity';
 import { PurchaseOrder } from './../../purchase-orders/entities/purchase-order.entity';
 import {
   Column,
@@ -48,10 +48,10 @@ export class Supplier {
   purchaseOrders?: PurchaseOrder[];
 
   @OneToMany(
-    () => SupplierProductCode,
-    (supplierProductCode) => supplierProductCode.supplier,
+    () => IntegrationProductSupplierErp,
+    (integrationProductSupplierErp) => integrationProductSupplierErp.supplier,
   )
-  supplierProductCodes?: SupplierProductCode[];
+  integrationProductSupplierErp?: IntegrationProductSupplierErp[];
 
   constructor(partial: Partial<Supplier>) {
     Object.assign(this, partial);

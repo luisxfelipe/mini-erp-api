@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateSupplierProductCodeDto {
+export class CreateIntegrationProductSupplierErpDto {
   @IsNumber()
   productId: number;
 

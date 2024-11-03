@@ -4,10 +4,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateSupplierProductCodeDto } from './dto/create-supplier-product-code.dto';
-import { UpdateSupplierProductCodeDto } from './dto/update-supplier-product-code.dto';
+import { CreateIntegrationProductSupplierErpDto } from './dto/create-integration-product-supplier-erp.dto';
+import { UpdateIntegrationProductSupplierErpDto } from './dto/update-integration-product-supplier-erp.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SupplierProductCode } from './entities/supplier-product-code.entity';
+import { IntegrationProductSupplierErp } from './entities/integration-product-supplier-erp.entity';
 import { Repository } from 'typeorm';
 import { ProductsService } from 'src/products/products.service';
 import { ProductVariationsService } from 'src/products/product-variations/product-variations.service';
@@ -16,10 +16,10 @@ import { Product } from 'src/products/entities/product.entity';
 import { ProductVariation } from 'src/products/product-variations/entities/product-variation.entity';
 
 @Injectable()
-export class SupplierProductCodesService {
+export class IntegrationProductSupplierErpService {
   constructor(
-    @InjectRepository(SupplierProductCode)
-    private readonly repository: Repository<SupplierProductCode>,
+    @InjectRepository(IntegrationProductSupplierErp)
+    private readonly repository: Repository<IntegrationProductSupplierErp>,
     @Inject(ProductsService)
     private readonly productsService: ProductsService,
     @Inject(ProductVariationsService)
@@ -29,27 +29,29 @@ export class SupplierProductCodesService {
   ) {}
 
   async create(
-    createSupplierProductCodeDto: CreateSupplierProductCodeDto,
-  ): Promise<SupplierProductCode> {
+    createIntegrationProductSupplierErpDto: CreateIntegrationProductSupplierErpDto,
+  ): Promise<IntegrationProductSupplierErp> {
     const product = await this.productsService.findOne(
-      createSupplierProductCodeDto.productId,
+      createIntegrationProductSupplierErpDto.productId,
     );
     const productVariation = await this.productVariationsService.findOne(
-      createSupplierProductCodeDto.productVariationId,
+      createIntegrationProductSupplierErpDto.productVariationId,
     );
     const supplier = await this.suppliersService.findOne(
-      createSupplierProductCodeDto.supplierId,
+      createIntegrationProductSupplierErpDto.supplierId,
     );
 
-    const existingSupplierProductCode = await this.repository.findOne({
-      where: {
-        productId: product.id,
-        productVariationId: productVariation.id,
-        supplierId: supplier.id,
+    const existingIntegrationProductSupplierErp = await this.repository.findOne(
+      {
+        where: {
+          productId: product.id,
+          productVariationId: productVariation.id,
+          supplierId: supplier.id,
+        },
       },
-    });
+    );
 
-    if (existingSupplierProductCode) {
+    if (existingIntegrationProductSupplierErp) {
       throw new BadRequestException('Supplier product code already exists');
     }
 
@@ -57,25 +59,27 @@ export class SupplierProductCodesService {
       throw new BadRequestException('Variation is not related to the product');
     }
 
-    const supplierProductCode = await this.repository.save(
-      this.repository.create(createSupplierProductCodeDto),
+    const integrationProductSupplierErp = await this.repository.save(
+      this.repository.create(createIntegrationProductSupplierErpDto),
     );
     return {
-      ...supplierProductCode,
+      ...integrationProductSupplierErp,
       product,
       productVariation,
       supplier,
     };
   }
 
-  async findAll(): Promise<SupplierProductCode[]> {
+  async findAll(): Promise<IntegrationProductSupplierErp[]> {
     const findOptions = {
       relations: ['product', 'productVariation', 'supplier'],
     };
     return await this.repository.find(findOptions);
   }
 
-  async findBySupplierId(supplierId: number): Promise<SupplierProductCode[]> {
+  async findBySupplierId(
+    supplierId: number,
+  ): Promise<IntegrationProductSupplierErp[]> {
     const findOptions = {
       where: { supplierId },
       relations: ['product', 'productVariation', 'supplier'],
@@ -83,7 +87,7 @@ export class SupplierProductCodesService {
     return await this.repository.find(findOptions);
   }
 
-  async findOne(id: number): Promise<SupplierProductCode> {
+  async findOne(id: number): Promise<IntegrationProductSupplierErp> {
     try {
       return await this.repository.findOneOrFail({ where: { id } });
     } catch (error) {
@@ -93,25 +97,27 @@ export class SupplierProductCodesService {
 
   async update(
     id: number,
-    updateSupplierProductCodeDto: UpdateSupplierProductCodeDto,
-  ): Promise<SupplierProductCode> {
-    const supplierProductCode = await this.findOne(id).catch(() => undefined);
-    if (!supplierProductCode) {
+    updateIntegrationProductSupplierErpDto: UpdateIntegrationProductSupplierErpDto,
+  ): Promise<IntegrationProductSupplierErp> {
+    const integrationProductSupplierErp = await this.findOne(id).catch(
+      () => undefined,
+    );
+    if (!integrationProductSupplierErp) {
       throw new NotFoundException('Supplier product code not found');
     }
 
     let product: Product;
     let productVariation: ProductVariation;
 
-    if (updateSupplierProductCodeDto.productId) {
+    if (updateIntegrationProductSupplierErpDto.productId) {
       product = await this.productsService.findOne(
-        updateSupplierProductCodeDto.productId,
+        updateIntegrationProductSupplierErpDto.productId,
       );
     }
 
-    if (updateSupplierProductCodeDto.productVariationId) {
+    if (updateIntegrationProductSupplierErpDto.productVariationId) {
       productVariation = await this.productVariationsService.findOne(
-        updateSupplierProductCodeDto.productVariationId,
+        updateIntegrationProductSupplierErpDto.productVariationId,
       );
     }
 
@@ -128,14 +134,14 @@ export class SupplierProductCodesService {
       if (
         product &&
         !productVariation &&
-        supplierProductCode.productId !== product.id
+        integrationProductSupplierErp.productId !== product.id
       ) {
         throw new BadRequestException('Product is not related to variation');
       }
       if (
         productVariation &&
         !product &&
-        supplierProductCode.product.id !== productVariation.productId
+        integrationProductSupplierErp.product.id !== productVariation.productId
       ) {
         throw new BadRequestException(
           'Variation is not related to the product',
@@ -144,7 +150,10 @@ export class SupplierProductCodesService {
     }
 
     try {
-      await this.repository.update({ id }, { ...updateSupplierProductCodeDto });
+      await this.repository.update(
+        { id },
+        { ...updateIntegrationProductSupplierErpDto },
+      );
       return await this.findOne(id);
     } catch (error) {
       throw new Error(error);

@@ -11,8 +11,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('supplier_product_code')
-export class SupplierProductCode {
+@Entity('integration_product_supplier_erp')
+export class IntegrationProductSupplierErp {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -26,7 +26,7 @@ export class SupplierProductCode {
   supplierId: number;
 
   @Column({ name: 'supplier_product_code' })
-  supplierProductCode: string;
+  integrationProductSupplierErp: string;
 
   @Column({ name: 'in_stock_in_the_supplier', nullable: false })
   inStockInTheSupplier: boolean;
@@ -45,7 +45,7 @@ export class SupplierProductCode {
 
   @ManyToOne(
     () => Product,
-    (product: Product) => product.supplierProductCodes,
+    (product: Product) => product.integrationProductSupplierErp,
     {
       eager: true,
     },
@@ -56,7 +56,7 @@ export class SupplierProductCode {
   @ManyToOne(
     () => ProductVariation,
     (productVariation: ProductVariation) =>
-      productVariation.supplierProductCodes,
+      productVariation.integrationProductSupplierErp,
     { eager: true },
   )
   @JoinColumn({ name: 'product_variation_id', referencedColumnName: 'id' })
@@ -64,13 +64,13 @@ export class SupplierProductCode {
 
   @ManyToOne(
     () => Supplier,
-    (supplier: Supplier) => supplier.supplierProductCodes,
+    (supplier: Supplier) => supplier.integrationProductSupplierErp,
     { eager: true },
   )
   @JoinColumn({ name: 'supplier_id', referencedColumnName: 'id' })
   supplier?: Supplier;
 
-  constructor(partial: Partial<SupplierProductCode>) {
+  constructor(partial: Partial<IntegrationProductSupplierErp>) {
     Object.assign(this, partial);
   }
 }

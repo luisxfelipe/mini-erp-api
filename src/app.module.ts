@@ -13,7 +13,7 @@ import { StockItemsModule } from './stock-items/stock-items.module';
 import { PlatformsModule } from './platforms/platforms.module';
 import { SalesPlatformCommissionsModule } from './pricing/sales-platform-commissions/sales-platform-commissions.module';
 import { PricingModule } from './pricing/pricing.module';
-import { SupplierProductCodesModule } from './supplier-product-codes/supplier-product-codes.module';
+import { IntegrationProductSupplierErpModule } from './integration-product-supplier-erp/integration-product-supplier-erp.module';
 
 @Module({
   imports: [
@@ -69,7 +69,7 @@ import { SupplierProductCodesModule } from './supplier-product-codes/supplier-pr
     StockItemsModule,
     SalesPlatformCommissionsModule,
     PricingModule,
-    SupplierProductCodesModule,
+    IntegrationProductSupplierErpModule,
   ],
   controllers: [],
   providers: [AppService],
