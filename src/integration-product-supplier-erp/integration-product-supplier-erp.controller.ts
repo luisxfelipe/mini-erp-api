@@ -5,7 +5,7 @@ import { UpdateIntegrationProductSupplierErpDto } from './dto/update-integration
 import { ApiTags } from '@nestjs/swagger';
 import { ReturnIntegrationProductSupplierErpDto } from './dto/return-integration-product-supplier-erp.dto';
 
-@Controller('supplier-product-codes')
+@Controller('integration-product-supplier-erp')
 @ApiTags('Supplier Product Codes')
 export class IntegrationProductSupplierErpController {
   constructor(
