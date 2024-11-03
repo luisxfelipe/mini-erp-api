@@ -11,6 +11,7 @@ export class CreateTableSupplierProductCode1730128427665
         product_variation_id INT NOT NULL,
         supplier_id INT NOT NULL,
         supplier_product_code VARCHAR(255) NOT NULL,
+        in_stock_in_the_supplier BOOLEAN NOT NULL,
         link TEXT,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

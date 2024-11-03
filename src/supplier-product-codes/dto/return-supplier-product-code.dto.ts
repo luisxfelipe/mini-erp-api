@@ -11,6 +11,7 @@ export class ReturnSupplierProductCodeDto {
   productVariation?: ReturnProductVariationDto;
   supplier?: ReturnSupplierDto;
   supplierProductCode: string;
+  inStockInTheSupplier: boolean;
   link?: string;
 
   constructor(entity: SupplierProductCode) {
@@ -25,6 +26,7 @@ export class ReturnSupplierProductCodeDto {
       ? new ReturnSupplierDto(entity.supplier)
       : undefined;
     this.supplierProductCode = entity.supplierProductCode;
+    this.inStockInTheSupplier = entity.inStockInTheSupplier;
     this.link = entity.link ? entity.link : undefined;
   }
 }

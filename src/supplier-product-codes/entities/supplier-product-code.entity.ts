@@ -28,6 +28,9 @@ export class SupplierProductCode {
   @Column({ name: 'supplier_product_code' })
   supplierProductCode: string;
 
+  @Column({ name: 'in_stock_in_the_supplier', nullable: false })
+  inStockInTheSupplier: boolean;
+
   @Column({ name: 'link', nullable: true })
   link: string;
 

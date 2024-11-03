@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateSupplierProductCodeDto {
   @IsNumber()
@@ -13,6 +19,9 @@ export class CreateSupplierProductCodeDto {
   @IsString()
   @IsNotEmpty()
   supplierProductCode: string;
+
+  @IsBoolean()
+  inStockInTheSupplier: boolean;
 
   @IsString()
   @IsOptional()
