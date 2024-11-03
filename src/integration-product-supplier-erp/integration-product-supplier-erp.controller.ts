@@ -6,7 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { ReturnIntegrationProductSupplierErpDto } from './dto/return-integration-product-supplier-erp.dto';
 
 @Controller('integration-product-supplier-erp')
-@ApiTags('Supplier Product Codes')
+@ApiTags('Integration Product Supplier Erp')
 export class IntegrationProductSupplierErpController {
   constructor(
     private readonly integrationProductSupplierErpsService: IntegrationProductSupplierErpService,
