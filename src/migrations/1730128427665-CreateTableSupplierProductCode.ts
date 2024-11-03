@@ -13,13 +13,15 @@ export class CreateTableSupplierProductCode1730128427665
         supplier_product_code VARCHAR(255) NOT NULL,
         in_stock_in_the_supplier BOOLEAN NOT NULL,
         link TEXT,
+        bling_product_id bigint NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id),
         FOREIGN KEY (product_id) REFERENCES product (id),
         FOREIGN KEY (product_variation_id) REFERENCES product_variation (id),
         FOREIGN KEY (supplier_id) REFERENCES supplier (id),
-        CONSTRAINT unique_product_variation_supplier UNIQUE (product_id, product_variation_id, supplier_id)
+        CONSTRAINT unique_product_variation_supplier UNIQUE (product_id, product_variation_id, supplier_id),
+        CONSTRAINT unique_bling_product_id UNIQUE (bling_product_id)
       );
     `);
   }

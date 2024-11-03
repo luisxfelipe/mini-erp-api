@@ -34,6 +34,9 @@ export class SupplierProductCode {
   @Column({ name: 'link', nullable: true })
   link: string;
 
+  @Column({ name: 'bling_product_id', nullable: false })
+  blingProductId: number;
+
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
 

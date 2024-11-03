@@ -13,6 +13,7 @@ export class ReturnSupplierProductCodeDto {
   supplierProductCode: string;
   inStockInTheSupplier: boolean;
   link?: string;
+  blingProductId: number;
 
   constructor(entity: SupplierProductCode) {
     this.id = entity.id;
@@ -28,5 +29,6 @@ export class ReturnSupplierProductCodeDto {
     this.supplierProductCode = entity.supplierProductCode;
     this.inStockInTheSupplier = entity.inStockInTheSupplier;
     this.link = entity.link ? entity.link : undefined;
+    this.blingProductId = entity.blingProductId;
   }
 }
