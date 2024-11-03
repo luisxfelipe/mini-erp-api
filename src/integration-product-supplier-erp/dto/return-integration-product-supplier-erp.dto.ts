@@ -10,7 +10,7 @@ export class ReturnIntegrationProductSupplierErpDto {
   product?: ReturnProductDto;
   productVariation?: ReturnProductVariationDto;
   supplier?: ReturnSupplierDto;
-  integrationProductSupplierErp: string;
+  supplierProductCode: string;
   inStockInTheSupplier: boolean;
   supplierProductLink?: string;
   blingProductId: number;
@@ -26,7 +26,7 @@ export class ReturnIntegrationProductSupplierErpDto {
     this.supplier = entity.supplier
       ? new ReturnSupplierDto(entity.supplier)
       : undefined;
-    this.integrationProductSupplierErp = entity.integrationProductSupplierErp;
+    this.supplierProductCode = entity.supplierProductCode;
     this.inStockInTheSupplier = entity.inStockInTheSupplier;
     this.supplierProductLink = entity.supplierProductLink
       ? entity.supplierProductLink

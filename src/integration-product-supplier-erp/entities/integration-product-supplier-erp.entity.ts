@@ -26,7 +26,7 @@ export class IntegrationProductSupplierErp {
   supplierId: number;
 
   @Column({ name: 'supplier_product_code' })
-  integrationProductSupplierErp: string;
+  supplierProductCode: string;
 
   @Column({ name: 'in_stock_in_the_supplier', nullable: false })
   inStockInTheSupplier: boolean;
