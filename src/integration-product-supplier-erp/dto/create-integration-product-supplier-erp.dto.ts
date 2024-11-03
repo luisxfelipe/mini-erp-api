@@ -3,6 +3,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
+  IsPositive,
   IsString,
 } from 'class-validator';
 
@@ -15,6 +16,10 @@ export class CreateIntegrationProductSupplierErpDto {
 
   @IsNumber()
   supplierId: number;
+
+  @IsNumber()
+  @IsPositive()
+  supplierPrice: number;
 
   @IsString()
   @IsNotEmpty()

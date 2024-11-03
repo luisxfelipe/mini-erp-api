@@ -25,6 +25,9 @@ export class IntegrationProductSupplierErp {
   @Column({ name: 'supplier_id', nullable: false })
   supplierId: number;
 
+  @Column({ name: 'supplier_price', nullable: false })
+  supplierPrice: number;
+
   @Column({ name: 'supplier_product_code' })
   supplierProductCode: string;
 
