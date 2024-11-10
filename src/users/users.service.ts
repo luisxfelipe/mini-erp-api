@@ -15,28 +15,26 @@ import { UpdatePasswordDto } from './dto/update-password.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly repository: Repository<User>,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = await this.findOneByEmail(createUserDto.email).catch(
+    const userReceved = await this.findOneByEmail(createUserDto.email).catch(
       () => undefined,
     );
 
-    if (user) {
+    if (userReceved) {
       throw new BadGatewayException('E-mail already registered');
     }
 
     createUserDto.password = await createPasswordHash(createUserDto.password);
 
-    return this.userRepository.save({
-      ...createUserDto,
-    });
+    return await this.repository.save(this.repository.create(createUserDto));
   }
 
   async findOne(id: number): Promise<User> {
     try {
-      return await this.userRepository.findOneOrFail({
+      return await this.repository.findOneOrFail({
         where: { id },
       });
     } catch (error) {
@@ -46,7 +44,7 @@ export class UsersService {
 
   async findOneByEmail(email: string): Promise<User> {
     try {
-      return await this.userRepository.findOneByOrFail({ email });
+      return await this.repository.findOneByOrFail({ email });
     } catch (error) {
       throw new NotFoundException('User not found');
     }
@@ -67,7 +65,7 @@ export class UsersService {
       throw new BadRequestException('Old password does not match');
     }
 
-    const updatedUser = await this.userRepository.save({
+    const updatedUser = await this.repository.save({
       ...user,
       password: await createPasswordHash(updatePasswordDto.newPassword),
     });

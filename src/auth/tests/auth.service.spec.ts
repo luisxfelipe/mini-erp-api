@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../auth.service';
 import { UsersService } from '../../users/users.service';
-import { userMock } from './../../users/mocks/user.mock';
+import { userMock } from '../../users/tests/mocks/user.mock';
 import { JwtService } from '@nestjs/jwt';
-import { jwtMock } from '../mocks/jwt.mock';
-import { signInDtoMock } from '../mocks/sign-in-dto.mock';
+import { jwtMock } from './mocks/jwt.mock';
+import { signInDtoMock } from './mocks/sign-in-dto.mock';
 import { UnauthorizedException } from '@nestjs/common';
 
 describe('AuthService', () => {

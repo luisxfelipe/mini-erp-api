@@ -29,6 +29,7 @@ export class AuthService {
       access_token: await this.jwtService.sign({
         ...new SignInPayloadDto(user),
       }),
+      user: user,
     };
   }
 }

@@ -2,14 +2,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsService } from '../products.service';
 import { ILike, In, Repository } from 'typeorm';
 import { Product } from '../entities/product.entity';
-import { CategoriesService } from './../../categories/categories.service';
-import { categoryMock } from './../../categories/mocks/category.mock';
-import { productMock } from '../mocks/product.mock';
+import { CategoriesService } from '../categories/categories.service';
+import { categoryMock } from '../categories/tests/mocks/category.mock';
+import { productMock } from './mocks/product.mock';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { returnDeleteMock } from './../../mocks/return-delete.mock';
-import { createProductMock } from '../mocks/create-product.mock';
+import { createProductMock } from './mocks/create-product.mock';
 import { NotFoundException } from '@nestjs/common';
-import { updateProductMock } from '../mocks/update-product.mock';
+import { updateProductMock } from './mocks/update-product.mock';
+import { returnProductsPaginatedMock } from './mocks/return-produts-paginated.mock';
 
 describe('ProductsService', () => {
   let service: ProductsService;
@@ -98,23 +99,12 @@ describe('ProductsService', () => {
 
   describe('findAllPaginated', () => {
     it('should return an array of products', async () => {
-      const spy = jest.spyOn(repository, 'findAndCount');
       const products = await service.findAllPage();
 
-      expect(products.data).toEqual([productMock]);
-      expect(products.meta).toEqual({
-        itemsPerPage: 10,
-        totalItems: 1,
-        currentPage: 1,
-        totalPages: 1,
-      });
-      expect(spy.mock.calls[0][0]).toEqual({
-        take: 10,
-        skip: 0,
-      });
+      expect(products).toEqual(returnProductsPaginatedMock);
     });
 
-    it('should return an array of products paginated send take and skip', async () => {
+    it('should return an array of products paginated', async () => {
       const takeMock = 10;
       const pageMock = 1;
       const productsPagination = await service.findAllPage(
@@ -123,13 +113,10 @@ describe('ProductsService', () => {
         pageMock,
       );
 
-      expect(productsPagination.data).toEqual([productMock]);
-      expect(productsPagination.meta).toEqual({
-        itemsPerPage: takeMock,
-        totalItems: 1,
-        currentPage: pageMock,
-        totalPages: 1,
-      });
+      expect(productsPagination).toEqual(returnProductsPaginatedMock);
+      expect(productsPagination.total).toEqual(
+        returnProductsPaginatedMock.total,
+      );
     });
 
     it('should return an array of products paginated send search', async () => {

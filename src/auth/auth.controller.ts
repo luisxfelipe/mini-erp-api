@@ -13,7 +13,7 @@ import { ReturnSignInDto } from './dto/return-sign-in.dto';
 import { Public } from './../decorators/is-public.decorator';
 
 @Controller('auth')
-@ApiTags('auth')
+@ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -25,6 +25,6 @@ export class AuthController {
       throw new UnauthorizedException('Authorization token is missing');
     }
 
-    return this.authService.signIn(signInDto);
+    return new ReturnSignInDto(await this.authService.signIn(signInDto));
   }
 }

@@ -5,13 +5,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { JwtModule } from '@nestjs/jwt';
-import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
+import { PurchaseOrdersModule } from './purchase-orders/purchase-orders.module';
+import { SaleOrdersModule } from './sale-orders/sale-orders.module';
+import { StockItemsModule } from './stock-items/stock-items.module';
+import { PlatformsModule } from './platforms/platforms.module';
+import { SalesPlatformCommissionsModule } from './pricing/sales-platform-commissions/sales-platform-commissions.module';
+import { PricingModule } from './pricing/pricing.module';
+import { IntegrationProductSupplierErpModule } from './integration-product-supplier-erp/integration-product-supplier-erp.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -34,9 +42,9 @@ import { ProductsModule } from './products/products.module';
           'MYSQL_DATABASE',
           process.env.MYSQL_DATABASE,
         ),
-        entities: [__dirname + configService.get('MYSQL_ENTITIES')] || [
-          __dirname + process.env.MYSQL_ENTITIES,
-        ],
+        entities: configService.get('MYSQL_ENTITIES')
+          ? [__dirname + configService.get('MYSQL_ENTITIES')]
+          : [__dirname + process.env.MYSQL_ENTITIES],
         autoLoadEntities:
           Boolean(
             Number(configService.get<boolean>('MYSQL_AUTO_LOAD_ENTITIES')),
@@ -54,8 +62,15 @@ import { ProductsModule } from './products/products.module';
     AuthModule,
     JwtModule,
     UsersModule,
-    CategoriesModule,
     ProductsModule,
+    SuppliersModule,
+    PlatformsModule,
+    PurchaseOrdersModule,
+    SaleOrdersModule,
+    StockItemsModule,
+    SalesPlatformCommissionsModule,
+    PricingModule,
+    IntegrationProductSupplierErpModule,
   ],
   controllers: [],
   providers: [AppService],
