@@ -19,6 +19,7 @@ import { IntegrationProductSupplierErpModule } from './integration-product-suppl
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -41,9 +42,9 @@ import { IntegrationProductSupplierErpModule } from './integration-product-suppl
           'MYSQL_DATABASE',
           process.env.MYSQL_DATABASE,
         ),
-        entities: [__dirname + configService.get('MYSQL_ENTITIES')] || [
-          __dirname + process.env.MYSQL_ENTITIES,
-        ],
+        entities: configService.get('MYSQL_ENTITIES')
+          ? [__dirname + configService.get('MYSQL_ENTITIES')]
+          : [__dirname + process.env.MYSQL_ENTITIES],
         autoLoadEntities:
           Boolean(
             Number(configService.get<boolean>('MYSQL_AUTO_LOAD_ENTITIES')),
