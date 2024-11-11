@@ -3,12 +3,22 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const configService = app.get(ConfigService);
+
+  const port = configService.get<string>('API_PORT', process.env.PORT) || 58733;
+
   const cors = {
-    origin: ['http://localhost:5173', 'http://localhost'],
+    origin: [
+      'http://localhost:5173',
+      'http://localhost',
+      'https://www.erp.meviosshop.com.br',
+      'https://erp.meviosshop.com.br/',
+    ],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
     preflightContinue: false,
     optionsSuccessStatus: 204,
@@ -33,6 +43,8 @@ async function bootstrap() {
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
 
-  await app.listen(process.env.PORT || 58733);
+  console.log(process.env);
+
+  await app.listen(port);
 }
 bootstrap();
