@@ -18,6 +18,7 @@ async function bootstrap() {
       'http://localhost',
       'https://www.erp.meviosshop.com.br',
       'https://erp.meviosshop.com.br/',
+      'https://mini-erp-react-app.vercel.app/',
     ],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
     preflightContinue: false,
