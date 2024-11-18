@@ -34,6 +34,18 @@ export class Pricing {
   })
   costPrice: number;
 
+  @Column({ name: 'profit_percentage', nullable: false })
+  profitPercentage: number;
+
+  @Column({
+    type: 'decimal',
+    name: 'additional_profit',
+    precision: 10,
+    scale: 2,
+    nullable: true,
+  })
+  additionalProfit: number;
+
   @Column({
     type: 'decimal',
     name: 'sale_price',
