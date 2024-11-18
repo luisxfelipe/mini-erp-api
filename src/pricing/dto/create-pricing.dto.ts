@@ -1,4 +1,4 @@
-import { IsInt, IsNumber, IsPositive } from 'class-validator';
+import { IsInt, IsNumber, IsOptional, IsPositive } from 'class-validator';
 
 export class CreatePricingDto {
   @IsInt()
@@ -13,6 +13,17 @@ export class CreatePricingDto {
   @IsNumber({ maxDecimalPlaces: 2 })
   @IsPositive({ message: 'Cost price must be a positive number' })
   costPrice: number;
+
+  @IsInt()
+  @IsPositive({
+    message: 'Profit percentage must be a positive number',
+  })
+  profitPercentage: number;
+
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsPositive({ message: 'Additional profit must be a positive number' })
+  @IsOptional()
+  additionalProfit: number;
 
   @IsNumber({ maxDecimalPlaces: 2 })
   @IsPositive({ message: 'Sale price must be a positive number' })

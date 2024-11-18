@@ -9,6 +9,8 @@ export class ReturnPricingDto {
   productVariation?: ReturnProductVariationDto;
   salePlatform?: ReturnPlatformDto;
   costPrice: number;
+  profitPercentage: number;
+  additionalProfit?: number;
   salePrice: number;
 
   constructor(entity: Pricing) {
@@ -23,6 +25,10 @@ export class ReturnPricingDto {
       ? new ReturnPlatformDto(entity.salePlatform)
       : undefined;
     this.costPrice = entity.costPrice;
+    this.profitPercentage = entity.profitPercentage;
+    this.additionalProfit = entity.additionalProfit
+      ? entity.additionalProfit
+      : undefined;
     this.salePrice = entity.salePrice;
   }
 }
