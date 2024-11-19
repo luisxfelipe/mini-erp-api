@@ -21,6 +21,6 @@ export class CreateSalePriceDto {
   profitPercentage: number;
 
   @IsNumber()
-  @IsPositive({ message: 'Sale platform must be a positive number' })
-  salePlatformId: number;
+  @IsPositive({ message: 'Pricing id must be a positive number' })
+  pricingId: number;
 }

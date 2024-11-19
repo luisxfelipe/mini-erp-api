@@ -44,8 +44,6 @@ async function bootstrap() {
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
 
-  console.log(process.env);
-
   await app.listen(port);
 }
 bootstrap();

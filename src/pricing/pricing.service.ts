@@ -35,9 +35,11 @@ export class PricingService {
   async calculateSalePrice(
     createSalePriceDto: CreateSalePriceDto,
   ): Promise<number> {
+    const pricing = await this.findOne(createSalePriceDto.pricingId);
+
     const salePlatformCommission =
       await this.salesPlatformCommissionsService.findOneByPlatformId(
-        createSalePriceDto.salePlatformId,
+        pricing.salePlatformId,
       );
 
     if (!salePlatformCommission) {
@@ -46,8 +48,7 @@ export class PricingService {
 
     const costPrice = createSalePriceDto.costPrice;
     const additionalProfit =
-      createSalePriceDto.additionalProfit ||
-      salePlatformCommission.additionalProfit;
+      createSalePriceDto.additionalProfit || Number(pricing.additionalProfit);
     const costPerItemSold = Number(
       createSalePriceDto.costPerItemSold ||
         salePlatformCommission.costPerItemSold,
@@ -56,8 +57,7 @@ export class PricingService {
     const costs = costPrice + additionalProfit + costPerItemSold;
 
     const defaultProfitPercentage =
-      createSalePriceDto.profitPercentage ||
-      salePlatformCommission.defaultProfitPercentage;
+      createSalePriceDto.profitPercentage || pricing.profitPercentage;
 
     const commissionPercentage = salePlatformCommission.commissionPercentage;
 
