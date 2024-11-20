@@ -25,15 +25,6 @@ export class IntegrationProductSupplierErp {
   @Column({ name: 'supplier_id', nullable: false })
   supplierId: number;
 
-  @Column({
-    type: 'decimal',
-    name: 'supplier_price',
-    precision: 10,
-    scale: 2,
-    nullable: false,
-  })
-  supplierPrice: number;
-
   @Column({ name: 'supplier_product_code' })
   supplierProductCode: string;
 

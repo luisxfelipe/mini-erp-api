@@ -17,10 +17,6 @@ export class CreateIntegrationProductSupplierErpDto {
   @IsNumber()
   supplierId: number;
 
-  @IsNumber()
-  @IsPositive()
-  supplierPrice: number;
-
   @IsString()
   @IsNotEmpty()
   supplierProductCode: string;

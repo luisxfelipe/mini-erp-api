@@ -52,7 +52,7 @@ export class IntegrationProductSupplierErpService {
     );
 
     if (existingIntegrationProductSupplierErp) {
-      throw new BadRequestException('Supplier product code already exists');
+      throw new BadRequestException('Integration already exists');
     }
 
     if (product.id !== productVariation.productId) {
@@ -91,7 +91,7 @@ export class IntegrationProductSupplierErpService {
     try {
       return await this.repository.findOneOrFail({ where: { id } });
     } catch (error) {
-      throw new NotFoundException('Supplier product code not found');
+      throw new NotFoundException('Integration product supplier not found');
     }
   }
 
@@ -103,7 +103,7 @@ export class IntegrationProductSupplierErpService {
       () => undefined,
     );
     if (!integrationProductSupplierErp) {
-      throw new NotFoundException('Supplier product code not found');
+      throw new NotFoundException('Integration product supplier not found');
     }
 
     let product: Product;
