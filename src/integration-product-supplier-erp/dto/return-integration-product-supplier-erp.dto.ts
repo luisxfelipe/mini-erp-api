@@ -10,7 +10,6 @@ export class ReturnIntegrationProductSupplierErpDto {
   product?: ReturnProductDto;
   productVariation?: ReturnProductVariationDto;
   supplier?: ReturnSupplierDto;
-  supplierPrice: number;
   supplierProductCode: string;
   inStockInTheSupplier: boolean;
   supplierProductLink?: string;
@@ -27,7 +26,6 @@ export class ReturnIntegrationProductSupplierErpDto {
     this.supplier = entity.supplier
       ? new ReturnSupplierDto(entity.supplier)
       : undefined;
-    this.supplierPrice = entity.supplierPrice;
     this.supplierProductCode = entity.supplierProductCode;
     this.inStockInTheSupplier = entity.inStockInTheSupplier;
     this.supplierProductLink = entity.supplierProductLink
