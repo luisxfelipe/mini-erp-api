@@ -5,6 +5,7 @@ import { UpdatePricingDto } from './dto/update-pricing.dto';
 import { ReturnPricingDto } from './dto/return-pricing.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateSalePriceDto } from './dto/create-sale-price.dto';
+import { FindPricingByProductPlatformDto } from './dto/find-pricing-by-product-platform.dto';
 
 @Controller('pricing')
 @ApiTags('Pricing')
@@ -37,6 +38,17 @@ export class PricingController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<ReturnPricingDto> {
     return new ReturnPricingDto(await this.pricingService.findOne(+id));
+  }
+
+  @Post('/find-by-product-and-platform')
+  async findOneByProductAndPlatformId(
+    @Body() findPricingByProductPlatformDto: FindPricingByProductPlatformDto,
+  ): Promise<ReturnPricingDto> {
+    return new ReturnPricingDto(
+      await this.pricingService.findOneByProductAndPlatformId(
+        findPricingByProductPlatformDto,
+      ),
+    );
   }
 
   @Patch(':id')

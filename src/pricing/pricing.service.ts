@@ -16,6 +16,7 @@ import { Product } from 'src/products/entities/product.entity';
 import { ProductVariation } from 'src/products/product-variations/entities/product-variation.entity';
 import { CreateSalePriceDto } from './dto/create-sale-price.dto';
 import { SalesPlatformCommissionsService } from './sales-platform-commissions/sales-platform-commissions.service';
+import { FindPricingByProductPlatformDto } from './dto/find-pricing-by-product-platform.dto';
 
 @Injectable()
 export class PricingService {
@@ -123,6 +124,28 @@ export class PricingService {
   async findOne(id: number): Promise<Pricing> {
     try {
       return await this.repository.findOneOrFail({ where: { id } });
+    } catch (error) {
+      throw new NotFoundException('Pricing not found');
+    }
+  }
+
+  async findOneByProductAndPlatformId(
+    findPricingByProductPlatformDto: FindPricingByProductPlatformDto,
+  ): Promise<Pricing> {
+    await this.productsService.findOne(
+      findPricingByProductPlatformDto.productId,
+    );
+    await this.productVariationsService.findOne(
+      findPricingByProductPlatformDto.productVariationId,
+    );
+    await this.platformsService.findOne(
+      findPricingByProductPlatformDto.salePlatformId,
+    );
+
+    try {
+      return await this.repository.findOneOrFail({
+        where: findPricingByProductPlatformDto,
+      });
     } catch (error) {
       throw new NotFoundException('Pricing not found');
     }
