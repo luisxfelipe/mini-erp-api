@@ -29,9 +29,6 @@ export class IntegrationProductSupplierErp {
   @Column({ name: 'supplier_product_code' })
   supplierProductCode: string;
 
-  @Column({ name: 'in_stock_in_the_supplier', nullable: false })
-  inStockInTheSupplier: boolean;
-
   @Column({ name: 'status_id', nullable: false })
   statusId: number;
 
@@ -51,6 +48,9 @@ export class IntegrationProductSupplierErp {
     () => IntegrationStatus,
     (integrationStatus: IntegrationStatus) =>
       integrationStatus.integrationProductSupplierErpList,
+    {
+      eager: true,
+    },
   )
   @JoinColumn({ name: 'status_id', referencedColumnName: 'id' })
   integrationStatus?: IntegrationStatus;
