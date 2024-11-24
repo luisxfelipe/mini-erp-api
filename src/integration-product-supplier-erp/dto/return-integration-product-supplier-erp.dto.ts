@@ -11,6 +11,7 @@ export class ReturnIntegrationProductSupplierErpDto {
   productVariation?: ReturnProductVariationDto;
   supplier?: ReturnSupplierDto;
   supplierProductCode: string;
+  statusId: number;
   inStockInTheSupplier: boolean;
   supplierProductLink?: string;
   blingProductId: number;
@@ -27,6 +28,7 @@ export class ReturnIntegrationProductSupplierErpDto {
       ? new ReturnSupplierDto(entity.supplier)
       : undefined;
     this.supplierProductCode = entity.supplierProductCode;
+    this.statusId = entity.statusId;
     this.inStockInTheSupplier = entity.inStockInTheSupplier;
     this.supplierProductLink = entity.supplierProductLink
       ? entity.supplierProductLink
