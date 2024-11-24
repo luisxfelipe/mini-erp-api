@@ -9,9 +9,11 @@ import {
 
 export class CreateIntegrationProductSupplierErpDto {
   @IsNumber()
+  @IsPositive()
   productId: number;
 
   @IsNumber()
+  @IsPositive()
   productVariationId: number;
 
   @IsNumber()
@@ -20,6 +22,10 @@ export class CreateIntegrationProductSupplierErpDto {
   @IsString()
   @IsNotEmpty()
   supplierProductCode: string;
+
+  @IsNumber()
+  @IsPositive()
+  statusId: number;
 
   @IsBoolean()
   inStockInTheSupplier: boolean;

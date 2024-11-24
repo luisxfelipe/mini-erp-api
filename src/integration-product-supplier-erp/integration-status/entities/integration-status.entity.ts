@@ -1,7 +1,9 @@
+import { IntegrationProductSupplierErp } from 'src/integration-product-supplier-erp/entities/integration-product-supplier-erp.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,6 +21,13 @@ export class IntegrationStatus {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @OneToMany(
+    () => IntegrationProductSupplierErp,
+    (integrationProductSupplierErp: IntegrationProductSupplierErp) =>
+      integrationProductSupplierErp.integrationStatus,
+  )
+  integrationProductSupplierErpList?: IntegrationProductSupplierErp[];
 
   constructor(partial: Partial<IntegrationStatus>) {
     Object.assign(this, partial);

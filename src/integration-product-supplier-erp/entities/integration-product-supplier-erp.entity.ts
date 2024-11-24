@@ -10,6 +10,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { IntegrationStatus } from '../integration-status/entities/integration-status.entity';
 
 @Entity('integration_product_supplier_erp')
 export class IntegrationProductSupplierErp {
@@ -31,6 +32,9 @@ export class IntegrationProductSupplierErp {
   @Column({ name: 'in_stock_in_the_supplier', nullable: false })
   inStockInTheSupplier: boolean;
 
+  @Column({ name: 'status_id', nullable: false })
+  statusId: number;
+
   @Column({ name: 'supplier_product_link', nullable: true })
   supplierProductLink: string;
 
@@ -42,6 +46,14 @@ export class IntegrationProductSupplierErp {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @ManyToOne(
+    () => IntegrationStatus,
+    (integrationStatus: IntegrationStatus) =>
+      integrationStatus.integrationProductSupplierErpList,
+  )
+  @JoinColumn({ name: 'status_id', referencedColumnName: 'id' })
+  integrationStatus?: IntegrationStatus;
 
   @ManyToOne(
     () => Product,
