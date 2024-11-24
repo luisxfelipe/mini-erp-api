@@ -4,6 +4,7 @@ import { ReturnProductVariationDto } from 'src/products/product-variations/dto/r
 
 import { ReturnSupplierDto } from 'src/suppliers/dto/return-supplier.dto';
 import { IntegrationProductSupplierErp } from '../entities/integration-product-supplier-erp.entity';
+import { ReturnIntegrationStatusDto } from '../integration-status/dto/return-integration-status.dto';
 
 export class ReturnIntegrationProductSupplierErpDto {
   id: number;
@@ -11,8 +12,7 @@ export class ReturnIntegrationProductSupplierErpDto {
   productVariation?: ReturnProductVariationDto;
   supplier?: ReturnSupplierDto;
   supplierProductCode: string;
-  statusId: number;
-  inStockInTheSupplier: boolean;
+  status: ReturnIntegrationStatusDto;
   supplierProductLink?: string;
   blingProductId: number;
 
@@ -28,8 +28,9 @@ export class ReturnIntegrationProductSupplierErpDto {
       ? new ReturnSupplierDto(entity.supplier)
       : undefined;
     this.supplierProductCode = entity.supplierProductCode;
-    this.statusId = entity.statusId;
-    this.inStockInTheSupplier = entity.inStockInTheSupplier;
+    this.status = entity.integrationStatus
+      ? new ReturnIntegrationStatusDto(entity.integrationStatus)
+      : undefined;
     this.supplierProductLink = entity.supplierProductLink
       ? entity.supplierProductLink
       : undefined;

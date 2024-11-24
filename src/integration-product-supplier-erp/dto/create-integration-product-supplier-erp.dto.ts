@@ -1,5 +1,4 @@
 import {
-  IsBoolean,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -26,9 +25,6 @@ export class CreateIntegrationProductSupplierErpDto {
   @IsNumber()
   @IsPositive()
   statusId: number;
-
-  @IsBoolean()
-  inStockInTheSupplier: boolean;
 
   @IsString()
   @IsOptional()
