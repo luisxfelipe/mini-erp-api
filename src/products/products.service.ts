@@ -98,6 +98,14 @@ export class ProductsService {
     }
   }
 
+  async findByName(name: string): Promise<Product[]> {
+    try {
+      return await this.productsRepository.findBy({ name: ILike(`%${name}%`) });
+    } catch (error) {
+      throw new NotFoundException('Product not found');
+    }
+  }
+
   async findOne(id: number, isRelation?: boolean): Promise<Product> {
     try {
       return await this.productsRepository.findOneOrFail({
