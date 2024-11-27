@@ -12,7 +12,7 @@ import { Product } from './entities/product.entity';
 import { DeleteResult, ILike, In, Repository } from 'typeorm';
 import { CategoriesService } from './categories/categories.service';
 import { ReturnNumberProductsByCategoryDto } from './dto/return-number-products-category.dto';
-import { ReturnProductsPaginatedDto } from './dto/return-products-paginated.dto';
+import { ReturnPaginatedDto } from 'src/dtos/return-paginated.dto';
 
 @Injectable()
 export class ProductsService {
@@ -79,7 +79,7 @@ export class ProductsService {
     search?: string,
     take = 10,
     page = 1,
-  ): Promise<ReturnProductsPaginatedDto> {
+  ): Promise<ReturnPaginatedDto<Product>> {
     try {
       const skip = (page - 1) * take;
 
@@ -92,7 +92,7 @@ export class ProductsService {
         skip,
       });
 
-      return new ReturnProductsPaginatedDto(products, total);
+      return new ReturnPaginatedDto(products, total);
     } catch (error) {
       throw new BadRequestException('Error find products');
     }
