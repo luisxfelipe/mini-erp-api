@@ -8,7 +8,7 @@ import { CreatePricingDto } from './dto/create-pricing.dto';
 import { UpdatePricingDto } from './dto/update-pricing.dto';
 import { Pricing } from './entities/pricing.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { PlatformsService } from 'src/platforms/platforms.service';
 import { ProductsService } from 'src/products/products.service';
 import { ProductVariationsService } from 'src/products/product-variations/product-variations.service';
@@ -17,6 +17,7 @@ import { ProductVariation } from 'src/products/product-variations/entities/produ
 import { CreateSalePriceDto } from './dto/create-sale-price.dto';
 import { SalesPlatformCommissionsService } from './sales-platform-commissions/sales-platform-commissions.service';
 import { FindPricingByProductPlatformDto } from './dto/find-pricing-by-product-platform.dto';
+import { ReturnPaginatedDto } from 'src/dtos/return-paginated.dto';
 
 @Injectable()
 export class PricingService {
@@ -119,6 +120,38 @@ export class PricingService {
       relations: ['product', 'productVariation', 'salePlatform'],
     };
     return await this.repository.find(options);
+  }
+
+  async findAllWithPagination(
+    search?: string,
+    take = 10,
+    page = 1,
+  ): Promise<any> {
+    try {
+      const skip = (page - 1) * take;
+
+      const products = await this.productsService.findByName(search);
+      const productIds = products.map((product) => product.id);
+
+      if (products && products.length == 0) {
+        return new NotFoundException('Product not found');
+      }
+
+      const findOptions = {
+        where: {
+          productId: In(productIds),
+        },
+        take,
+        skip,
+        relations: ['product', 'productVariation', 'salePlatform'],
+      };
+
+      const [pricing, total] = await this.repository.findAndCount(findOptions);
+
+      return new ReturnPaginatedDto(pricing, total);
+    } catch (error) {
+      throw new BadRequestException('Error find pricing');
+    }
   }
 
   async findOne(id: number): Promise<Pricing> {

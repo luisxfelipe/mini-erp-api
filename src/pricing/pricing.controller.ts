@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { PricingService } from './pricing.service';
 import { CreatePricingDto } from './dto/create-pricing.dto';
 import { UpdatePricingDto } from './dto/update-pricing.dto';
@@ -6,6 +14,7 @@ import { ReturnPricingDto } from './dto/return-pricing.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateSalePriceDto } from './dto/create-sale-price.dto';
 import { FindPricingByProductPlatformDto } from './dto/find-pricing-by-product-platform.dto';
+import { PaginationDto, PaginationMetaDto } from 'src/dtos/pagination.dto';
 
 @Controller('pricing')
 @ApiTags('Pricing')
@@ -32,6 +41,31 @@ export class PricingController {
   async findAll(): Promise<ReturnPricingDto[]> {
     return (await this.pricingService.findAll()).map(
       (pricing) => new ReturnPricingDto(pricing),
+    );
+  }
+
+  @Get('/pages')
+  async findAllWithPagination(
+    @Query('search') search?: string,
+    @Query('take') take?: number,
+    @Query('page') page?: number,
+  ): Promise<PaginationDto<ReturnPricingDto[]>> {
+    const productsPaginated = await this.pricingService.findAllWithPagination(
+      search,
+      take,
+      page,
+    );
+
+    return new PaginationDto(
+      new PaginationMetaDto(
+        Number(take),
+        productsPaginated.total,
+        Number(page),
+        Math.ceil(productsPaginated.total / take),
+      ),
+      productsPaginated.data.map(
+        (integration) => new ReturnPricingDto(integration),
+      ),
     );
   }
 
