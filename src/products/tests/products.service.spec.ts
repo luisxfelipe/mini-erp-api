@@ -99,7 +99,7 @@ describe('ProductsService', () => {
 
   describe('findAllPaginated', () => {
     it('should return an array of products', async () => {
-      const products = await service.findAllPage();
+      const products = await service.findAllWithPagination();
 
       expect(products).toEqual(returnProductsPaginatedMock);
     });
@@ -107,7 +107,7 @@ describe('ProductsService', () => {
     it('should return an array of products paginated', async () => {
       const takeMock = 10;
       const pageMock = 1;
-      const productsPagination = await service.findAllPage(
+      const productsPagination = await service.findAllWithPagination(
         undefined,
         takeMock,
         pageMock,
@@ -122,7 +122,7 @@ describe('ProductsService', () => {
     it('should return an array of products paginated send search', async () => {
       const searchMock = 'search';
       const spy = jest.spyOn(repository, 'findAndCount');
-      await service.findAllPage(searchMock);
+      await service.findAllWithPagination(searchMock);
 
       expect(spy.mock.calls[0][0].where).toEqual({
         name: ILike(`%${searchMock}%`),

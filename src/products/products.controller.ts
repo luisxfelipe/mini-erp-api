@@ -57,9 +57,7 @@ export class ProductsController {
         Number(page),
         Math.ceil(productsPaginated.total / take),
       ),
-      productsPaginated.products.map(
-        (product) => new ReturnProductDto(product),
-      ),
+      productsPaginated.data.map((product) => new ReturnProductDto(product)),
     );
   }
 
