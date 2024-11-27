@@ -38,13 +38,13 @@ export class ProductsController {
     );
   }
 
-  @Get('/page')
+  @Get('/pages')
   async findAllPage(
     @Query('search') search?: string,
     @Query('take') take?: number,
     @Query('page') page?: number,
   ): Promise<any> {
-    const productsPaginated = await this.productsService.findAllPage(
+    const productsPaginated = await this.productsService.findAllWithPagination(
       search,
       take,
       page,

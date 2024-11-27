@@ -75,7 +75,7 @@ export class ProductsService {
     return products;
   }
 
-  async findAllPage(
+  async findAllWithPagination(
     search?: string,
     take = 10,
     page = 1,
