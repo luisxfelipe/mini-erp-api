@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { IntegrationProductSupplierErpService } from './integration-product-supplier-erp.service';
 import { CreateIntegrationProductSupplierErpDto } from './dto/create-integration-product-supplier-erp.dto';
 import { UpdateIntegrationProductSupplierErpDto } from './dto/update-integration-product-supplier-erp.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { ReturnIntegrationProductSupplierErpDto } from './dto/return-integration-product-supplier-erp.dto';
+import { PaginationDto, PaginationMetaDto } from 'src/dtos/pagination.dto';
 
 @Controller('integration-product-supplier-erp')
 @ApiTags('Integration Product Supplier Erp')
@@ -31,6 +40,33 @@ export class IntegrationProductSupplierErpController {
         new ReturnIntegrationProductSupplierErpDto(
           integrationProductSupplierErp,
         ),
+    );
+  }
+
+  @Get('/pages')
+  async findAllWithPagination(
+    @Query('search') search?: string,
+    @Query('take') take?: number,
+    @Query('page') page?: number,
+  ): Promise<PaginationDto<ReturnIntegrationProductSupplierErpDto[]>> {
+    const productsPaginated =
+      await this.integrationProductSupplierErpsService.findAllWithPagination(
+        search,
+        take,
+        page,
+      );
+
+    return new PaginationDto(
+      new PaginationMetaDto(
+        Number(take),
+        productsPaginated.total,
+        Number(page),
+        Math.ceil(productsPaginated.total / take),
+      ),
+      productsPaginated.data.map(
+        (integration) =>
+          new ReturnIntegrationProductSupplierErpDto(integration),
+      ),
     );
   }
 

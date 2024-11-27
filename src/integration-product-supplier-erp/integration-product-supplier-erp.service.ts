@@ -8,12 +8,13 @@ import { CreateIntegrationProductSupplierErpDto } from './dto/create-integration
 import { UpdateIntegrationProductSupplierErpDto } from './dto/update-integration-product-supplier-erp.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IntegrationProductSupplierErp } from './entities/integration-product-supplier-erp.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { ProductsService } from 'src/products/products.service';
 import { ProductVariationsService } from 'src/products/product-variations/product-variations.service';
 import { SuppliersService } from 'src/suppliers/suppliers.service';
 import { Product } from 'src/products/entities/product.entity';
 import { ProductVariation } from 'src/products/product-variations/entities/product-variation.entity';
+import { ReturnPaginatedDto } from 'src/dtos/return-paginated.dto';
 
 @Injectable()
 export class IntegrationProductSupplierErpService {
@@ -75,6 +76,41 @@ export class IntegrationProductSupplierErpService {
       relations: ['product', 'productVariation', 'supplier'],
     };
     return await this.repository.find(findOptions);
+  }
+
+  async findAllWithPagination(
+    search?: string,
+    take = 10,
+    page = 1,
+  ): Promise<any> {
+    try {
+      const skip = (page - 1) * take;
+
+      const products = await this.productsService.findByName(search);
+      const productIds = products.map((product) => product.id);
+
+      if (products && products.length == 0) {
+        return new NotFoundException('Product not found');
+      }
+
+      const findOptions = {
+        where: {
+          productId: In(productIds),
+        },
+        take,
+        skip,
+        relations: ['product', 'productVariation', 'supplier'],
+      };
+
+      const [IntegrationProductSupplierErp, total] =
+        await this.repository.findAndCount(findOptions);
+
+      return new ReturnPaginatedDto(IntegrationProductSupplierErp, total);
+
+      // return new ReturnPaginatedDto(IntegrationProductSupplierErp, total);
+    } catch (error) {
+      throw new BadRequestException('Error find products');
+    }
   }
 
   async findBySupplierId(
