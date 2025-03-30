@@ -15,6 +15,7 @@ async function bootstrap() {
   const cors = {
     origin: [
       'http://localhost:5173',
+      'http://localhost:3000',
       'http://localhost',
       'https://www.erp.meviosshop.com.br',
       'https://erp.meviosshop.com.br',
