@@ -32,4 +32,8 @@ export class CreateIntegrationProductSupplierErpDto {
 
   @IsNumber()
   blingProductId: number;
+
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsPositive({ message: 'Cost price must be a positive number' })
+  costPrice: number;
 }
