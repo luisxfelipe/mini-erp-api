@@ -38,6 +38,15 @@ export class IntegrationProductSupplierErp {
   @Column({ name: 'bling_product_id', nullable: false })
   blingProductId: number;
 
+  @Column({
+    type: 'decimal',
+    name: 'cost_price',
+    precision: 10,
+    scale: 2,
+    nullable: false,
+  })
+  costPrice: number;
+
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: Date;
 

@@ -15,6 +15,7 @@ export class ReturnIntegrationProductSupplierErpDto {
   status: ReturnIntegrationStatusDto;
   supplierProductLink?: string;
   blingProductId: number;
+  costPrice: number;
 
   constructor(entity: IntegrationProductSupplierErp) {
     this.id = entity.id;
@@ -35,5 +36,6 @@ export class ReturnIntegrationProductSupplierErpDto {
       ? entity.supplierProductLink
       : undefined;
     this.blingProductId = entity.blingProductId;
+    this.costPrice = entity.costPrice;
   }
 }
