@@ -3,6 +3,7 @@ import { SaleOrder } from '../../sale-orders/entities/sale-order.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -23,6 +24,9 @@ export class Platform {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date;
 
   @OneToMany(() => SaleOrder, (salesOrder: SaleOrder) => salesOrder.platform)
   salesOrders?: SaleOrder[];

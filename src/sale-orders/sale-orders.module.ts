@@ -46,6 +46,6 @@ import { StockItemsModule } from 'src/stock-items/stock-items.module';
     SaleOrderRefundsService,
     SaleStatusService,
   ],
-  exports: [SaleOrderItemsService],
+  exports: [SaleOrdersService, SaleOrderItemsService],
 })
-export class SaleOrdersModule {}
+export class SaleOrdersModule { }

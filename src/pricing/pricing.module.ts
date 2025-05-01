@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { PricingService } from './pricing.service';
 import { PricingController } from './pricing.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,11 +10,12 @@ import { SalesPlatformCommissionsModule } from './sales-platform-commissions/sal
 @Module({
   imports: [
     TypeOrmModule.forFeature([Pricing]),
-    PlatformsModule,
+    forwardRef(() => PlatformsModule),
     ProductsModule,
     SalesPlatformCommissionsModule,
   ],
   controllers: [PricingController],
   providers: [PricingService],
+  exports: [PricingService],
 })
-export class PricingModule {}
+export class PricingModule { }

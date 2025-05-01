@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSalesPlatformCommissionDto } from './dto/create-sales-platform-commission.dto';
 import { UpdateSalesPlatformCommissionDto } from './dto/update-sales-platform-commission.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,9 +11,18 @@ export class SalesPlatformCommissionsService {
   constructor(
     @InjectRepository(SalesPlatformCommission)
     private readonly repository: Repository<SalesPlatformCommission>,
-    @Inject(PlatformsService)
+    @Inject(forwardRef(() => PlatformsService))
     private readonly platformsService: PlatformsService,
-  ) {}
+  ) { }
+
+  async countSalesPlatformCommissionsByPlatform(
+    platformId: number,
+  ): Promise<number> {
+    return await this.repository.count({
+      where: { salePlatformId: platformId },
+    });
+  }
+
   async create(
     createSalesPlatformCommissionDto: CreateSalesPlatformCommissionDto,
   ): Promise<SalesPlatformCommission> {
