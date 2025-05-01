@@ -2,6 +2,7 @@ import { Category } from '../categories/entities/category.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -35,6 +36,9 @@ export class Product {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date;
 
   @ManyToOne(() => Category, (category: Category) => category.products)
   @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })

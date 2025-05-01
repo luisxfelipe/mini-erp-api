@@ -7,4 +7,5 @@ export const productVariationMock: ProductVariation = {
   productId: productMock.id,
   createdAt: new Date(),
   updatedAt: new Date(),
+  deletedAt: null,
 };

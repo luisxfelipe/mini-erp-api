@@ -20,7 +20,7 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('products')
 @ApiTags('Products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Post()
   async create(
@@ -79,7 +79,16 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
-    return await this.productsService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<ReturnProductDto> {
+    return new ReturnProductDto(
+      await this.productsService.remove(id),
+    );
+  }
+
+  @Post(':id/restore')
+  async restore(@Param('id', ParseIntPipe) id: number): Promise<ReturnProductDto> {
+    return new ReturnProductDto(
+      await this.productsService.restore(id),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -32,6 +33,9 @@ export class ProductVariation {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date;
 
   @ManyToOne(() => Product, (product: Product) => product.productVariations)
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
