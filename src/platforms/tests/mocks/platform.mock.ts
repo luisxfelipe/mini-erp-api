@@ -5,4 +5,5 @@ export const platformMock: Platform = {
   name: 'Platform Mock',
   createdAt: new Date(),
   updatedAt: new Date(),
+  deletedAt: null,
 };

@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  forwardRef,
   Inject,
   Injectable,
   NotFoundException,
@@ -24,7 +25,7 @@ export class PricingService {
   constructor(
     @InjectRepository(Pricing)
     private readonly repository: Repository<Pricing>,
-    @Inject(PlatformsService)
+    @Inject(forwardRef(() => PlatformsService))
     private readonly platformsService: PlatformsService,
     @Inject(ProductsService)
     private readonly productsService: ProductsService,
@@ -32,7 +33,7 @@ export class PricingService {
     private readonly productVariationsService: ProductVariationsService,
     @Inject(SalesPlatformCommissionsService)
     private readonly salesPlatformCommissionsService: SalesPlatformCommissionsService,
-  ) {}
+  ) { }
 
   async calculateSalePrice(
     createSalePriceDto: CreateSalePriceDto,
@@ -53,7 +54,7 @@ export class PricingService {
       createSalePriceDto.additionalProfit || Number(pricing.additionalProfit);
     const costPerItemSold = Number(
       createSalePriceDto.costPerItemSold ||
-        salePlatformCommission.costPerItemSold,
+      salePlatformCommission.costPerItemSold,
     );
 
     const costs = costPrice + additionalProfit + costPerItemSold;
@@ -69,6 +70,14 @@ export class PricingService {
     const salePrice = Number((costs / profitPercentage).toFixed(2));
 
     return salePrice;
+  }
+
+  async countPricingByPlatform(platformId: number): Promise<number> {
+    return await this.repository.count({
+      where: {
+        salePlatformId: platformId,
+      },
+    });
   }
 
   async create(createPricingDto: CreatePricingDto): Promise<Pricing> {

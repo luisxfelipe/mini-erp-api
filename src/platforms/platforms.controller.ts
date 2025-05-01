@@ -18,7 +18,7 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('platforms')
 @ApiTags('Platforms')
 export class PlatformsController {
-  constructor(private readonly platformsService: PlatformsService) {}
+  constructor(private readonly platformsService: PlatformsService) { }
 
   @Post()
   async create(
@@ -54,7 +54,16 @@ export class PlatformsController {
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
-    return await this.platformsService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<ReturnPlatformDto> {
+    return new ReturnPlatformDto(
+      await this.platformsService.remove(id),
+    );
+  }
+
+  @Post(':id/restore')
+  async restore(@Param('id', ParseIntPipe) id: number): Promise<ReturnPlatformDto> {
+    return new ReturnPlatformDto(
+      await this.platformsService.restore(id),
+    );
   }
 }

@@ -19,7 +19,7 @@ export class SaleOrdersService {
     private readonly platformsService: PlatformsService,
     @Inject(SaleStatusService)
     private readonly saleStatusService: SaleStatusService,
-  ) {}
+  ) { }
 
   async calculateTotalValue(saleOrderId: number): Promise<number> {
     const saleOrder = await this.findOne(saleOrderId);
@@ -32,6 +32,11 @@ export class SaleOrdersService {
       ((saleOrder.shippingCost || 0) - (saleOrder.discount || 0));
 
     return parseFloat(totalValue.toFixed(2));
+  }
+
+  async countSaleOrdersByPlatform(platformId: number): Promise<number> {
+    const platform = await this.platformsService.findOne(platformId);
+    return await this.repository.count({ where: { platform } });
   }
 
   async create(createSaleOrderDto: CreateSaleOrderDto): Promise<SaleOrder> {
