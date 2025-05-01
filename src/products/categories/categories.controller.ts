@@ -18,7 +18,7 @@ import { DeleteResult } from 'typeorm';
 @Controller('categories')
 @ApiTags('Categories')
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+  constructor(private readonly categoriesService: CategoriesService) { }
 
   @Post()
   async create(
@@ -54,7 +54,16 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
-    return await this.categoriesService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<ReturnCategoryDto> {
+    return new ReturnCategoryDto(
+      await this.categoriesService.remove(id),
+    );
+  }
+
+  @Post(':id/restore')
+  async restore(@Param('id', ParseIntPipe) id: number): Promise<ReturnCategoryDto> {
+    return new ReturnCategoryDto(
+      await this.categoriesService.restore(id),
+    );
   }
 }
