@@ -4,6 +4,7 @@ import { Supplier } from 'src/suppliers/entities/supplier.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -52,6 +53,9 @@ export class IntegrationProductSupplierErp {
 
   @UpdateDateColumn({ name: 'updated_at', nullable: false })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt: Date;
 
   @ManyToOne(
     () => IntegrationStatus,
