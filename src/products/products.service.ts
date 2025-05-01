@@ -23,6 +23,14 @@ export class ProductsService {
     private readonly categoriesService: CategoriesService,
   ) { }
 
+  async countByCategory(categoryId: number): Promise<number> {
+    return await this.productsRepository.count({
+      where: {
+        categoryId,
+      },
+    });
+  }
+
   async countProductsByCategory(): Promise<
     ReturnNumberProductsByCategoryDto[]
   > {
