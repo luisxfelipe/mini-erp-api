@@ -21,7 +21,7 @@ export class ProductsService {
     private productsRepository: Repository<Product>,
     @Inject(forwardRef(() => CategoriesService))
     private readonly categoriesService: CategoriesService,
-  ) {}
+  ) { }
 
   async countProductsByCategory(): Promise<
     ReturnNumberProductsByCategoryDto[]
@@ -131,8 +131,15 @@ export class ProductsService {
     });
   }
 
-  async remove(id: number): Promise<DeleteResult> {
-    await this.findOne(id);
-    return this.productsRepository.delete(id);
+  async remove(id: number) {
+    const product = await this.findOne(id);
+
+    return await this.productsRepository.softRemove(product);
+  }
+
+  async restore(id: number) {
+    await this.productsRepository.restore(id);
+
+    return await this.findOne(id);
   }
 }

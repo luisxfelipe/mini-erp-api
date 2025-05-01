@@ -13,7 +13,7 @@ export class ProductVariationsService {
     private productsVariationRepository: Repository<ProductVariation>,
     @Inject(ProductsService)
     private readonly productsService: ProductsService,
-  ) {}
+  ) { }
 
   async create(
     productId: number,
@@ -55,5 +55,17 @@ export class ProductVariationsService {
       ...productVariation,
       ...updateProductVariationDto,
     });
+  }
+
+  async remove(id: number) {
+    const productVariation = await this.findOne(id);
+
+    return await this.productsVariationRepository.softRemove(productVariation);
+  }
+
+  async restore(id: number) {
+    await this.productsVariationRepository.restore(id);
+
+    return await this.findOne(id);
   }
 }

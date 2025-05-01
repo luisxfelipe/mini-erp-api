@@ -9,6 +9,7 @@ export const productMock: Product = {
   description: 'Descrição 1',
   createdAt: new Date(),
   updatedAt: new Date(),
+  deletedAt: null,
 };
 
 export const paginationProductMock: PaginationDto<Product[]> = {

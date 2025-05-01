@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   ParseIntPipe,
+  Delete,
 } from '@nestjs/common';
 import { ProductVariationsService } from './product-variations.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -18,7 +19,7 @@ import { UpdateProductVariationDto } from './dto/update-product-variation.dto';
 export class ProductVariationsController {
   constructor(
     private readonly productVariationsService: ProductVariationsService,
-  ) {}
+  ) { }
 
   @Post()
   async create(
@@ -58,6 +59,20 @@ export class ProductVariationsController {
   ): Promise<ReturnProductVariationDto> {
     return new ReturnProductVariationDto(
       await this.productVariationsService.update(id, updateProductVariationDto),
+    );
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<ReturnProductVariationDto> {
+    return new ReturnProductVariationDto(
+      await this.productVariationsService.remove(id),
+    );
+  }
+
+  @Post(':id/restore')
+  async restore(@Param('id', ParseIntPipe) id: number): Promise<ReturnProductVariationDto> {
+    return new ReturnProductVariationDto(
+      await this.productVariationsService.restore(id),
     );
   }
 }
