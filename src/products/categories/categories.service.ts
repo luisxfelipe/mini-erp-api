@@ -77,12 +77,10 @@ export class CategoriesService {
   async remove(id: number): Promise<Category> {
     const category = await this.findOne(id, true);
 
-    console.log(category);
+    const quantityProducts = this.productsService.countByCategory(id);
 
-    if (category.products?.length > 0) {
-      throw new BadRequestException(
-        'it is not possible to delete a category with products',
-      );
+    if ((await quantityProducts) > 0) {
+      throw new BadRequestException('Cannot remove a category with products associated');
     }
 
     return await this.repository.softRemove(category);
