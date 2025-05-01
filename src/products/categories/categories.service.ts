@@ -19,7 +19,7 @@ export class CategoriesService {
     private readonly repository: Repository<Category>,
     @Inject(forwardRef(() => ProductsService))
     private readonly productsService: ProductsService,
-  ) {}
+  ) { }
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const category = await this.findOneByName(createCategoryDto.name).catch(
@@ -74,8 +74,10 @@ export class CategoriesService {
     });
   }
 
-  async remove(id: number): Promise<DeleteResult> {
+  async remove(id: number): Promise<Category> {
     const category = await this.findOne(id, true);
+
+    console.log(category);
 
     if (category.products?.length > 0) {
       throw new BadRequestException(
@@ -83,6 +85,12 @@ export class CategoriesService {
       );
     }
 
-    return await this.repository.delete(id);
+    return await this.repository.softRemove(category);
+  }
+
+  async restore(id: number): Promise<Category> {
+    await this.repository.restore(id);
+
+    return await this.findOne(id);
   }
 }

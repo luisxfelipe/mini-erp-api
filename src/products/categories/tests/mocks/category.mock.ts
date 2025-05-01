@@ -5,4 +5,5 @@ export const categoryMock: Category = {
   name: 'Category Mock',
   createdAt: new Date(),
   updatedAt: new Date(),
+  deletedAt: null,
 };
