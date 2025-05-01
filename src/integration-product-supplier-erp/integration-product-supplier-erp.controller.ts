@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Query,
+  Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { IntegrationProductSupplierErpService } from './integration-product-supplier-erp.service';
 import { CreateIntegrationProductSupplierErpDto } from './dto/create-integration-product-supplier-erp.dto';
@@ -19,7 +21,7 @@ import { PaginationDto, PaginationMetaDto } from 'src/dtos/pagination.dto';
 export class IntegrationProductSupplierErpController {
   constructor(
     private readonly integrationProductSupplierErpsService: IntegrationProductSupplierErpService,
-  ) {}
+  ) { }
 
   @Post()
   async create(
@@ -107,5 +109,19 @@ export class IntegrationProductSupplierErpController {
         updateIntegrationProductSupplierErpDto,
       ),
     );
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<ReturnIntegrationProductSupplierErpDto> {
+    return new ReturnIntegrationProductSupplierErpDto(
+      await this.integrationProductSupplierErpsService.remove(id),
+    )
+  }
+
+  @Post(':id/restore')
+  async restore(@Param('id', ParseIntPipe) id: number): Promise<ReturnIntegrationProductSupplierErpDto> {
+    return new ReturnIntegrationProductSupplierErpDto(
+      await this.integrationProductSupplierErpsService.restore(id),
+    )
   }
 }

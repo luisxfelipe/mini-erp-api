@@ -27,7 +27,7 @@ export class IntegrationProductSupplierErpService {
     private readonly productVariationsService: ProductVariationsService,
     @Inject(SuppliersService)
     private readonly suppliersService: SuppliersService,
-  ) {}
+  ) { }
 
   async create(
     createIntegrationProductSupplierErpDto: CreateIntegrationProductSupplierErpDto,
@@ -194,5 +194,16 @@ export class IntegrationProductSupplierErpService {
     } catch (error) {
       throw new Error(error);
     }
+  }
+
+  async remove(id: number): Promise<IntegrationProductSupplierErp> {
+    const integrationProductSupplierErp = await this.findOne(id)
+
+    return await this.repository.softRemove(integrationProductSupplierErp);
+  }
+
+  async restore(id: number): Promise<IntegrationProductSupplierErp> {
+    await this.repository.restore(id);
+    return await this.findOne(id);
   }
 }
