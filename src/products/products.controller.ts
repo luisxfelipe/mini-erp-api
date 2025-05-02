@@ -15,7 +15,8 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { ReturnProductDto } from './dto/return-product.dto';
 import { PaginationDto, PaginationMetaDto } from './../dtos/pagination.dto';
 import { DeleteResult } from 'typeorm';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { PaginationProductDto } from './dto/pagination-product.dto';
 
 @Controller('products')
 @ApiTags('Products')
@@ -39,18 +40,26 @@ export class ProductsController {
   }
 
   @Get('/pages')
+  @ApiQuery({ name: 'search', required: false, description: 'Termo de busca para filtrar produtos' })
+  @ApiQuery({ name: 'take', required: false, description: 'Quantidade de itens por página' })
+  @ApiQuery({ name: 'page', required: false, description: 'Número da página' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista paginada de produtos',
+    type: PaginationProductDto
+  })
   async findAllPage(
     @Query('search') search?: string,
     @Query('take') take?: number,
     @Query('page') page?: number,
-  ): Promise<any> {
+  ): Promise<PaginationDto<ReturnProductDto>> {
     const productsPaginated = await this.productsService.findAllWithPagination(
       search,
       take,
       page,
     );
 
-    return new PaginationDto(
+    return new PaginationDto<ReturnProductDto>(
       new PaginationMetaDto(
         Number(take),
         productsPaginated.total,
