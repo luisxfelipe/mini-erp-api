@@ -12,7 +12,7 @@ export const productMock: Product = {
   deletedAt: null,
 };
 
-export const paginationProductMock: PaginationDto<Product[]> = {
+export const paginationProductMock: PaginationDto<Product> = {
   data: [productMock],
   meta: {
     currentPage: 1,
