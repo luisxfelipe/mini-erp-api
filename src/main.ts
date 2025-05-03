@@ -20,6 +20,7 @@ async function bootstrap() {
       'https://www.erp.meviosshop.com.br',
       'https://erp.meviosshop.com.br',
       'https://mini-erp-eight.vercel.app',
+      'https://mini-erp-next-app.vercel.app'
     ],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
     preflightContinue: false,
