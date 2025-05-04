@@ -12,9 +12,10 @@ import {
 import { IntegrationProductSupplierErpService } from './integration-product-supplier-erp.service';
 import { CreateIntegrationProductSupplierErpDto } from './dto/create-integration-product-supplier-erp.dto';
 import { UpdateIntegrationProductSupplierErpDto } from './dto/update-integration-product-supplier-erp.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ReturnIntegrationProductSupplierErpDto } from './dto/return-integration-product-supplier-erp.dto';
 import { PaginationDto, PaginationMetaDto } from 'src/dtos/pagination.dto';
+import { PaginationIntegrationProductSupplierErpDto } from './dto/pagination-integration-product-supplier-erp.dto';
 
 @Controller('integration-product-supplier-erp')
 @ApiTags('Integration Product Supplier Erp')
@@ -46,11 +47,19 @@ export class IntegrationProductSupplierErpController {
   }
 
   @Get('/pages')
+  @ApiQuery({ name: 'search', required: false, description: 'Termo de busca para filtrar integrações por nome do produto' })
+  @ApiQuery({ name: 'take', required: false, description: 'Quantidade de itens por página' })
+  @ApiQuery({ name: 'page', required: false, description: 'Número da página' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista paginada de integrações produto-fornecedor-erp',
+    type: PaginationIntegrationProductSupplierErpDto
+  })
   async findAllWithPagination(
     @Query('search') search?: string,
     @Query('take') take?: number,
     @Query('page') page?: number,
-  ): Promise<PaginationDto<ReturnIntegrationProductSupplierErpDto[]>> {
+  ): Promise<PaginationDto<ReturnIntegrationProductSupplierErpDto>> {
     const productsPaginated =
       await this.integrationProductSupplierErpsService.findAllWithPagination(
         search,
@@ -58,7 +67,7 @@ export class IntegrationProductSupplierErpController {
         page,
       );
 
-    return new PaginationDto(
+    return new PaginationDto<ReturnIntegrationProductSupplierErpDto>(
       new PaginationMetaDto(
         Number(take),
         productsPaginated.total,
