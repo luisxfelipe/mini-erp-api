@@ -82,34 +82,35 @@ export class IntegrationProductSupplierErpService {
     search?: string,
     take = 10,
     page = 1,
-  ): Promise<any> {
+  ): Promise<ReturnPaginatedDto<IntegrationProductSupplierErp>> {
     try {
       const skip = (page - 1) * take;
 
-      const products = await this.productsService.findByName(search);
-      const productIds = products.map((product) => product.id);
-
-      if (products && products.length == 0) {
-        return new NotFoundException('Product not found');
-      }
-
-      const findOptions = {
-        where: {
-          productId: In(productIds),
-        },
+      let findOptions: any = {
+        relations: ['product', 'productVariation', 'supplier'],
         take,
         skip,
-        relations: ['product', 'productVariation', 'supplier'],
       };
 
-      const [IntegrationProductSupplierErp, total] =
-        await this.repository.findAndCount(findOptions);
+      if (search) {
+        const products = await this.productsService.findByName(search);
 
-      return new ReturnPaginatedDto(IntegrationProductSupplierErp, total);
+        if (products && products.length === 0) {
+          return new ReturnPaginatedDto([], 0);
+        }
 
-      // return new ReturnPaginatedDto(IntegrationProductSupplierErp, total);
+        const productIds = products.map((product) => product.id);
+
+        findOptions.where = {
+          productId: In(productIds),
+        };
+      }
+
+      const [integrations, total] = await this.repository.findAndCount(findOptions);
+
+      return new ReturnPaginatedDto(integrations, total);
     } catch (error) {
-      throw new BadRequestException('Error find products');
+      throw new BadRequestException('Erro ao buscar integrações');
     }
   }
 
