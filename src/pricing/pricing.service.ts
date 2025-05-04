@@ -135,28 +135,32 @@ export class PricingService {
     search?: string,
     take = 10,
     page = 1,
-  ): Promise<any> {
+  ): Promise<ReturnPaginatedDto<Pricing>> {
     try {
       const skip = (page - 1) * take;
-
-      const products = await this.productsService.findByName(search);
-      const productIds = products.map((product) => product.id);
-
-      if (products && products.length == 0) {
-        return new NotFoundException('Product not found');
-      }
-
-      const findOptions = {
-        where: {
-          productId: In(productIds),
-        },
+  
+      let findOptions: any = {
         take,
         skip,
         relations: ['product', 'productVariation', 'salePlatform'],
       };
-
+  
+      if (search) {
+        const products = await this.productsService.findByName(search);
+        
+        if (products && products.length === 0) {
+          return new ReturnPaginatedDto([], 0);
+        }
+        
+        const productIds = products.map((product) => product.id);
+        
+        findOptions.where = {
+          productId: In(productIds),
+        };
+      }
+  
       const [pricing, total] = await this.repository.findAndCount(findOptions);
-
+  
       return new ReturnPaginatedDto(pricing, total);
     } catch (error) {
       throw new BadRequestException('Error find pricing');
