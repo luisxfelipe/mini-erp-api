@@ -11,15 +11,16 @@ import { PricingService } from './pricing.service';
 import { CreatePricingDto } from './dto/create-pricing.dto';
 import { UpdatePricingDto } from './dto/update-pricing.dto';
 import { ReturnPricingDto } from './dto/return-pricing.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateSalePriceDto } from './dto/create-sale-price.dto';
 import { FindPricingByProductPlatformDto } from './dto/find-pricing-by-product-platform.dto';
 import { PaginationDto, PaginationMetaDto } from 'src/dtos/pagination.dto';
+import { PaginationPricingDto } from './dto/pagination-pricing.dto';
 
 @Controller('pricing')
 @ApiTags('Pricing')
 export class PricingController {
-  constructor(private readonly pricingService: PricingService) {}
+  constructor(private readonly pricingService: PricingService) { }
 
   @Post('/calculate')
   async calculate(
@@ -45,18 +46,26 @@ export class PricingController {
   }
 
   @Get('/pages')
+  @ApiQuery({ name: 'search', required: false, description: 'Termo de busca para filtrar precificações por nome do produto' })
+  @ApiQuery({ name: 'take', required: false, description: 'Quantidade de itens por página' })
+  @ApiQuery({ name: 'page', required: false, description: 'Número da página' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista paginada de precificações',
+    type: PaginationPricingDto
+  })
   async findAllWithPagination(
     @Query('search') search?: string,
     @Query('take') take?: number,
     @Query('page') page?: number,
-  ): Promise<PaginationDto<ReturnPricingDto[]>> {
+  ): Promise<PaginationDto<ReturnPricingDto>> {
     const productsPaginated = await this.pricingService.findAllWithPagination(
       search,
       take,
       page,
     );
 
-    return new PaginationDto(
+    return new PaginationDto<ReturnPricingDto>(
       new PaginationMetaDto(
         Number(take),
         productsPaginated.total,
